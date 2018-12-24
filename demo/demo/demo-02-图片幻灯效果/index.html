@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+	<meta charset="UTF-8">
+	<title>图片幻灯片效果</title>
+	<style>
+		* {
+			padding:0;
+			margin:0;
+		}
+		/*533  4*8 + 3*167*/
+		#slideshow {
+			width: 533px;	
+			/*background: red;*/
+			background:#b8a9d3;
+			overflow:hidden;
+			position:relative;
+			margin:60px auto;
+		}
+		#image {
+			height:333px;
+			margin:10px 0;
+			/*background:pink;*/
+			-webkit-border-radius: 5px;
+			border-radius: 5px;
+		}
+		#pos {
+			width:2132px;
+			/*background:"green";*/
+			margin:0 0 10px 0;
+			overflow:hidden;
+			position:relative;
+			left:0;
+		}
+		#image img {
+			margin-left:16px;
+			position:absolute;
+			z-index:0;
+			-webkit-border-radius: 5px;
+			border-radius: 5px;
+		}
+		#image img:first-child {
+			z-index: 1;
+		}
+		#pos img {
+			float:left;
+			width:167px;
+			margin-left:8px;
+			cursor: pointer;
+			opacity:0.7;
+			filter:alpha(opacity=70);
+			-webkit-border-radius: 5px;
+			border-radius: 5px;
+		}
+		#pos img:hover {
+			-moz-transform: rotate(360deg);
+			-webkit-transform: rotate(360deg);
+			-o-transform: rotate(360deg);
+			transform: rotate(360deg);
+			-webkit-transition: -webkit-transform 1s,opacity 1s,background 1s,width 1s,height 1s,font-size 1s;
+			-o-transition-property: width,height,-o-transform,background,font-size,opacity;
+			-o-transition-duration: 1s,1s,1s,1s,1s,1s;
+			-moz-transition-property: width,height,-o-transform,background,font-size,opacity;
+			-moz-transition-duration: 1s,1s,1s,1s,1s,1s;
+		}
+		#pos .selected {
+			opacity:1;
+			border:2px solid black;
+		}
+		#slideshow a{
+			position:absolute;
+			text-indent: -5000px;
+			overflow:hidden;
+			display: block;
+			width:60px;
+			height:60px;
+			top:145px;
+			z-index:20000;
+			opacity:0.5;
+			filter:alpha(opacity:50);
+		}
+		#pre {
+			left:16px;
+			background:url(images/btn.gif) no-repeat 0 0;
+		}
+		#next {
+			right:17px;
+			background:url(images/btn.gif) no-repeat 0 -60px;
+		}
+	</style>
+	<script>
+		function forEach(arr,func){
+			var i = arr.length - 1;
+			if (i > -1){
+				do {
+					func(arr[i]);
+				}while (--i >= 0)
+			}
+		}
+		var getStyle = function(obj,attr){
+			if(typeof getComputedStyle !== "undefined"){
+				getStyle = function(obj,attr){
+					return getComputedStyle(obj,null)[attr];
+				};
+			}else{
+				getStyle = function(obj,attr){
+					return obj.currentStyle[attr];
+				};
+			}
+			return getStyle(obj,attr);
+		};
+		/*
+		@@		内部调用了getStyle函数
+		obj: 	动画对象	
+		json: 	要改变的属性和属性值	callback：动画结束后执行函数
+		type：	匀速传入true或其他任意能转成true即可	后面的speed：传入数值,不传默认5
+		type：	不传或传false，默认缓冲动画（即一开始快后来慢），speed也就可不传（传了也没用）
+		*/
+		function animate(obj,json,callback,type,speed){
+			if(obj.timer){
+				clearInterval(obj.timer);
+			}
+			obj.timer=setInterval(function(){
+				var bStop = true;
+				for(var attr in json){
+					if(attr == "opacity"){
+						json[attr] > 100 ? 100 : json[attr];
+						var cur = Math.round(parseFloat(getStyle(obj,attr))*100);
+					}else{
+						cur = parseInt(getStyle(obj,attr));
+					}
+					if(!type){
+						speed = (json[attr] - cur)/6;
+						speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+						if(attr == "opacity"){
+							obj.style.filter="alpha(opacity:" + (cur + speed) + ")";
+							obj.style.opacity =(cur + speed)/100;
+						}else{
+							obj.style[attr] = cur + speed + "px";
+						}
+					}else{
+						if(typeof speed != "number"){
+							speed = 5;
+						}
+						if(cur > json[attr]){
+							speed = -Math.abs(speed);
+						}else{
+							speed = Math.abs(speed);
+						}
+						if(attr == "opacity"){
+							obj.style.filter = "alpha(opacity:" + (speed) + ")";
+							obj.style.opacity = (cur + speed)/100;
+						}else{
+							obj.style[attr] = cur + speed + "px";
+						}
+						if(Math.abs(json[attr] - cur) < Math.abs(speed)){
+							if(attr == "opacity"){
+								obj.style.filter = "alpha(opacity:" + (json[attr]) + ")";
+								obj.style.opacity = (json[attr])/100;
+							}
+							else{
+								obj.style[attr] = json[attr] + "px";
+							}
+						}
+					}
+					if(cur != json[attr]){
+						bStop = false;
+					}
+				}
+				if(bStop){
+					clearInterval(obj.timer);
+					if(callback){
+						callback();
+					}
+				}
+			},30)
+		}
+		window.onload = function () {
+			var oImage = document.getElementById("image"),
+				oPos = document.getElementById("pos"),
+				oPre = document.getElementById("pre"),
+				oNext = document.getElementById("next"),
+				aMainImg = oImage.getElementsByTagName("img"),
+				aThumbnail = oPos.getElementsByTagName("img");
+			for (var i = aThumbnail.length - 1;i >= 0; i--){
+				aThumbnail[i].index = i;
+				aThumbnail[i].onmouseover = function (){
+					animate(this,{"opacity":100});
+				}
+				aThumbnail[i].onmouseout = function (){
+					if(this.className !== "selected"){
+						animate(this,{"opacity":70});
+					}
+				}
+			}
+			var nowThumb = 0,
+				nowzIndex = 0;
+			forEach(aThumbnail,function(item){
+				item.onclick = function (){
+					var mark = this.index;
+					if (mark !== nowThumb){
+						var oMainImg = aMainImg[this.index];
+						oMainImg.style.zIndex = ++nowzIndex;
+						oMainImg.style.height = 0;
+						animate(oMainImg,{"height":333});
+						nowThumb = mark;
+						// console.log(nowThumb)
+						if (mark === 0){
+							animate(oPos,{"left":0});
+						}else if (mark === 5){
+							animate(oPos,{"left":(-175*(mark-2))});
+						}else {
+							animate(oPos,{"left":(-175*(mark-1))});
+						}
+						forEach(aThumbnail,function(value){
+							value.className = "";
+						})
+						item.className = "selected";
+					}
+				}
+			})
+			oPre.onclick = function (){
+				if (nowThumb === 0){
+					aThumbnail[5].onclick();
+				}else{
+					aThumbnail[nowThumb - 1].onclick();
+				}
+				return false;
+			}
+			oNext.onclick = function (){
+				if (nowThumb === 5){
+					(aThumbnail[0].onclick)();
+				}else{
+					aThumbnail[nowThumb + 1].onclick();
+				}
+				return false;
+			}
+			/*
+			function Btntoggle(obj,type){
+				switch(type){
+					case "over":
+						return function (){
+							animate(obj,{"opacity":100});
+						}
+						break;
+					case "out":
+						return function (){
+							animate(obj,{"opacity":50});
+						}
+						break;
+				}
+			}
+			oPre.onmouseover = Btntoggle(oPre,"over");
+			oPre.onmouseout = Btntoggle(oPre,"out");
+			oNext.onmouseover = Btntoggle(oNext,"over");
+			oNext.onmouseout = Btntoggle(oNext,"out");
+			*/
+			oPre.onmouseover = function (){
+				animate(oPre,{"opacity":100});
+			}
+			oPre.onmouseout = function (){
+				animate(oPre,{"opacity":50});
+			}
+			oNext.onmouseover = function (){
+				animate(oNext,{"opacity":100});
+			}
+			oNext.onmouseout = function (){
+				animate(oNext,{"opacity":50});
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id="slideshow">
+		<div id="image">
+			<img src="images/time (1).jpg">
+			<img src="images/time (2).jpg">
+			<img src="images/time (3).jpg">
+			<img src="images/time (4).jpg">
+			<img src="images/time (5).jpg">
+			<img src="images/time (6).jpg">
+		</div>
+		<div id="pos">
+			<img src="images/time (1).jpg" class="selected">
+			<img src="images/time (2).jpg">
+			<img src="images/time (3).jpg">
+			<img src="images/time (4).jpg">
+			<img src="images/time (5).jpg">
+			<img src="images/time (6).jpg">
+		</div>
+		<a id="pre" href="#">往前</a>
+		<a id="next" href="#">往后</a>
+	</div>
+</body>
+</html>

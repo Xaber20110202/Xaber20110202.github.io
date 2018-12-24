@@ -1,0 +1,131 @@
+/* @font-face kit by Fonts2u (http://www.fonts2u.com) */ 
+@font-face {
+	font-family:"WebSymbols-Regular";
+	src:url("WebSymbols-Regular.eot?") format("eot"),
+		url("WebSymbols-Regular.woff") format("woff"),
+		url("WebSymbols-Regular.ttf") format("truetype"),
+		url("WebSymbols-Regular.svg#WebSymbols-Regular") format("svg");
+	font-weight:normal;
+	font-style:normal;
+}
+
+#wrapper {
+	background:#dedede;
+	width:100%;
+	height:700px;
+	border:1px #dedede solid;
+}
+.nav {
+	width:15em;
+	margin:50px auto;
+	font-size:1.8em;
+	overflow:hidden;
+}
+.navbox:hover, .navlist li:hover {
+	cursor: pointer;
+}
+.navbox span, .navlist span, .navlist a {
+	display:block;
+	float:left;
+	line-height: 2.5;
+}
+.navbox {
+	color:#CC0033;
+	font-weight: bold;
+	background:black;
+	overflow:hidden;
+	margin:0 0 10px 0;
+	border-radius: 5px;
+	height:70px;
+	position:relative;
+}
+.navbox span {
+	margin-left:130px;
+}
+.navbox .icon {
+	float:right;
+	line-height: 2.5;
+	margin:0;
+}
+.navlist li {
+	overflow:hidden;
+	margin:0 0 10px 0;
+	border-radius: 5px;
+	background:#FF6666;
+	height:70px;
+	position:relative;
+	-webkit-transition:0.3s all ease;
+	-moz-transition:0.3s all ease;
+	-ms-transition:0.3s all ease;
+	-o-transition:0.3s all ease;
+}
+.navlist li:hover {
+	background:#000;
+	-webkit-transition:0.3s all ease;
+	-moz-transition:0.3s all ease;
+	-ms-transition:0.3s all ease;
+	-o-transition:0.3s all ease;
+}
+.border {
+	width:10px;
+	background:pink;
+	line-height:100em;
+	overflow:hidden;
+	text-indent:9999px;
+	border-radius: 5px;
+	opacity:0;
+	-webkit-transition:0.3s all ease;
+	-moz-transition:0.3s all ease;
+	-ms-transition:0.3s all ease;
+	-o-transition:0.3s all ease;
+}
+.navlist li:hover .border {
+	opacity:1;
+	-webkit-transition:0.3s all ease;
+	-moz-transition:0.3s all ease;
+	-ms-transition:0.3s all ease;
+	-o-transition:0.3s all ease;
+}
+.navlist a {
+	font-size:25px;
+	text-decoration: none;
+	color:#333333;
+	font-weight:bold;
+	line-height:70px;
+	position:absolute;
+	width:100%;
+	z-index:10;
+	padding-left: 130px;
+}
+.navlist li:hover a {
+	font-size:35px;
+	color:#99CC00;
+	-webkit-transition:0.3s all ease;
+	-moz-transition:0.3s all ease;
+	-ms-transition:0.3s all ease;
+	-o-transition:0.3s all ease;
+}
+.icon {
+	font-family:"WebSymbols-Regular";
+	text-align: center;
+	width:70px;
+}
+.navlist .icon {
+	width:120px;
+	height:70px;
+	font-size:25px;
+	line-height:70px;
+	color:#0066CC;
+	-webkit-transition:0.3s all ease;
+	-moz-transition:0.3s all ease;
+	-ms-transition:0.3s all ease;
+	-o-transition:0.3s all ease;
+}
+.navlist li:hover .icon {
+	font-size:35px;
+	color:#CC0033;
+	-webkit-transition:0.3s all ease;
+	-moz-transition:0.3s all ease;
+	-ms-transition:0.3s all ease;
+	-o-transition:0.3s all ease;
+}

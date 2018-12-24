@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+	<meta charset="UTF-8">
+	<title>图片幻灯片效果</title>
+	<style>
+		* {
+			padding:0;
+			margin:0;
+		}
+		/*533  4*8 + 3*167*/
+		#slideshow {
+			width: 533px;	
+			/*background: red;*/
+			background:#b8a9d3;
+			overflow:hidden;
+			position:relative;
+			margin:60px auto;
+			-webkit-border-radius: 5px;
+			border-radius: 5px;
+		}
+		#image {
+			height:333px;
+			margin:10px 0;
+			/*background:pink;*/
+		}
+		#pos {
+			width:2132px;
+			/*background:"green";*/
+			margin:0 0 10px 0;
+			overflow:hidden;
+			position:relative;
+			left:0;
+		}
+		#image img {
+			margin-left:16px;
+			position:absolute;
+			z-index:0;
+			-webkit-border-radius: 5px;
+			border-radius: 5px;
+		}
+		#image img:first-child {
+			z-index: 1;
+		}
+		#pos img {
+			float:left;
+			width:167px;
+			height: 115px;
+			margin-left:8px;
+			cursor: pointer;
+			opacity:0.7;
+			filter:alpha(opacity=70);
+			-webkit-border-radius: 5px;
+			border-radius: 5px;
+		}
+		#pos img:hover {
+			-moz-transform: rotate(360deg);
+			-webkit-transform: rotate(360deg);
+			-o-transform: rotate(360deg);
+			transform: rotate(360deg);
+			-webkit-transition: -webkit-transform 1s,opacity 1s,background 1s,width 1s,height 1s,font-size 1s;
+			-o-transition-property: width,height,-o-transform,background,font-size,opacity;
+			-o-transition-duration: 1s,1s,1s,1s,1s,1s;
+			-moz-transition-property: width,height,-o-transform,background,font-size,opacity;
+			-moz-transition-duration: 1s,1s,1s,1s,1s,1s;
+		}
+		#pos .selected {
+			opacity:1;
+			border:2px solid black;
+		}
+		#slideshow a {
+			position:absolute;
+			text-indent: -5000px;
+			overflow:hidden;
+			display: block;
+			width:60px;
+			height:60px;
+			top:145px;
+			z-index:20000;
+			opacity:0.5;
+			filter:alpha(opacity:50);
+		}
+		#pre {
+			left:16px;
+			background:url(images/btn.gif) no-repeat 0 0;
+		}
+		#next {
+			right:17px;
+			background:url(images/btn.gif) no-repeat 0 -60px;
+		}
+	</style>
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js">
+	</script>
+	<script>
+		(function($){
+			$(function(){
+				var $oImg = $("#image"),
+					$oPos = $("#pos"),
+					$mainImg = $oImg.find("img"),
+					$thumb = $oPos.find("img");
+				/*
+				(function(){
+					for(var i = $thumb.length - 1; i >=0; i--){
+						$thumb[i].index = i;
+					}
+				})();		已用 JQuery index方法代替
+				*/
+				var nowzIndex = 0,
+					nowThumb = 0;
+				/*
+				$thumb.each(function(){
+					$(this).click(function(){
+						var mark = this.index;
+						if (mark !== nowThumb){
+							nowThumb = mark;
+							var target;
+							// console.log(mark);
+							switch (mark){
+								case 0:
+									target = "0px";
+									break;
+								case 5:
+									target = (-177*(mark-2))+"px";
+									break;
+								default:
+									target = (-177*(mark-1))+"px";
+									break;
+							}
+							// $(this).parent().animate({"left":target});
+							$oPos.animate({"left":target});
+							var $oMainImg = $($mainImg[mark]);
+							$oMainImg.css({"zIndex":++nowzIndex,"height":0,"opacity":"0.5"});
+							$oMainImg.animate({"height":"333px","opacity":"1"});
+						}
+					});
+				});
+				*/
+				$thumb.click(function(e){
+					var mark = $thumb.index(this);
+					if(mark !== nowThumb){
+						nowThumb = mark;
+						var target;
+						switch (mark){
+							case 0:
+								target = "0px";
+								break;
+							case 5:
+								target = (-177*(mark-2))+"px";
+								break;
+							default:
+								target = (-177*(mark-1))+"px";
+								break;
+						}
+						$oPos.stop(true)
+							.animate({"left":target});
+						$(e.target).addClass("selected")
+							.stop(true)
+							.animate({"opacity":"1"})
+							.siblings().removeClass("selected")
+								.trigger("mouseout");
+						var oMainImg = $mainImg[mark],
+							$oMainImg = $(oMainImg),
+							posTop = $oMainImg.position().top + "px";
+						oMainImg.style.zIndex = ++nowzIndex;
+						oMainImg.style.height = 0;
+						oMainImg.style.top = "600px";
+						// console.log(posTop);
+						// $oMainImg.css({"zIndex":++nowzIndex,"height":0});
+						$oMainImg.animate({"height":"333px","top":posTop},"slow");
+					}
+				});
+				(function(){
+					var $pre = $("#pre");
+					$pre.click(function(){
+						var oMainImg;
+						if (nowThumb === 0){
+							oMainImg = $thumb[5];
+						}else{
+							oMainImg = $thumb[nowThumb - 1];
+						}
+						$(oMainImg).click();
+						return false;
+					});
+					$pre.hover(function(){
+						$pre.stop(true)
+							.animate({"opacity":"1"})
+					},function(){
+						$pre.stop(true)
+							.animate({"opacity":"0.5"})
+					});
+				})();
+				(function(){
+					var $next = $("#next");
+					$next.click(function(){
+						var oMainImg;
+						if (nowThumb === 5){
+							oMainImg = $thumb[0];
+						}else{
+							oMainImg = $thumb[nowThumb + 1];
+						}
+						$(oMainImg).click();
+						return false;
+					});
+					$next.hover(function(){
+						$next.stop(true)
+							.animate({"opacity":"1"})
+					},function(){
+						$next.stop(true)
+							.animate({"opacity":"0.5"})
+					});
+				})();
+				$thumb.hover(function(e){
+					$(e.target).stop(true)
+					.animate({"opacity":"1","width":"200px"});
+				},function(e){
+					$(e.target).stop(true)
+					.animate({"width":"167px"});
+					if(e.target.className !=="selected"){
+						$(e.target).animate({"opacity":"0.7"});
+					}
+				})
+			});
+		})($);
+	</script>
+</head>
+<body>
+	<div id="slideshow">
+		<div id="image">
+			<img src="images/time (1).jpg">
+			<img src="images/time (2).jpg">
+			<img src="images/time (3).jpg">
+			<img src="images/time (4).jpg">
+			<img src="images/time (5).jpg">
+			<img src="images/time (6).jpg">
+		</div>
+		<div id="pos">
+			<img src="images/time (1).jpg" class="selected">
+			<img src="images/time (2).jpg">
+			<img src="images/time (3).jpg">
+			<img src="images/time (4).jpg">
+			<img src="images/time (5).jpg">
+			<img src="images/time (6).jpg">
+		</div>
+		<a id="pre" href="#">往前</a>
+		<a id="next" href="#">往后</a>
+	</div>
+</body>
+</html>

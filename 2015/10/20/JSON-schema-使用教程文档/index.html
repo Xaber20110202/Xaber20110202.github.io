@@ -1,0 +1,869 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.8.0">
+  
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1">
+
+
+
+
+  <meta name="keywords" content="工具,API,JSON Schema,">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Xaber's Blog" type="application/atom+xml">
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1">
+
+
+<meta name="description" content="兼做文档，随手翻。整理来源：《Understanding JSON Schema》">
+<meta name="keywords" content="工具,API,JSON Schema">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JSON Schema 使用教程文档">
+<meta property="og:url" content="http://xaber.co/2015/10/20/JSON-schema-使用教程文档/index.html">
+<meta property="og:site_name" content="Xaber&#39;s Blog">
+<meta property="og:description" content="兼做文档，随手翻。整理来源：《Understanding JSON Schema》">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2015-10-20T12:59:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JSON Schema 使用教程文档">
+<meta name="twitter:description" content="兼做文档，随手翻。整理来源：《Understanding JSON Schema》">
+
+
+<script>
+(function () {
+    window.zhuge = window.zhuge || [];
+    window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
+    window.zhuge.factory = function(b) {
+        return function() {
+            var a = Array.prototype.slice.call(arguments);
+            a.unshift(b);
+            window.zhuge.push(a);
+            return window.zhuge
+        }
+    };
+    for (var i = 0; i < window.zhuge.methods.length; i++) {
+        var key = window.zhuge.methods[i];
+        window.zhuge[key] = window.zhuge.factory(key)
+    }
+    window.zhuge.load = function(b, x) {
+        if (!document.getElementById("zhuge-js")) {
+            var a = document.createElement("script");
+            var verDate = new Date();
+            var verStr = verDate.getFullYear().toString()
+                + verDate.getMonth().toString() + verDate.getDate().toString();
+
+            a.type = "text/javascript";
+            a.id = "zhuge-js";
+            a.async = !0;
+            a.src = (location.protocol == 'http:' ? "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" : 'https://zgsdk.zhugeio.com/zhuge-lastest.min.js?v=') + verStr;
+            var c = document.getElementsByTagName("script")[0];
+            c.parentNode.insertBefore(a, c);
+            window.zhuge._init(b, x)
+        }
+    };
+    
+    // 开发模式调试
+    
+    window.zhuge.load('49fc6625ddcc4004aa98d05e876a70e0');
+    
+})();
+</script>
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide'
+  };
+</script>
+
+  <title> JSON Schema 使用教程文档 | Xaber's Blog </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-47125735-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Xaber's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br>
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br>
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br>
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br>
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br>
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              JSON Schema 使用教程文档
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-10-20T20:21:05+08:00" content="2015-10-20">
+            2015-10-20
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/JSON-Schema/" itemprop="url" rel="index">
+                  <span itemprop="name">JSON Schema</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/10/20/JSON-schema-使用教程文档/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/10/20/JSON-schema-使用教程文档/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>兼做文档，随手翻。<br>整理来源：<a href="http://spacetelescope.github.io/understanding-json-schema/index.html" target="_blank" rel="noopener">《Understanding JSON Schema》</a></p>
+<a id="more"></a>
+<h2 id="1-JSON-SCHEMA-REFERENCE"><a href="#1-JSON-SCHEMA-REFERENCE" class="headerlink" title="1. JSON SCHEMA REFERENCE"></a>1. JSON SCHEMA REFERENCE</h2><h4 id="type-string"><a href="#type-string" class="headerlink" title="type string"></a>type string</h4><ul>
+<li>“type”: “string”</li>
+<li>“maxLength”</li>
+<li>“minLength”</li>
+<li>“pattern”: “^(\([0-9]{3}\))?[0-9]{3}-[0-9]{4}$”</li>
+<li>“format”<ul>
+<li>“date-time”: Date representation, as defined by RFC 3339, section 5.6.</li>
+<li>“email”: Internet email address, see RFC 5322, section 3.4.1.</li>
+<li>“hostname”: Internet host name, see RFC 1034, section 3.1.</li>
+<li>“ipv4”: IPv4 address, according to dotted-quad ABNF syntax as defined in RFC 2673, section 3.2. </li>
+<li>“ipv6”: IPv6 address, as defined in RFC 2373, section 2.2.</li>
+<li>“uri”: A universal resource identifier (URI), according to RFC3986.</li>
+</ul>
+</li>
+</ul>
+<h4 id="type-number"><a href="#type-number" class="headerlink" title="type number"></a>type number</h4><ul>
+<li>type<ul>
+<li>“integer”<br>—— 依赖 schema validator 实现，在不同的实现里可能会作为不同的判定。（For example, a JavaScript-based may accept 1.0 as an integer, whereas the Python-based jsonschema does not. 1.0）</li>
+<li>“number”</li>
+</ul>
+</li>
+<li>“multipleOf”: 10<br>—— 10的倍数</li>
+<li>“minimun”: 10<br>—— 最小是10</li>
+<li>“exclusiveMinimum”: true<br>—— 为true代表不包含10</li>
+<li>“maximun”: 100<br>—— 最大是100</li>
+<li>“exclusiveMaximum”: false<br>—— 或者未定义，包括100</li>
+</ul>
+<h4 id="type-object-——-key-必须是string"><a href="#type-object-——-key-必须是string" class="headerlink" title="type object —— key 必须是string"></a>type object —— key 必须是string</h4><ul>
+<li>“type”: “object”</li>
+<li>“properies”: {“number”: {“type”: “number”}}<br>—— 默认缺失了属性和多了什么属性都是可以通过验证的，即{number: 1}和{}和{number: 1, a: 2}都符合规则；</li>
+<li>“additionalProperties”:<br>—— 如果没有添加额外的属性，这个属性实际不会作用<ul>
+<li>false<br>—— 不允许有附加的多余属性</li>
+<li>{“type”: “string”, “pattern”: “^(\([0-9]{3}\))?[0-9]{3}-[0-9]{4}$”}<br>—— 值为object，默认所有添加上去的属性，都必须满足这个object的条件</li>
+</ul>
+</li>
+<li>“required”: [“name”, “tel”]<br>—— 值为一个数组，指定properies哪些属性是必须的</li>
+<li>“minProperties”: 2<br>—— 最少有两个属性</li>
+<li>“maxProperties”: 3<br>—— 最多有三个属性</li>
+<li><p>“dependencies”: </p>
+<ul>
+<li><p>properies dependencies<br>—— {“credit_card”: [“billing_address”]} 相当于依赖的管理，credit_card属性的存在，必须要有billing_address属性；甚至可以建立双向依赖</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">// valid</span><br><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">    &quot;credit_card&quot;: 5555555555555555,</span><br><span class="line">    &quot;billing_address&quot;: &quot;555 Debtor</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// invalid</span><br><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">    &quot;credit_card&quot;: 5555555555555555</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// valid</span><br><span class="line">&#123;</span><br><span class="line">      &quot;name&quot;: &quot;John Doe&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// valid</span><br><span class="line">&#123;</span><br><span class="line">    &quot;name&quot;: &quot;John Doe&quot;,</span><br><span class="line">    &quot;billing_address&quot;: &quot;555 Debtor</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 双向依赖</span><br><span class="line">&#123;</span><br><span class="line">    &quot;type&quot;: &quot;object&quot;,</span><br><span class="line">    &quot;properties&quot;: &#123;</span><br><span class="line">        &quot;name&quot;: &#123; &quot;type&quot;: &quot;string&quot; &#125;,</span><br><span class="line">        &quot;credit_card&quot;: &#123; &quot;type&quot;: &quot;number&quot; &#125;,</span><br><span class="line">        &quot;billing_address&quot;: &#123; &quot;type&quot;: &quot;string&quot; &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;required&quot;: [&quot;name&quot;],</span><br><span class="line">    &quot;dependencies&quot;: &#123;</span><br><span class="line">        &quot;credit_card&quot;: [&quot;billing_address&quot;],</span><br><span class="line">        &quot;billing_address&quot;: [&quot;credit_card&quot;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Schema dependencies，相当于属性依赖的扩展；可以指定依赖到的属性的类型，以及需要满足的条件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;credit_card&quot;: &#123;</span><br><span class="line">        &quot;properties&quot;: &#123;</span><br><span class="line">            &quot;billing_address&quot;: &#123; &quot;type&quot;: &quot;string&quot; &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;required&quot;: [&quot;billing_address&quot;]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>“patternProperties”<br>—— 通过正则匹配属性；默认为全局搜索，例如”p”的搜索，”apple” 满足条件，要达到目的，需要是”^p$”；与additionalProperties配合食用效果更佳</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;patternProperties&quot;: &#123;</span><br><span class="line">    &quot;^S_&quot;: &#123; &quot;type&quot;: &quot;string&quot; &#125;,</span><br><span class="line">    &quot;^I_&quot;: &#123; &quot;type&quot;: &quot;integer&quot; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="type-array"><a href="#type-array" class="headerlink" title="type array"></a>type array</h4><ul>
+<li>“type”: “array”</li>
+<li><p>“items”</p>
+<ul>
+<li><p>List validation，简单、全部满足的，每一项都满足相同的条件；additionalItems不要和这个一起用，无效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&quot;items&quot;: &#123;</span><br><span class="line">    &quot;type&quot;: &quot;number&quot;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// valid</span><br><span class="line">[1, 2, 3, 4, 5]</span><br><span class="line"></span><br><span class="line">// invalid</span><br><span class="line">[1, 2, &quot;3&quot;, 4, 5]</span><br><span class="line"></span><br><span class="line">// valid 空数组也符合情况</span><br><span class="line">[]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Tuple validation，针对元素在数组中的位置来校验不同规则</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;type&quot;: &quot;array&quot;,</span><br><span class="line">    &quot;items&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;type&quot;: &quot;number&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;type&quot;: &quot;string&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;type&quot;: &quot;string&quot;,</span><br><span class="line">          &quot;enum&quot;: [&quot;Street&quot;, &quot;Avenue&quot;, &quot;Boulevard&quot;]</span><br><span class="line">        &#125;, </span><br><span class="line">        &#123;</span><br><span class="line">          &quot;type&quot;: &quot;string&quot;,</span><br><span class="line">          &quot;enum&quot;: [&quot;NW&quot;, &quot;NE&quot;, &quot;SW&quot;, &quot;SE&quot;]</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 只要满足元素项的规则</span><br><span class="line"></span><br><span class="line">// valid 三缺一，可以的</span><br><span class="line">[10, &quot;Downing&quot;, &quot;Street&quot;]</span><br><span class="line"></span><br><span class="line">// valid 多来了一个也没事</span><br><span class="line">[1600, &quot;Pennsylvania&quot;, &quot;Avenue&quot;, &quot;NW&quot;, &quot;Washington&quot;]</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>additionalItems: false —— 需要和Tuple validation配合食用，代表是否允许添加其他的数组项</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;type&quot;: &quot;array&quot;,</span><br><span class="line">    &quot;items&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;type&quot;: &quot;number&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;type&quot;: &quot;string&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">          &quot;type&quot;: &quot;string&quot;,</span><br><span class="line">          &quot;enum&quot;: [&quot;Street&quot;, &quot;Avenue&quot;, &quot;Boulevard&quot;]</span><br><span class="line">        &#125;, </span><br><span class="line">        &#123;</span><br><span class="line">          &quot;type&quot;: &quot;string&quot;,</span><br><span class="line">          &quot;enum&quot;: [&quot;NW&quot;, &quot;NE&quot;, &quot;SW&quot;, &quot;SE&quot;]</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;additionalItems&quot;: false</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// valid 三缺一，可以的</span><br><span class="line">[10, &quot;Downing&quot;, &quot;Street&quot;]</span><br><span class="line"></span><br><span class="line">// invalid 多来了一个？ ！！！就不让来！！！</span><br><span class="line">[1600, &quot;Pennsylvania&quot;, &quot;Avenue&quot;, &quot;NW&quot;, &quot;Washington&quot;]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>“minItems”: 2<br>—— 最小数组元素个数</li>
+<li>“maxItems”: 3<br>—— 最大数组元素个数</li>
+<li>“uniqueItems”: true<br>—— 数组元素必须是唯一不重复的</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// valid</span><br><span class="line">[1, 2, 3, 4, 5]</span><br><span class="line">[]</span><br><span class="line"></span><br><span class="line">// invalid</span><br><span class="line">[1, 2, 3, 3, 4]</span><br></pre></td></tr></table></figure>
+<h4 id="type-boolean-——-只要配置一个，值只能是-boolean值-true-false"><a href="#type-boolean-——-只要配置一个，值只能是-boolean值-true-false" class="headerlink" title="type boolean —— 只要配置一个，值只能是 boolean值 true false"></a>type boolean —— 只要配置一个，值只能是 boolean值 true false</h4><ul>
+<li>“type”: “boolean”</li>
+</ul>
+<h4 id="type-null-——-只要配置一个，值只能是-null；一般用于代表属性"><a href="#type-null-——-只要配置一个，值只能是-null；一般用于代表属性" class="headerlink" title="type null —— 只要配置一个，值只能是 null；一般用于代表属性"></a>type null —— 只要配置一个，值只能是 null；一般用于代表属性</h4><ul>
+<li>“type”: “null”</li>
+</ul>
+<h2 id="2-Generic-keywords"><a href="#2-Generic-keywords" class="headerlink" title="2. Generic keywords"></a>2. Generic keywords</h2><p>所有情况都能用的关键字。</p>
+<h4 id="Metadata"><a href="#Metadata" class="headerlink" title="Metadata"></a>Metadata</h4><ul>
+<li>“title”: “标题”</li>
+<li>“description”: “描述信息”</li>
+<li>“default”: “空的属性的默认值”</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &quot;title&quot; : &quot;Match anything&quot;,</span><br><span class="line">  &quot;description&quot; : &quot;This is a schema that matches anything.&quot;,</span><br><span class="line">  &quot;default&quot; : &quot;Default value&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Enumerated-values"><a href="#Enumerated-values" class="headerlink" title="Enumerated values"></a>Enumerated values</h4><ul>
+<li>“enum”: [“red”, “amber”, “green”] —— 列举出来的内容里面出现一个</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;type&quot;: &quot;string&quot;,</span><br><span class="line">    &quot;enum&quot;: [&quot;red&quot;, &quot;amber&quot;, &quot;green&quot;]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">￼￼￼ &#123;</span><br><span class="line">    &quot;enum&quot;: [&quot;red&quot;, &quot;amber&quot;, &quot;green&quot;, null, 42]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>注意</strong>： 会先匹配type，才匹配enum，例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;type&quot;: &quot;string&quot;,</span><br><span class="line">    &quot;enum&quot;: [&quot;red&quot;, &quot;amber&quot;, &quot;green&quot;, null]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// invalid</span><br><span class="line">null</span><br><span class="line"></span><br><span class="line">// valid</span><br><span class="line">&quot;red&quot;</span><br></pre></td></tr></table></figure>
+<h2 id="3-Combining-schemas"><a href="#3-Combining-schemas" class="headerlink" title="3. Combining schemas"></a>3. Combining schemas</h2><h4 id="allOf-全部满足"><a href="#allOf-全部满足" class="headerlink" title="allOf 全部满足"></a>allOf 全部满足</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;allOf&quot;: [</span><br><span class="line">        &#123; &quot;type&quot;: &quot;string&quot; &#125;,</span><br><span class="line">        &#123; &quot;maxLength&quot;: 5 &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// valid</span><br><span class="line">&quot;short&quot;</span><br><span class="line"></span><br><span class="line">// invalid</span><br><span class="line">&quot;too long&quot;</span><br></pre></td></tr></table></figure>
+<p>吊吊的写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;definitions&quot;: &#123;</span><br><span class="line">        &quot;address&quot;: &#123;</span><br><span class="line">            &quot;type&quot;: &quot;object&quot;,</span><br><span class="line">            &quot;properties&quot;: &#123;</span><br><span class="line">                &quot;street_address&quot;: &#123; &quot;type&quot;: &quot;string&quot; &#125;,</span><br><span class="line">                &quot;city&quot;:           &#123; &quot;type&quot;: &quot;string&quot; &#125;,</span><br><span class="line">                &quot;state&quot;:          &#123; &quot;type&quot;: &quot;string&quot; &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;required&quot;: [&quot;street_address&quot;, &quot;city&quot;, &quot;state&quot;]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;allOf&quot;: [</span><br><span class="line">        &#123; </span><br><span class="line">            // $ref 也是有点吊的，好比继承和模块化</span><br><span class="line">            &quot;$ref&quot;: &quot;#/definitions/address&quot; </span><br><span class="line">        &#125;,</span><br><span class="line">        &#123; </span><br><span class="line">            &quot;properties&quot;: &#123;</span><br><span class="line">                &quot;type&quot;: &#123; &quot;enum&quot;: [ &quot;residential&quot;, &quot;business&quot; ] &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// valid</span><br><span class="line">&#123;</span><br><span class="line">    &quot;street_address&quot;: &quot;1600 Pennsylvania Avenue NW&quot;,</span><br><span class="line">    &quot;city&quot;: &quot;Washington&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;DC&quot;,</span><br><span class="line">    &quot;type&quot;: &quot;business&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意事项：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;definitions&quot;: &#123;</span><br><span class="line">        &quot;address&quot;: &#123;</span><br><span class="line">            &quot;type&quot;: &quot;object&quot;,</span><br><span class="line">            &quot;properties&quot;: &#123;</span><br><span class="line">                &quot;street_address&quot;: &#123; &quot;type&quot;: &quot;string&quot; &#125;,</span><br><span class="line">                &quot;city&quot;: &#123; &quot;type&quot;: &quot;string&quot; &#125;,</span><br><span class="line">                &quot;state&quot;: &#123; &quot;type&quot;: &quot;string&quot; &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;required&quot;: [&quot;street_address&quot;, &quot;city&quot;, &quot;state&quot;]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;allOf&quot;: [</span><br><span class="line">        &#123; </span><br><span class="line">            &quot;$ref&quot;: &quot;#/definitions/address&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;properties&quot;: &#123;</span><br><span class="line">                &quot;type&quot;: &#123; &quot;enum&quot;: [ &quot;residential&quot;, &quot;business&quot; ] &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;additionalProperties&quot;: false</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// invalid</span><br><span class="line">// 因为在一开始，properties不是在根下的，allOf的处理，并没有在一开始将具体项的properties合并起来</span><br><span class="line">// 因此，上面的schema，因为additionalProperties，只能接受 [] 空对象；又因为type enum，导致无论什么都无效</span><br><span class="line">&#123;</span><br><span class="line">    &quot;street_address&quot;: &quot;1600 Pennsylvania Avenue NW&quot;,</span><br><span class="line">    &quot;city&quot;: &quot;Washington&quot;,</span><br><span class="line">    &quot;state&quot;: &quot;DC&quot;,</span><br><span class="line">    &quot;type&quot;: &quot;business&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="anyOf-只要满足其中任意一个"><a href="#anyOf-只要满足其中任意一个" class="headerlink" title="anyOf 只要满足其中任意一个"></a>anyOf <strong>只要</strong>满足其中任意一个</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;anyOf&quot;: [</span><br><span class="line">        &#123; &quot;type&quot;: &quot;string&quot; &#125;,</span><br><span class="line">        &#123; &quot;type&quot;: &quot;number&quot; &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="oneOf-只能满足其中任意一个"><a href="#oneOf-只能满足其中任意一个" class="headerlink" title="oneOf 只能满足其中任意一个"></a>oneOf <strong>只能</strong>满足其中任意一个</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;oneOf&quot;: [</span><br><span class="line">        &#123; &quot;type&quot;: &quot;number&quot;, &quot;multipleOf&quot;: 5 &#125;,</span><br><span class="line">        &#123; &quot;type&quot;: &quot;number&quot;, &quot;multipleOf&quot;: 3 &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// valid  5   3</span><br><span class="line">// invalid 15</span><br><span class="line"></span><br><span class="line">// 抽离公用、重复情况 &quot;type&quot;: &quot;number&quot;</span><br><span class="line">// 仅仅就写个schema都有公用、避免重复的想法在里面，写那么多年JS、写PHP，一点封装的意识都没有，怎么都不会羞愧。</span><br><span class="line">&#123;</span><br><span class="line">    &quot;type&quot;: &quot;number&quot;,</span><br><span class="line">    &quot;oneOf&quot;: [</span><br><span class="line">        &#123; &quot;multipleOf&quot;: 5 &#125;,</span><br><span class="line">        &#123; &quot;multipleOf&quot;: 3 &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="not-不是不是就不是"><a href="#not-不是不是就不是" class="headerlink" title="not 不是不是就不是"></a>not 不是不是就不是</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; &quot;not&quot;: &#123; &quot;type&quot;: &quot;string&quot; &#125; &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="4-The-schema-keyword"><a href="#4-The-schema-keyword" class="headerlink" title="4. The $schema keyword"></a>4. The $schema keyword</h2><p>代表这是一个schema，并带上版本，并且做好在根那一级带上这个属性。</p>
+<ul>
+<li><a href="http://json-schema.org/schema#" target="_blank" rel="noopener">http://json-schema.org/schema#</a><br>JSON Schema written against the current version of the specification.</li>
+<li><a href="http://json-schema.org/hyper-schema#" target="_blank" rel="noopener">http://json-schema.org/hyper-schema#</a><br>JSON Schema hyperschema written against the current version of the specification.</li>
+<li><a href="http://json-schema.org/draft-04/schema#" target="_blank" rel="noopener">http://json-schema.org/draft-04/schema#</a> JSON Schema written against this version.</li>
+<li><a href="http://json-schema.org/draft-04/hyper-schema#" target="_blank" rel="noopener">http://json-schema.org/draft-04/hyper-schema#</a> JSON Schema hyperschema written against this version.</li>
+<li><a href="http://json-schema.org/draft-03/schema#" target="_blank" rel="noopener">http://json-schema.org/draft-03/schema#</a><br>JSON Schema written against JSON Schema, draft v3</li>
+<li><a href="http://json-schema.org/draft-03/hyper-schema#" target="_blank" rel="noopener">http://json-schema.org/draft-03/hyper-schema#</a><br>JSON Schema hyperschema written against JSON Schema, draft v3</li>
+</ul>
+<p>当前貌似都在用 <code>http://json-schema.org/draft-04/schema#</code> 这个版本。</p>
+<h4 id="5-STRUCTURING-A-COMPLEX-SCHEMA"><a href="#5-STRUCTURING-A-COMPLEX-SCHEMA" class="headerlink" title="5. STRUCTURING A COMPLEX SCHEMA"></a>5. STRUCTURING A COMPLEX SCHEMA</h4><blockquote>
+<p>When writing computer programs of even moderate complexity, it’s commonly accepted that “structuring” the program into reusable functions is better than copying-and-pasting duplicate bits of code everywhere they are used. Likewise in JSON Schema, for anything but the most trivial schema, it’s really useful to structure the schema into parts that can be reused in a number of places. —— 《Understanding JSON Schema》CHAPTER 5 STRUCTURING A COMPLEX SCHEMA</p>
+</blockquote>
+<p>简明扼要，写可复用的代码、写可复用的JSON-schema，拒绝重复。</p>
+<h4 id="使用-ref"><a href="#使用-ref" class="headerlink" title="使用 $ref"></a>使用 $ref</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123; &quot;$ref&quot;: &quot;#/definitions/address&quot; &#125;</span><br><span class="line">// # 为根， ／ 为路径</span><br><span class="line">// 1. 到schema root</span><br><span class="line">// 2. 找到&quot;definitions&quot;</span><br><span class="line">// 3. 找到&quot;address&quot;的值，作为schema</span><br><span class="line"></span><br><span class="line">&#123; &quot;$ref&quot;: &quot;definitions.json#/address&quot; &#125;</span><br><span class="line">// 也可以是绝对路径，相对路径</span><br></pre></td></tr></table></figure>
+<h4 id="加上id-属性"><a href="#加上id-属性" class="headerlink" title="加上id 属性"></a>加上id 属性</h4><ul>
+<li>作为这个schema的唯一识别装置</li>
+<li>提供一个基本路径给 $ref 用</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;id&quot;: &quot;http://foo.bar/schemas/address.json&quot;</span><br><span class="line">    // 路径基于 http://foo.bar/schemas/</span><br><span class="line">    // 等同于 http://foo.bar/schemas/person.json</span><br><span class="line">    &quot;$ref&quot;: &quot;person.json&quot; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>将 $ref 与 allOf、anyOf、oneOf 配合使用</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;$schema&quot;: &quot;http://json-schema.org/draft-04/schema#&quot;,</span><br><span class="line">    &quot;definitions&quot;: &#123;</span><br><span class="line">        &quot;address&quot;: &#123;</span><br><span class="line">            &quot;type&quot;: &quot;object&quot;,</span><br><span class="line">            &quot;properties&quot;: &#123;</span><br><span class="line">                &quot;street_address&quot;: &#123; &quot;type&quot;: &quot;string&quot; &#125;,</span><br><span class="line">                &quot;city&quot;: &#123; &quot;type&quot;: &quot;string&quot; &#125;,</span><br><span class="line">                &quot;state&quot;: &#123; &quot;type&quot;: &quot;string&quot; &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            &quot;required&quot;: [&quot;street_address&quot;, &quot;city&quot;, &quot;state&quot;]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;type&quot;: &quot;object&quot;,</span><br><span class="line">    &quot;properties&quot;: &#123;</span><br><span class="line">        &quot;billing_address&quot;: &#123; &quot;$ref&quot;: &quot;#/definitions/address&quot; &#125;,</span><br><span class="line">        &quot;shipping_address&quot;: &#123;</span><br><span class="line">            &quot;allOf&quot;: [</span><br><span class="line">                &#123; &quot;$ref&quot;: &quot;#/definitions/address&quot; &#125;,</span><br><span class="line">                &#123; &quot;properties&quot;:</span><br><span class="line">                    &#123; &quot;type&quot;: &#123; &quot;enum&quot;: [ &quot;residential&quot;, &quot;business&quot; ] &#125; &#125;,</span><br><span class="line">                    &quot;required&quot;: [&quot;type&quot;]</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/工具/" rel="tag">#工具</a>
+          
+            <a href="/tags/API/" rel="tag">#API</a>
+          
+            <a href="/tags/JSON-Schema/" rel="tag">#JSON Schema</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/28/论流程化带来的利与弊/" rel="prev">论流程化带来的利与弊</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/24/时间管理、trello与omniFocus使用对比、异步式工作流/" rel="next">时间管理、trello与omniFocus使用对比、异步式工作流</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/6246962?v=3&s=460" alt="Xaber" itemprop="image">
+          <p class="site-author-name" itemprop="name">Xaber</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-JSON-SCHEMA-REFERENCE"><span class="nav-number">1.</span> <span class="nav-text">1. JSON SCHEMA REFERENCE</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#type-string"><span class="nav-number">1.0.1.</span> <span class="nav-text">type string</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#type-number"><span class="nav-number">1.0.2.</span> <span class="nav-text">type number</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#type-object-——-key-必须是string"><span class="nav-number">1.0.3.</span> <span class="nav-text">type object —— key 必须是string</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#type-array"><span class="nav-number">1.0.4.</span> <span class="nav-text">type array</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#type-boolean-——-只要配置一个，值只能是-boolean值-true-false"><span class="nav-number">1.0.5.</span> <span class="nav-text">type boolean —— 只要配置一个，值只能是 boolean值 true false</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#type-null-——-只要配置一个，值只能是-null；一般用于代表属性"><span class="nav-number">1.0.6.</span> <span class="nav-text">type null —— 只要配置一个，值只能是 null；一般用于代表属性</span></a></li></ol></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Generic-keywords"><span class="nav-number">2.</span> <span class="nav-text">2. Generic keywords</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Metadata"><span class="nav-number">2.0.1.</span> <span class="nav-text">Metadata</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Enumerated-values"><span class="nav-number">2.0.2.</span> <span class="nav-text">Enumerated values</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Combining-schemas"><span class="nav-number">3.</span> <span class="nav-text">3. Combining schemas</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#allOf-全部满足"><span class="nav-number">3.0.1.</span> <span class="nav-text">allOf 全部满足</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#anyOf-只要满足其中任意一个"><span class="nav-number">3.0.2.</span> <span class="nav-text">anyOf 只要满足其中任意一个</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#oneOf-只能满足其中任意一个"><span class="nav-number">3.0.3.</span> <span class="nav-text">oneOf 只能满足其中任意一个</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#not-不是不是就不是"><span class="nav-number">3.0.4.</span> <span class="nav-text">not 不是不是就不是</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-The-schema-keyword"><span class="nav-number">4.</span> <span class="nav-text">4. The $schema keyword</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-STRUCTURING-A-COMPLEX-SCHEMA"><span class="nav-number">4.0.1.</span> <span class="nav-text">5. STRUCTURING A COMPLEX SCHEMA</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用-ref"><span class="nav-number">4.0.2.</span> <span class="nav-text">使用 $ref</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#加上id-属性"><span class="nav-number">4.0.3.</span> <span class="nav-text">加上id 属性</span></a></li></ol></li></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xaber</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xaber';
+      var disqus_identifier = '2015/10/20/JSON-schema-使用教程文档/';
+      var disqus_title = 'JSON Schema 使用教程文档';
+      var disqus_url = 'http://xaber.co/2015/10/20/JSON-schema-使用教程文档/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+
+  </script>
+
+  
+  <script src="/js/fingerprint2.js"></script>
+<script>
+    $(function () {
+        if (!window.zhuge || !window.Fingerprint2) {
+            return;
+        }
+
+        var tb = function (num) {
+            return num < 10 ? ('0' + num) : num;
+        };
+
+        var getFormatTime = function () {
+            var a = new Date();
+            return a.getFullYear() + '-' + 
+                tb(a.getMonth() + 1) + '-' + 
+                tb(a.getDate()) + ' ' +
+                tb(a.getHours()) + ':' +
+                tb(a.getMinutes()) + ':' +
+                tb(a.getSeconds());
+        };
+
+        new Fingerprint2().get(function (result, components) {
+            //a hash, representing your device fingerprint
+            // console.log(result); 
+
+            // an array of FP components
+            // console.log(components);
+
+            // 已设备指纹作为一个用户记录
+            zhuge.identify(result, {});
+
+            zhuge.track('页面展示', {
+                'time': getFormatTime(),
+                'referrer_url': document.referrer,
+                'url': window.location.href
+            });
+        });
+    });
+</script>
+</body>
+</html>

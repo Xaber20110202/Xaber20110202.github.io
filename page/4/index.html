@@ -1,0 +1,1401 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.8.0">
+  
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1">
+
+
+
+
+  <meta name="keywords" content="Hexo,next">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Xaber's Blog" type="application/atom+xml">
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1">
+
+
+<meta name="keywords" content="FrontEnd Developer 前端 开发 工程师">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Xaber&#39;s Blog">
+<meta property="og:url" content="http://xaber.co/page/4/index.html">
+<meta property="og:site_name" content="Xaber&#39;s Blog">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Xaber&#39;s Blog">
+
+
+<script>
+(function () {
+    window.zhuge = window.zhuge || [];
+    window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
+    window.zhuge.factory = function(b) {
+        return function() {
+            var a = Array.prototype.slice.call(arguments);
+            a.unshift(b);
+            window.zhuge.push(a);
+            return window.zhuge
+        }
+    };
+    for (var i = 0; i < window.zhuge.methods.length; i++) {
+        var key = window.zhuge.methods[i];
+        window.zhuge[key] = window.zhuge.factory(key)
+    }
+    window.zhuge.load = function(b, x) {
+        if (!document.getElementById("zhuge-js")) {
+            var a = document.createElement("script");
+            var verDate = new Date();
+            var verStr = verDate.getFullYear().toString()
+                + verDate.getMonth().toString() + verDate.getDate().toString();
+
+            a.type = "text/javascript";
+            a.id = "zhuge-js";
+            a.async = !0;
+            a.src = (location.protocol == 'http:' ? "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" : 'https://zgsdk.zhugeio.com/zhuge-lastest.min.js?v=') + verStr;
+            var c = document.getElementsByTagName("script")[0];
+            c.parentNode.insertBefore(a, c);
+            window.zhuge._init(b, x)
+        }
+    };
+    
+    // 开发模式调试
+    
+    window.zhuge.load('49fc6625ddcc4004aa98d05e876a70e0');
+    
+})();
+</script>
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide'
+  };
+</script>
+
+  <title> Xaber's Blog </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-47125735-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+  <div class="container one-column 
+   page-home 
+">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Xaber's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br>
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br>
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br>
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br>
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br>
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+  <section id="posts" class="posts-expand">
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/04/22/webkit内核浏览器在当前页面刷新时scrollTo失效/" itemprop="url">
+                webkit内核浏览器在当前页面刷新时scrollTo失效
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-04-22T00:51:54+08:00" content="2015-04-22">
+            2015-04-22
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                  <span itemprop="name">JavaScript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/04/22/webkit内核浏览器在当前页面刷新时scrollTo失效/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/22/webkit内核浏览器在当前页面刷新时scrollTo失效/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><a id="more"></a>
+<p>实际上这是去年7月份时碰到的问题，但是那会儿只是单纯认为这是浏览器纪录了刷新前的位置，并自发做了回到原来位置的处理导致的失效，并没有刻意去处理，而只是简单做了如下操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$(window).on(&apos;load&apos;, function () &#123;</span><br><span class="line">    setTimeout(function () &#123;</span><br><span class="line">        $(&apos;html,body&apos;).animate(&#123;</span><br><span class="line">            &apos;scrollTop&apos; : top</span><br><span class="line">        &#125;, 0);</span><br><span class="line">    &#125;, 200);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上周时，因周年庆的活动，偶然间触动了这部分代码，偶然间触发了这个问题。于是今天花了几个小时做了算是精准的定位。</p>
+<p>以下代码直接运行在html中，具体可以下载这个html代码做修改和查看<a href="https://github.com/Xaber20110202/Container/blob/master/JavaScript/2015.04.21-webkit%20scrollTo%E5%9C%A8%E9%A1%B5%E9%9D%A2loaded%E5%AE%8C%E6%88%90%E4%B9%8B%E5%89%8D%E5%A4%B1%E6%95%88.html" target="_blank" rel="noopener">这个页面</a>。</p>
+<p>测试：chrome 41.0.2272.104 (64-bit) / ff 37.0.1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">log(&apos;test 1 for window.scrollTo&apos;);</span><br><span class="line">window.scrollTo(0, 2000);</span><br><span class="line">log(&apos;now document.body.scrollTop is : &apos; + document.body.scrollTop); // chrome: 2000       FF: 0</span><br><span class="line">log(&apos;now document.documentElement.scrollTop is : &apos; + document.documentElement.scrollTop); // chrome: 0   ff: 2000</span><br></pre></td></tr></table></figure>
+<p>…… 等等等等，总共做了六个测试，包括<code>window.scorllTo</code>， <code>window.scroll</code>， <code>window.scrollBy</code>， <code>window.onload then scrollTo</code>， <code>window.onload then setTimeout then scrollTo</code>。最后log的结果都是类似的，而实际效果就是，chrome在刷新的情况下，怎么都到不了设定的2000px的位置，而firefox可以。重新打开倒是正常。</p>
+<p>而实际业务逻辑中做的减法调试也耗费了不少的时间。包括以这样的代码找到所有的scroll事件依依去除。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var lookForBindHandler = function (dom, eventType) &#123;</span><br><span class="line">    $.each( $._data(dom).events[eventType], function (key, handle) &#123;</span><br><span class="line">        console.log(handle.handler.toString());</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;; </span><br><span class="line">lookForBindHandler(window, &apos;scroll&apos;)</span><br></pre></td></tr></table></figure>
+<p>到依次去除业务代码、依赖到的库文件lazyload、 infinitescroll、jQuery 到最后直接用原生的 window.scrollTo（jQuey内部用的应该也是window.scrollTo无误）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if ( win ) &#123;</span><br><span class="line">    win.scrollTo(</span><br><span class="line">        top ? val : jQuery( win ).scrollLeft(),</span><br><span class="line">        top ? val : jQuery( win ).scrollTop()</span><br><span class="line">    );</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    elem[ method ] = val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另见stackoverflow，<a href="http://stackoverflow.com/questions/15260184/strange-beaviour-of-chrome-at-window-scrollto" target="_blank" rel="noopener">链接A</a>、<a href="http://stackoverflow.com/questions/15691569/javascript-issue-with-scrollto-in-chrome" target="_blank" rel="noopener">链接B</a>，定位为Chrome 刷新当前页面的情况。</p>
+<p>后做继续跟进，发现Safari、Opera(偶尔) 也有此现象，而IE、FF都是正常，那推测为Webkit的通病。</p>
+<p>对应的UA为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Chrome 	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36</span><br><span class="line">Opera	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36 OPR/27.0.1689.69</span><br><span class="line">Safari	 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/600.5.17 (KHTML, like Gecko) Version/8.0.5 Safari/600.5.17</span><br><span class="line">FireFox	 Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:37.0) Gecko/20100101 Firefox/37.0</span><br></pre></td></tr></table></figure>
+<p>因此，只需做webKit和是否刷新页面的判断，就可以提供比原来多200ms以上的用户反馈和体验。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">if (window.navigator.userAgent.search(/AppleWebKit\/(\d+\.)+(\d+)? \(KHTML\, like Gecko\)/) !== -1) &#123;</span><br><span class="line">    if (window.name) &#123; // 默认如果被设置过 就采用延时</span><br><span class="line">        $(window).on(&apos;load&apos;, function () &#123;</span><br><span class="line">            setTimeout(next, 200);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        window.name = &apos;refresh_frag&apos;;</span><br><span class="line">        next();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    next();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://www.cainiao8.com/web/js_blueidea/12_detect_if_refreshed.html" target="_blank" rel="noopener">网页是否当前页面刷新的判断 － 根据window.name</a></p>
+<p>其实我们能做的可以做的还有很多…<br>The End.<br>2015.04.22 01:15</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/01/20/project-thinking-part-3/" itemprop="url">
+                project thinking part.3
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-01-20T00:01:44+08:00" content="2015-01-20">
+            2015-01-20
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/总结系列/" itemprop="url" rel="index">
+                  <span itemprop="name">总结系列</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/01/20/project-thinking-part-3/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/01/20/project-thinking-part-3/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><a id="more"></a>
+<p>做事，个人感觉其实是发现、判断、方案、评估、执行的过程。以某一个视角上来说。</p>
+<p>####发现<br>嗯，捡到一个问题。</p>
+<p>####判断<br>判断这个问题的发生，其原因以及带来的弊端、后果，以及在此时此刻解决这个问题是否刻不容缓，花费的时间精力人力物力投入是否值得是否必要。</p>
+<p>####方案<br>在做完这个判断之后，再考虑方案。最好是几个方案而不是一个方案。</p>
+<p>####评估<br>评估的流程乃至关重要。评估建立在判断和方案之后，也就意味着，这个问题的解决，在这个时间点上投入这些人力物力势在必行。评估的作用在于，减少这个人力物力的消耗，尽可能地增强灵活性、可维护性、可扩展性。以免解决问题的过程，引发一系列其它问题。</p>
+<p>####执行<br>在已经确定在这个时间点上解决这个问题，评估并综合了方案的利弊，相应地提供了合理的人力物力的前提下，那做，其实已经细化到完成结果的阶段了。</p>
+<p>结果讲究的是过程，想好自己要做什么，为什么做，在这个点做合不合适，怎样做，怎样做更好，那其实事情已经做好了。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/01/04/2014/" itemprop="url">
+                2014
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-01-04T00:38:13+08:00" content="2015-01-04">
+            2015-01-04
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/总结系列/" itemprop="url" rel="index">
+                  <span itemprop="name">总结系列</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/01/04/2014/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/01/04/2014/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><a id="more"></a>
+<p>####挥霍生命懂得时间可贵<br>大学那几年都在做些什么？为了一些莫名其妙的理由、乱七八糟的事情，逃课、旷课、拿无学位警示，游戏、唱歌、玩。不知不觉，几年过去了。原定是，进大学，先玩两年再说。就那么整着整着，到反应过来，再用一年时间弥补掉挂掉的课，已经大四了，甚至不知道花掉的那几年，到底玩了什么。</p>
+<p>实习过，才知道要找工作。凭着兴趣学日语，又没法赚快钱。到去年十一，无聊在家看灌篮高手，到樱木说，这一次，是真的喜欢。</p>
+<p>想了下，哦，樱木花道一开始也不喜欢打篮球哦。于是，从一个变量是什么鬼都不知道的程度，伴随着一个学期、十几本书、两百多页笔记，于年后找到<strong>第一份</strong>正式的前端工作。这里，我要感谢我的朋友——廖子，是他开始学，给了我可以去往的方向，也感谢井上，让我突然就下了这样的决定。</p>
+<p>####一场说走就走的旅行<br>原定今年5月前弄好毕设，请好假，算上五一假期，去一趟西藏。结果四月份，朋友受不住，辞职了，想要立马去。刚买了kindle的我，没钱，问家里拿钱，算上正好发的实习工资，直接奔出去了。<strong>第一次</strong>出省，<strong>第一次</strong>旅行，<strong>第一次</strong>冒险。什么计划都没有，到西安，逛了大小地方，看了兵马俑。西安到西藏没票，37小时几乎没睡，补了27个小时的站票。到凌晨在格尔木之后看到窗外的雪山，不虚此行。后又临时决定辗转下川藏、进滇藏，到云南，到丽江。遇上三个非常好的朋友。</p>
+<p>####学会抉择</p>
+<ul>
+<li>在西安到西宁西的火车上，有个算是同行的女孩子。因为她一开始的计算失误，认为西宁西到西藏只要三个小时［漏看了日期，少了一天］，想要中途下车去青海湖。对于我朋友来说，他辞职了，他无所谓。他的选择是，我去哪，他去哪。于我来说，我没有时间，我想要去西藏，虽然不知道具体去哪些地方，但是摆在那里的，想要到达的，就是西藏。于是闹了一点别扭，之后又反反复复，到周围的人跟我说着，先想好自己要干什么，想要怎么样，先想好再下决定，本来就是出来玩的，如果玩得不开心，那都没用了。到火车停了，提着箱子要不要下车，到下决定，到和那位女生握了个手，到补票。感觉人生就是在一些情况下，就是几秒钟的时间，你做出来的选择。</li>
+<li>再到前段时间工作，放弃一个机会。因道义，因“欲望 － 实力 ＝ 痛苦程度 (via 莫迪亚诺) ”。</li>
+</ul>
+<p>####学着冷静</p>
+<ul>
+<li>在丽江的一晚，酒吧喝了点酒出来，想不通一些事情、心情沉闷、眼睛花了，几个痞子围着同行的女性朋友，以为怎样怎样就上去了。然后就被围殴到耳朵缝了几针。</li>
+<li>平时的工作，一些临时发生的bug，紧急待处理的问题，还需要平静下心态。</li>
+</ul>
+<p>####学着谦卑<br>我和那个朋友都一致认为，我们这样的年纪、在毕业的这半年，所到达的程度与其他同龄阶层［同学、朋友］相比已经是比较不错了。直到上次一个两年未见的朋友从衢州过来，带来一个91年的总裁。诶？怎么朋友的朋友里面还能产出这样一位人物？［大学四年，前两年摆过地摊、做过导游、干过销售，大一大二赚了20万大三就跑出去自己创业开公司了］。直到上次一个同学当兵回来，偶然说起之前别班的一位在腾讯，年薪20W。其实，我们不易，应当自豪却不应自傲。</p>
+<p>####为什么要努力工作</p>
+<ul>
+<li>援引知乎：<a href="http://www.zhihu.com/question/20398616/answer/31109052" target="_blank" rel="noopener">因为想去体验一个更大的世界！</a></li>
+<li>因为想要到达某个地方、到达某个程度、到达某人的身边！</li>
+<li>挥霍生命懂得时间可贵。</li>
+<li>全世界挡不住认真的人。</li>
+<li>我是一个相对来说还算比较认真的人。</li>
+</ul>
+<p>####感情</p>
+<ul>
+<li>学会放弃，放弃一段持续七年的模棱两可的单相思（果然距离［空间上、沟通上］到底还是有点越来越远）。</li>
+<li>封印。封印一个手表。</li>
+<li>遇见。遇见一个可能想要去呵护一生的人，在一个还算恰当的时机。</li>
+</ul>
+<p>####其他</p>
+<ul>
+<li><strong>第一次</strong>坐飞机，<strong>第一次</strong>出国［公司周年泰国游，其实我选择去的是三亚］。</li>
+<li>离去一些人。外婆过世，一个亲戚的孩子出车祸丧生。</li>
+<li>离别一些人。旅行中碰到的那三位好朋友，在丽江唱着歌送行；公司的一些朋友辞职，去了其他地方。</li>
+</ul>
+<p>2014这一年，尽管还是有很多想做的事情没做想看的书没看。但是真的谢谢，谢谢一些人，感激一些事，给了我很大的感触和启发，让我学到不少东西，使我有所成长。<br>2015这一年，我需要做哪些事，才配得上2013、2014这两年已经花费、付出过的时间，才对得起那些对我有所期待的人、自己。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/12/15/project-thinking-part-2/" itemprop="url">
+                project thinking part.2
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-12-15T23:51:08+08:00" content="2014-12-15">
+            2014-12-15
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/总结系列/" itemprop="url" rel="index">
+                  <span itemprop="name">总结系列</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/12/15/project-thinking-part-2/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/12/15/project-thinking-part-2/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><a id="more"></a>
+<ul>
+<li><p>方案是建立在合理的时间点、合理的资源分配前提下的，什么时间出什么方案。</p>
+</li>
+<li><p>方案的评估应该考虑的不是人员的情绪，而是方案的可行性、可操作性、复杂度上。</p>
+</li>
+<li><p>写代码不只是为了证明自己的能力，而更应该站在用户和产品化的角度来定方案、推翻不合理需求，好处：<br>   避免太多不必要的二次修改；<br>   错误的时间投入。</p>
+</li>
+<li><p>代码上线前，一定经过自身严格测试再上线，以免导致一些莫名其妙的问题，以致需要投入另外的时间来修复。<br>  翻译：这个需求在6个小时内搞定，时间比较充裕。你用3个小时完成了这个需求。却带来了隐患问题，以致后期需要占用其他事情的时间，花4个或者5个小时的时间来定位和修复带来的问题，得不偿失。</p>
+</li>
+<li><p>针对一些临时需要处理和解决的问题，摆正心态，冷静思考和面对，不应该急他人所急跟着瞎着急。<br>  翻译：领导要你临时处理一个问题，希望你能尽快解决掉这个问题顺便也考验你应对紧急情况的能力。你慌忙之中匆匆改动了一些东西，过了时间，发现问题没解决，orz。<br>  自我疗养法：代码出了问题，你只是一个程序员，这部分代码还不是你写的，关你屁事。上面要你修复，是给你表现的机会，而不是一个重担。就算原因在于你，发生都发生了。急一分钟，问题持续一分钟，于事无补。</p>
+</li>
+<li><p>针对当前代码和架构所产生的系列问题以及产品的更新迭代的平衡点。<br>  假设：现在有20个人PC前端团队，在日常活动交由产品化TMS搭建的前提下，开个项目拉10个前端出去重写重构代码，10个人处理业务和产品需求，好，没问题。<br>  现状：现在只有5个人，业务需求堆积，活动TMS方案未出每月轮五六个活动的情况下，每次重复几遍各种各样已知的系列问题，何苦何苦。</p>
+</li>
+<li><p>结构决定架构，数据结构决定算法。</p>
+</li>
+<li><p>前期的技术选型以及目标确立，需要谨慎调研。选型的失败或者定位的错误，大部分情况会导致后期花十倍的人力物力去重构、去订正。</p>
+</li>
+<li><p>聪明是你的优势，不应该成为你的短板。</p>
+</li>
+<li><p>少说话多读书，为人谦逊低调，避免口舌是非。<br>  在所钻的领域内专业博学才能侃侃而谈;<br>  适当的场合和时间表达自己的看法、想法和立场。</p>
+</li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/11/19/project-thinking/" itemprop="url">
+                project thinking
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-11-19T23:56:59+08:00" content="2014-11-19">
+            2014-11-19
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/总结系列/" itemprop="url" rel="index">
+                  <span itemprop="name">总结系列</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/11/19/project-thinking/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/11/19/project-thinking/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h3 id="A-选型"><a href="#A-选型" class="headerlink" title="A. 选型"></a>A. 选型</h3><ul>
+<li>css ui 库</li>
+<li>css 预处理器 less || sass || stylus</li>
+<li>js 工具库</li>
+<li>是否需要mvc? -&gt; (underscore &amp; backbone) || angularJS || emberJS [需根据开发团队熟练程度以及业务需求，而不是追求新的模式]</li>
+<li>模块化 CMD seaJS || AMD requireJS</li>
+</ul>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/11/19/project-thinking/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/10/26/d2-2014/" itemprop="url">
+                D2 2014
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-10-26T22:34:01+08:00" content="2014-10-26">
+            2014-10-26
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/总结系列/" itemprop="url" rel="index">
+                  <span itemprop="name">总结系列</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/10/26/d2-2014/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/10/26/d2-2014/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>不知道前几届D2状况如何，这届给我的感觉，其实都是演讲嘉宾在介绍自己公司的开发模式开发结构和开发架构。很多其实大同小异，印象深刻的仅两位：腾讯云的林楠以及蘑菇街的贝勒。
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/10/26/d2-2014/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </p></div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/08/24/underscorejs源码/" itemprop="url">
+                Underscore-1.6.0.js源码
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-08-24T22:50:18+08:00" content="2014-08-24">
+            2014-08-24
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                  <span itemprop="name">JavaScript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/08/24/underscorejs源码/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/08/24/underscorejs源码/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>underscore.js的代码十分简洁，一千多行的代码，从头到尾看下来，很少有特别吃力的地方。<br>当然，也肯定遇到一些问题以及一些在自己看来还不能驾驭的点，这方面，代码注释里加上了@mark或@problem。<br>而想要看这个库，一方面是工作中有用到，另一方面则是，JQuery一万多行还没下定决心去看。<br>所以打算先拿这个来练练眼，顺便练练打字速度(敲了1000多行注释呢！)。<br>这一个库，看了15天，期间还有几天是就看了几行的。<br>所以，可以下这样一个定论就是，如果是放在空闲的日子，最多一个星期可以看完。<br>但是，又因为林林总总的原因，时间跨度有点大，乃至时隔50天左右才正式看完，也不得不说，时间都去哪了。</p>
+<p>官网文档 —— <a href="http://underscorejs.org/" target="_blank" rel="noopener">Underscore.js</a><br>官网英文注释炫彩版 —— <a href="http://underscorejs.org/docs/underscore.html" target="_blank" rel="noopener">Underscore.js</a><br>我的中文注释黑白版 —— <a href="/project/items/2014.08.24.Underscore-1.6.0.js" target="_blank">Underscore.js</a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/07/13/前端 - 工具/" itemprop="url">
+                前端 - 工具
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-07-13T20:50:45+08:00" content="2014-07-13">
+            2014-07-13
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/工具系列/" itemprop="url" rel="index">
+                  <span itemprop="name">工具系列</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/07/13/前端 - 工具/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/07/13/前端 - 工具/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>此文介绍前端开发的几个实用工具。<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/07/13/前端 - 工具/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </p></div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/07/08/变量声明提升/" itemprop="url">
+                变量声明提升
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-07-08T22:14:39+08:00" content="2014-07-08">
+            2014-07-08
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                  <span itemprop="name">JavaScript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/07/08/变量声明提升/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/07/08/变量声明提升/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>今天偶然加的一个群，有人问了个问题，心想大概也是拿来玩玩的。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/07/08/变量声明提升/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/06/29/Dean Edwards Base.js解析/" itemprop="url">
+                Dean Edwards Base.js解析
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-06-29T00:18:18+08:00" content="2014-06-29">
+            2014-06-29
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                  <span itemprop="name">JavaScript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/06/29/Dean Edwards Base.js解析/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/06/29/Dean Edwards Base.js解析/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><p>第一次知道Dean Edwards，是在John Resig的《Pro Javascript Techniques》书中。<br>书中介绍到这样一个Base.js，也正好，公司实现继承的模式和它几近类似。<br>书中也介绍到Dean Edwards实现事件绑定的方式，而正巧某一天，看到JQuery的代码中借鉴了这样一个模式，并标注了名字。<br>所以打算对这个底层面向对象继承的小型类库做一个解析。<br>花了不少的时间，理解这100行不到的代码。受益匪浅。<br>说这么多，感觉都没到什么重点上。<br>其实也就是，站在巨人的肩上，看得更远。</p>
+<p>原文介绍 —— <a href="http://dean.edwards.name/weblog/2006/03/base/" target="_blank" rel="noopener">Base.js</a><br>我的注释版本 —— <a href="/project/items/2014.06.28.Base.js" target="_blank">Base.js</a></p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/5/">&raquo;</a>
+  </nav>
+
+ </div>
+
+        
+
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/6246962?v=3&s=460" alt="Xaber" itemprop="image">
+          <p class="site-author-name" itemprop="name">Xaber</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xaber</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xaber';
+      var disqus_identifier = 'page/4/index.html';
+      var disqus_title = '';
+      var disqus_url = '';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+
+  </script>
+
+  
+  <script src="/js/fingerprint2.js"></script>
+<script>
+    $(function () {
+        if (!window.zhuge || !window.Fingerprint2) {
+            return;
+        }
+
+        var tb = function (num) {
+            return num < 10 ? ('0' + num) : num;
+        };
+
+        var getFormatTime = function () {
+            var a = new Date();
+            return a.getFullYear() + '-' + 
+                tb(a.getMonth() + 1) + '-' + 
+                tb(a.getDate()) + ' ' +
+                tb(a.getHours()) + ':' +
+                tb(a.getMinutes()) + ':' +
+                tb(a.getSeconds());
+        };
+
+        new Fingerprint2().get(function (result, components) {
+            //a hash, representing your device fingerprint
+            // console.log(result); 
+
+            // an array of FP components
+            // console.log(components);
+
+            // 已设备指纹作为一个用户记录
+            zhuge.identify(result, {});
+
+            zhuge.track('页面展示', {
+                'time': getFormatTime(),
+                'referrer_url': document.referrer,
+                'url': window.location.href
+            });
+        });
+    });
+</script>
+</body>
+</html>

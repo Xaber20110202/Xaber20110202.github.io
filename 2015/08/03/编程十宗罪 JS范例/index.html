@@ -1,0 +1,793 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.8.0">
+  
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1">
+
+
+
+
+  <meta name="keywords" content="Hexo,next">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Xaber's Blog" type="application/atom+xml">
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1">
+
+
+<meta name="description" content="工作生活中碰到了太多不友好的代码和行为，实在是使人不能承受之重。有些点真的非常简单，大部分人其实也都知道，但是在工作中写代码就是那么写。">
+<meta name="keywords" content="FrontEnd Developer 前端 开发 工程师">
+<meta property="og:type" content="article">
+<meta property="og:title" content="编程 JS范例">
+<meta property="og:url" content="http://xaber.co/2015/08/03/编程十宗罪 JS范例/index.html">
+<meta property="og:site_name" content="Xaber&#39;s Blog">
+<meta property="og:description" content="工作生活中碰到了太多不友好的代码和行为，实在是使人不能承受之重。有些点真的非常简单，大部分人其实也都知道，但是在工作中写代码就是那么写。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2015-09-27T04:45:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="编程 JS范例">
+<meta name="twitter:description" content="工作生活中碰到了太多不友好的代码和行为，实在是使人不能承受之重。有些点真的非常简单，大部分人其实也都知道，但是在工作中写代码就是那么写。">
+
+
+<script>
+(function () {
+    window.zhuge = window.zhuge || [];
+    window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
+    window.zhuge.factory = function(b) {
+        return function() {
+            var a = Array.prototype.slice.call(arguments);
+            a.unshift(b);
+            window.zhuge.push(a);
+            return window.zhuge
+        }
+    };
+    for (var i = 0; i < window.zhuge.methods.length; i++) {
+        var key = window.zhuge.methods[i];
+        window.zhuge[key] = window.zhuge.factory(key)
+    }
+    window.zhuge.load = function(b, x) {
+        if (!document.getElementById("zhuge-js")) {
+            var a = document.createElement("script");
+            var verDate = new Date();
+            var verStr = verDate.getFullYear().toString()
+                + verDate.getMonth().toString() + verDate.getDate().toString();
+
+            a.type = "text/javascript";
+            a.id = "zhuge-js";
+            a.async = !0;
+            a.src = (location.protocol == 'http:' ? "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" : 'https://zgsdk.zhugeio.com/zhuge-lastest.min.js?v=') + verStr;
+            var c = document.getElementsByTagName("script")[0];
+            c.parentNode.insertBefore(a, c);
+            window.zhuge._init(b, x)
+        }
+    };
+    
+    // 开发模式调试
+    
+    window.zhuge.load('49fc6625ddcc4004aa98d05e876a70e0');
+    
+})();
+</script>
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide'
+  };
+</script>
+
+  <title> 编程 JS范例 | Xaber's Blog </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-47125735-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Xaber's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br>
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br>
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br>
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br>
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br>
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              编程 JS范例
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-08-03T22:56:47+08:00" content="2015-08-03">
+            2015-08-03
+          </time>
+        </span>
+
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/08/03/编程十宗罪 JS范例/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/08/03/编程十宗罪 JS范例/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>工作生活中碰到了太多不友好的代码和行为，实在是使人不能承受之重。有些点真的非常简单，大部分人其实也都知道，但是在工作中写代码就是那么写。</p>
+<a id="more"></a>
+<p>个人认为，代码优化的过程，是减少操作、封装操作的过程。</p>
+<h4 id="一、减少操作（基于性能）"><a href="#一、减少操作（基于性能）" class="headerlink" title="一、减少操作（基于性能）"></a>一、减少操作（基于性能）</h4><p>将大量操作，减少为少量操作，将少量操作，变成1次或0次操作。如何减少操作？</p>
+<ul>
+<li><p>属性访问的中间变量保存</p>
+</li>
+<li><p>计算结果的缓存</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 例1:</span><br><span class="line">a.b.c.d.e.f = a.b.c.d.e.f + 1;</span><br><span class="line">a.b.c.d.e.f = a.b.c.d.e.f * 2;</span><br><span class="line"></span><br><span class="line">// 优化后==&gt;</span><br><span class="line">var temp = a.b.c.d.e;</span><br><span class="line">temp.f = (temp.f + 1) * 2</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>JS中的属性搜索，是这样的，其会查找当前对象的属性、如果没有再查找其__proto__（一个内部指针，指向的是实例创建时构造函数的prototype对象）上的属性。<br>即使全部是当前对象的属性，例1未优化前，四次a.b.c.d.e.f，总共访问了20次属性。优化后，7次。其中，将+1操作的结果直接交给了下一步的操作，因为中间这个值，没有作用。</p>
+<ul>
+<li><p>减少dom操作</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 例2:</span><br><span class="line">$btn.on(&apos;click&apos;, function () &#123;</span><br><span class="line">    $(&apos;#J_etc&apos;).trigger(&apos;click&apos;);</span><br><span class="line">&#125;);</span><br><span class="line">// 优化后==&gt;</span><br><span class="line">var $etc = $(&apos;#J_etc&apos;);</span><br><span class="line">$btn.on(&apos;click&apos;, function () &#123;</span><br><span class="line">    $etc.trigger(&apos;click&apos;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>谁都知道JS中性能的瓶颈在于dom api的访问。例如要把循环append的操作，通过合并完以后一次性append进去。例如reactJS虚拟DOM的处理，主要还是为了将多次dom操作合并为一次，避免那么一群新人把老人积累下来的代码搞乱。以上的例子还只是click事件，还不会有太大影响。但是如果把这个事件放在手机端，再把事件换成<strong>scroll</strong>事件呢。现实工作中，还真有碰到这么写的。</p>
+<ul>
+<li><p>减少无用的变量命名</p>
+</li>
+<li><p>附：注意内存泄漏与垃圾回收</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 例3:</span><br><span class="line">var $btn = $(&apos;#btn&apos;);</span><br><span class="line">$btn.on(&apos;click&apos;, function () &#123;</span><br><span class="line">    $(this).parent().remove();</span><br><span class="line">&#125;);</span><br><span class="line">$btn.on(&apos;mouseout&apos;, b);</span><br><span class="line">$btn.on(&apos;mouseover&apos;, c);</span><br><span class="line">// 优化后==&gt;</span><br><span class="line">$(&apos;#btn&apos;).on(&apos;click&apos;, function () &#123;</span><br><span class="line">    $(this).parent().remove();</span><br><span class="line">&#125;).on(&apos;mouseout&apos;, b).on(&apos;mouseover&apos;, c);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>jQuery、underscore等库为什么都提供了链式的调用，主要的作用也是为了减少中间变量的声明。因为这中间的变量只需要用到一次，而其会存在内存中。虽然也有垃圾回收机制，也并不是任何场景垃圾回收都适用。<br>如例子中，$btn的父元素移除后，但是$btn在内存中的引用还在，导致$btn元素，实际并没有被移除。其需要显式地设置 <code>$btn = null;</code> 来触发垃圾回收。</p>
+<p>二、封装操作（基于可维护性）<br>其实也是减少操作的另一种表现，减少后续维护的操作</p>
+<ul>
+<li><p>减少复制粘贴、代码重复率</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 例4: 需要将一个对象的一些属性值处理成number类型</span><br><span class="line">item.cid = Number(item.cid);</span><br><span class="line">item.pid = Number(item.pid);</span><br><span class="line">// ...</span><br><span class="line"></span><br><span class="line">// 优化后：</span><br><span class="line">_.each([&apos;cid&apos;, &apos;event_id&apos;, &apos;product_id&apos;, &apos;gmt_create&apos;, &apos;gmt_modified&apos;, &apos;id&apos;, &apos;iid&apos;,</span><br><span class="line">    &apos;num&apos;, &apos;origin_price&apos;, &apos;price&apos;, &apos;discount&apos;, &apos;sku_id&apos;, &apos;sku_num_left&apos;, &apos;uid&apos;</span><br><span class="line">], function (prop) &#123;</span><br><span class="line">    item[prop] = Number(item[prop]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>优化前要写14行代码，并且是几乎一样的。改动一个属性，需要改两次；加一个属性，需要加一行代码。</p>
+<ul>
+<li><p>减少外部 ／ 全局变量 ／ 全局属性</p>
+</li>
+<li><p>数据处理与渲染分离，松散耦合</p>
+</li>
+<li><p>减少各个函数 ／ 模块间的依赖</p>
+</li>
+<li><p>函数式编程、思想，减少函数副作用</p>
+</li>
+</ul>
+<blockquote>
+<p>在计算机科学中，函数副作用指当调用函数时，除了返回函数值之外，还对主调用函数产生附加的影响。例如修改全局变量（函数外的变量）或修改参数。</p>
+</blockquote>
+<blockquote>
+<p>函数副作用会给程序设计带来不必要的麻烦，给程序带来十分难以查找的错误，并且降低程序的可读性。严格的函数式语言要求函数必须无副作用。</p>
+</blockquote>
+<pre><code><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line">// 例5：以上四项的例子</span><br><span class="line">var page = &#123;</span><br><span class="line">    resp: null,</span><br><span class="line">    init: function () &#123;</span><br><span class="line">        this.fetch();</span><br><span class="line">    &#125;,</span><br><span class="line">    fetch: function () &#123;</span><br><span class="line">        var self = this;</span><br><span class="line"></span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            url: &apos;xxx&apos;,</span><br><span class="line">            success: function (resp) &#123;</span><br><span class="line">                self.resp = resp;</span><br><span class="line">                self.render();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    render: function () &#123;</span><br><span class="line">        this.renderItems();</span><br><span class="line">    &#125;,</span><br><span class="line">    renderItems: function () &#123;</span><br><span class="line">        var resp = this.resp;</span><br><span class="line">        var items = [];</span><br><span class="line">        // 通过resp处理出items</span><br><span class="line">        // ......</span><br><span class="line">        var tpl = $(&apos;#item-tpl&apos;).html();</span><br><span class="line">        var html = lib.template(tpl, &#123;</span><br><span class="line">            items: items</span><br><span class="line">        &#125;);</span><br><span class="line">        $(&apos;.J_Items&apos;).html(html);</span><br><span class="line">        this.handle();</span><br><span class="line">    &#125;,</span><br><span class="line">    handle: function () &#123;</span><br><span class="line">        // 事件处理</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 优化后：</span><br><span class="line">(function () &#123;</span><br><span class="line">    var fetch = function (callback) &#123;</span><br><span class="line">        $.ajax(&#123;</span><br><span class="line">            url: &apos;xxx&apos;,</span><br><span class="line">            success: function (resp) &#123;</span><br><span class="line">                callback(resp);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;;</span><br><span class="line">    var processItems = function (items) &#123;</span><br><span class="line">        var items = [];</span><br><span class="line">        // 处理</span><br><span class="line">        return items;</span><br><span class="line">    &#125;;</span><br><span class="line">    var render = function (items) &#123;</span><br><span class="line">        $(&apos;.J_Items&apos;).html(lib.template($(&apos;#item-tpl&apos;).html(), &#123;</span><br><span class="line">            items: items</span><br><span class="line">        &#125;));</span><br><span class="line">    &#125;;</span><br><span class="line">    var handle = function () &#123;</span><br><span class="line">        // 事件处理</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    fetch(function (resp) &#123;</span><br><span class="line">        render(processItems(resp.items));</span><br><span class="line">        handle();</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;)();</span><br></pre></td></tr></table></figure>
+</code></pre><p>不知道大家看到的不同点是不是一样，依次罗列开来。先看优化前的<strong>“问题”</strong>：</p>
+<ol>
+<li><p>减少外部 ／ 全局变量 ／ 全局属性：优化前，<code>init</code>方法，<code>render</code>方法，<code>renderItems</code>方法中的<code>tpl</code>、<code>html</code>变量都是不需要的，这些中间变量的声明并没有实际的（划分功能）意义，也没有必要。而<code>resp</code>，被作为对象的全局的属性，这显然不合理，下面会说到。</p>
+</li>
+<li><p>数据处理与渲染分离，松散耦合：优化前，渲染的处理主要是<code>renderItems</code>，但是其内部却不像他的函数名，还进行了数据的处理，然后才是模版的渲染，实际情况中，数据处理的代码甚至会比模版渲染的代码还多。</p>
+</li>
+<li><p>减少各个函数 ／ 模块间的依赖：优化前，<code>resp</code>被作为全局的属性，<code>render</code>方法因为调用<code>renderItems</code>，而<code>renderItems</code>需要<code>resp</code>的属性，也就需要<code>fetch</code>函数<code>ajax</code>返回之后。各个方法间，依赖得太紧。</p>
+</li>
+<li><p>函数式编程、思想，减少函数副作用：不知道大家看出来没，我想这应该是最关键的一点。优化前，<code>init</code>内部调用<code>fetch</code>，<code>fetch</code>内部调用<code>render</code>，<code>render</code>内部调用<code>renderItems</code>，<code>renderItems</code>内部做完数据处理和渲染，调用<code>handle</code>。每一个逻辑与流程控制，都被 <strong>分散</strong> 到了各个方法中，而在<code>fetch</code>方法中，还改变了<code>resp</code>的值。<strong>单纯看逻辑，我就需要把<code>page</code>对象的所有方法全部过一遍</strong>。</p>
+</li>
+</ol>
+<p>而对应优化后，去掉了<code>page</code>对象，改成了函数式的调用：</p>
+<ol>
+<li><p>减少外部 ／ 全局变量 ／ 全局属性：去掉了<code>init</code>方法，<code>render</code>方法，<code>renderItems</code>方法中的<code>tpl</code>、<code>html</code>这些无意义的变量；去掉了<code>resp</code>属性，而通过函数的参数来传递；闭包中，没有一个变量是多余的，每一个函数都划分着对应的功能。</p>
+</li>
+<li><p>数据处理与渲染分离，松散耦合：从<code>renderItems</code>中抽出<code>processItems</code>，<code>renderItems</code>的处理，只依赖传递进来的<code>items</code>参数。而<code>processItems</code>用于处理出需要的<code>items</code>。例如，后面功能修改，<code>ajax</code>接口换了，接口返回的数据也换了，那我实际只需要改动<code>processItems</code>函数或者加一个<code>processItems2</code>函数即可；例如，后面功能修改，数据不变但是，UI要变，那我只要修改<code>renderItems</code>方法即可。</p>
+</li>
+<li><p>减少各个函数 ／ 模块间的依赖：再看优化后的函数，任何一个函数都功能独立，都不依赖于其他函数。</p>
+</li>
+<li><p>函数式编程、思想，减少函数副作用：没有了外部变量、属性，每一个函数都相对独立，而通过</p>
+ <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fetch(function (resp) &#123;</span><br><span class="line">    render(processItems(resp.items));</span><br><span class="line">    handle();</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>将所有的调用和流程控制聚合到一起，一目了然。而不是每一个方法中，带上下一个函数的调用。</p>
+<p>以上，为个人工作以来感受较深的一些点，应该适用于80％的应用场景。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/24/时间管理、trello与omniFocus使用对比、异步式工作流/" rel="prev">时间管理、trello与omniFocus使用对比、异步式工作流</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/07/22/再谈跨域/" rel="next">再谈跨域</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/6246962?v=3&s=460" alt="Xaber" itemprop="image">
+          <p class="site-author-name" itemprop="name">Xaber</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、减少操作（基于性能）"><span class="nav-number">1.</span> <span class="nav-text">一、减少操作（基于性能）</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xaber</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xaber';
+      var disqus_identifier = '2015/08/03/编程十宗罪 JS范例/';
+      var disqus_title = '编程 JS范例';
+      var disqus_url = 'http://xaber.co/2015/08/03/编程十宗罪 JS范例/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+
+  </script>
+
+  
+  <script src="/js/fingerprint2.js"></script>
+<script>
+    $(function () {
+        if (!window.zhuge || !window.Fingerprint2) {
+            return;
+        }
+
+        var tb = function (num) {
+            return num < 10 ? ('0' + num) : num;
+        };
+
+        var getFormatTime = function () {
+            var a = new Date();
+            return a.getFullYear() + '-' + 
+                tb(a.getMonth() + 1) + '-' + 
+                tb(a.getDate()) + ' ' +
+                tb(a.getHours()) + ':' +
+                tb(a.getMinutes()) + ':' +
+                tb(a.getSeconds());
+        };
+
+        new Fingerprint2().get(function (result, components) {
+            //a hash, representing your device fingerprint
+            // console.log(result); 
+
+            // an array of FP components
+            // console.log(components);
+
+            // 已设备指纹作为一个用户记录
+            zhuge.identify(result, {});
+
+            zhuge.track('页面展示', {
+                'time': getFormatTime(),
+                'referrer_url': document.referrer,
+                'url': window.location.href
+            });
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head><meta name="generator" content="Hexo 3.8.0">
+	<meta charset="UTF-8">
+	<title>仿-年终总结</title>
+	<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.14.1/build/cssreset/cssreset-min.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script>
+		$(function(){
+			var $effDiv = $("#wrapper .effect div");
+			$effDiv.animate({
+				"opacity":"0",
+				"width":"0",
+				"height":"0"
+			},0);
+			var aTop = [];
+			(function(){
+				var i = $effDiv.length,
+					$iDiv = null,
+					top;
+				for(; i--; ){
+					$iDiv = $($effDiv[i]);
+					top = parseInt($iDiv.css('top'));
+					aTop.push(top);
+				}
+				aTop.reverse();
+			})();
+			var eveShow = function ($iDiv){
+				$iDiv.prev().stop(true,true);
+				if($iDiv.hasClass("most_other_ef")){
+					$iDiv.animate({
+					"opacity": "0.8",
+					"height": "150px",
+					"width": "150px"
+					},"slow");
+				} else {
+					$iDiv.animate({
+					"opacity": "0.8",
+					"height": "185px",
+					"width": "185px",
+					},"slow");
+				}
+			}
+			var eveHide = function ($iDiv){
+				$iDiv.next().stop(true,true);
+				$iDiv.animate({
+					"opacity":"0",
+					"height": "0px",
+					"width": "0px"
+				},"slow");
+			}
+			var scrollTop = 0;
+			$(window).on('scroll',function(){
+				var mark = scrollTop;
+				scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+				//console.log(aTop);
+				var i,
+					$iDiv = null,
+					re;
+				if (scrollTop - mark > 0){
+					//console.log("向下");
+					for(i = $effDiv.length; i--; ){
+						$iDiv = $($effDiv[i]);
+						re = scrollTop - aTop[i];
+						if (re >= -250){
+							eveShow($iDiv);
+						}
+					}
+				} else {
+					//console.log("向上");
+					for(i = $effDiv.length; i--; ){
+						$iDiv = $($effDiv[i]);
+						re = scrollTop - aTop[i];
+						if (-re >= 250){
+							eveHide($iDiv);
+						}
+					}
+				}
+			})	
+		});
+	</script>
+</head>
+<body>
+	<div id="wrapper">
+		<div class="title">
+			<h1>
+				<span>我的虾米2013</span>
+			</h1>
+		</div>
+		<div class="effect">
+			<a class="home" href="http://www.xiami.com/u/4197195" target="_blank" rel="noopener">个人主页</a>
+			<div class="listened">
+				<span>听过</span>
+				<i>8254</i>
+				<span>首歌曲</span>
+			</div>
+			<div class="comment">
+				<span>发过</span>
+				<i>33</i>
+				<span>条评论</span>
+			</div>
+			<div class="made">
+				<span>制作过</span>
+				<i>2</i>
+				<span>张精选集</span>
+			</div>
+			<div class="most_album_1 most_other_ef">
+				<span>听得最多的</span>
+				<b>专辑</b>
+			</div>
+			<div class="most_album_2 most_other_ef">
+				<span>夜的钢琴曲 Demo集</span>
+				<b>501</b>
+				<span>次播放</span>
+			</div>
+			<div class="most_album_3">
+				<img src="http://img.xiami.net/images/album/img1/77201/4065321287132984_5.jpg">
+			</div>
+			<div class="most_artist_1 most_other_ef">
+				<span>听得最多的</span>
+				<b>艺人</b>
+			</div>
+			<div class="most_artist_2 most_other_ef">
+				<span>石进</span>
+				<b>775</b>
+				<span>次播放</span>
+			</div>
+			<div class="most_artist_3">
+				<img src="http://img.xiami.net/images/artistlogo/18/13741638164018_2.jpg">
+			</div>
+			<div class="most_song_1 most_other_ef">
+				<span>听得最多的</span>
+				<b>歌曲</b>
+			</div>
+			<div class="most_song_2">
+				<strong>素直と不器用と意地っ張り</strong>
+			</div>
+			<div class="most_song_3 most_other_ef">
+				<b>180</b>
+				<span>次播放</span>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

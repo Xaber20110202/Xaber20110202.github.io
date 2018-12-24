@@ -1,0 +1,535 @@
+/*CSS reset*/
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,
+form,fieldset,input,textarea,p,blockquote,th,td {
+	padding: 0;
+	margin: 0;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+fieldset,img {
+	border: 0;
+}
+address,caption,cite,code,dfn,em,strong,th,var { 
+	font-weight: normal; 
+	font-style: normal; 
+} 
+ol,ul { 
+	list-style: none; 
+} 
+caption,th { 
+	text-align: left; 
+} 
+h1,h2,h3,h4,h5,h6 { 
+	font-weight: normal; 
+	font-size: 100%; 
+} 
+q:before,q:after { 
+	content:''; 
+} 
+abbr,acronym { 
+	border: 0; 
+}
+input,img {
+	border:0;	
+}
+*:focus { 
+	outline: none; 
+}
+img:hover,a:hover {
+	cursor:pointer;	
+}
+a{
+	text-decoration:none;
+	color:black;
+} 
+input {
+	filter:chroma(color=#000000);
+	zoom:1;
+}
+a:focus, input:active {
+	noFocusLine:expression(this.onFocus=this.blur());
+}
+/*text*/
+#just_for_text {
+	position:fixed;
+	top:0;
+	right:0;
+	border:#9900FF 1px solid;
+}
+/*main*/
+body {
+	width:100%;
+	background:#FFFFFF;
+	font:12px 'Microsoft YaHei', 微软雅黑, Arial, Lucida Grande, Tahoma, sans-serif;
+}
+#wrapper {
+	width:980px;
+	margin:18px auto;
+	line-height:21px;
+	min-height:100%;
+	position:relative;
+}
+/*navigation*/
+#navigation a {
+	color:#F2F2F2;
+}
+#navigation a:hover {
+	color:#FFF;
+	background:url("../images/bg.png") no-repeat 0px -75px;
+}
+#navigation {
+	background:url("../images/bg.png");
+	width:100%;
+	height:35px;
+	line-height:35px;
+}
+#navigation .thenav {
+	text-align:center;
+	color:#F2F2F2;
+}
+#navigation li.nav{
+	float:left;
+	position:relative;
+	font-weight:bold;
+	border-right:1px black dotted;
+	z-index:999;
+}
+#navigation li.nav a{
+	display:block;
+	padding:0 25px;
+}
+#navigation #home{
+	margin-left:1px;
+	border-radius:3px;
+}
+#navigation #home a{
+	width:66px;
+}
+#navigation #searchbox{
+	width:159px;
+	height:28px;
+	margin:3px 0 0 25px;
+	padding:0 2px 0 5px;
+	background:#B60217 url(../images/bg.png) no-repeat -124px -42px;
+	border:0;
+	cursor:inherit;
+}
+#navigation form{
+	position:relative;
+}
+#navigation form .icon{
+	background:#FFFFFF url(../thumbnails/go.gif) no-repeat;
+	width:16px;
+	height:16px;
+	text-indent:100%;
+	position:absolute;
+	top:8px;
+	left:5px;
+	cursor:pointer;
+}
+#navigation form .search{
+	float:right;
+	width:130px;
+	height:16px;
+	position:relative;
+	top:6px;
+	left:-10px;
+	opacity:0.5;
+	filter:alpha(opacity:50);
+	font-family:'方正舒体','方正楷体';
+}
+
+#navigation .more{
+	position:absolute;
+	top:35px;
+	left:-9999px;
+	background:#B60217;
+	opacity:0.9;
+	filter:alpha(opacity:90);
+	zoom:1;
+	z-index:10;
+	font-weight:normal;
+}
+#navigation li.nav:hover .more{
+	left:0;
+}
+#navigation li.sfhover .more{
+	left:0;
+}
+#navigation .more li{
+	margin:0;
+	border-bottom:1px solid #e06262;
+	text-align:left;
+}
+#navigation .more li a{
+	width:88px;
+	background:#B60217;
+}
+#navigation .more li a:hover{
+	background:#640000;
+}
+
+/*header*/
+#header {
+	z-index:5;
+}
+#header .header_main{
+	float:left;
+	margin:10px;
+}
+#header .header_main h1{
+	font-size:1.8em;
+	font-weight:bold;
+	margin-bottom:5px;
+}
+#header .header_main span{
+	font-size:1.1em;
+	padding-left:20px;
+}
+#header .header_tel{
+	float:right;
+	padding:15px;
+}
+#header .header_time{
+	float:right;
+	padding:15px;
+}
+/*feature*/
+#feature {
+	width:100%;
+	height:170px;
+	margin-top:75px;
+	position:relative;
+	overflow:hidden;
+}
+#feature ul {
+	width:1960px;
+	position:absolute;
+	top:0;
+	left:0;	
+	z-index:1;
+}
+#feature ul li{
+	float:left;
+	margin-right:9px;
+	position:relative;	
+	z-index:3;
+}
+#feature ul li span{
+	position:absolute;
+	bottom:10px;
+	left:0px;
+	opacity:0;
+	filter:Alpha(opacity=0);
+	background:#666666;
+	text-align:center;
+	width:236px;
+	height:27px;
+	padding:5px 0;
+	font-weight:bold;
+}   
+#feature ul li span a{
+	color:#fff;
+}
+* html #feature ul li span{		/*ie6 hack*/
+	display:none;
+} 
+/*content*/
+#content {
+	position:relative;			/*这两行解决IE6 子元素及下级子元素relative导致overflow无效 bug问题*/
+	zoom:1;
+	overflow:hidden;
+	border:#9999FF 2px dashed;
+}
+#content a:hover {
+	color:#0099FF;
+}
+/*content aside*/
+#aside {
+	position:absolute;
+	right:-230px;
+	background:#FFFFFF;
+	width:230px;
+	top:70px;
+	opacity:0.8;
+}
+#aside .icondisplay {
+	position:absolute;
+	padding:0;
+	width:26px;
+	height:99px;
+	left:-33px;
+	top:90px;	
+	background:url(../images/r8.gif) no-repeat;
+	color:#990000;
+	font-weight:bolder;
+	letter-spacing:2px;
+	text-align:center;
+}
+#aside span {
+	float:left;
+	display:inline;
+	margin-left:7px;
+	width:68px;
+}
+#aside span a{
+	color:#F2F2F2;
+	padding:10px;
+	display:block;
+}
+#aside .otherCont1{
+	background:url(../images/tab.png) no-repeat -136px 0;
+}
+#aside .otherCont2{
+	background:url(../images/tab.png) no-repeat -68px 0;
+}
+#aside .otherCont3{
+	background:url(../images/tab.png) no-repeat -204px 0;
+}
+#aside .otherContSelected{
+	background:url(../images/tab.png) no-repeat 0 0;
+}
+#aside div {
+	width:210px;
+	margin:0 10px;
+	clear:both;
+	overflow:hidden;
+	zoom:1;
+}
+#aside table {
+	width:210px;
+}
+#aside table td {
+	border-bottom:solid #9999CC 1px;
+	padding-bottom:2px;
+}
+#aside .relatedCont2,#aside .relatedCont3{
+	display:none;	
+}
+#aside .relatedCont3 table td {
+	border:0;
+	text-align:center;
+}
+/*content article*/
+#article {
+	width:900px;
+	margin:20px auto;
+	position:relative;
+}
+#article h2 {
+	font-size:1.5em;
+	font-weight:bold;
+}
+#article .connection {
+	font-size:1.2em;
+	padding:1px 3px;
+	border:dashed 1px #CCCCCC;
+	margin:2px;
+	float:right;
+	position:relative;
+}
+#article .connection a {
+	color:#96F;
+}
+#article span {
+	color:#666666;
+}
+#article span .to_comment {
+	color:#9933FF;
+	font-weight:bold;	
+}
+#article .connection a:hover,#article span .to_comment:hover {
+	color:#990000;
+}
+#article .item {
+	overflow:hidden;
+	zoom:1;						/*zoom 解决overflow bug 以及float影响*/
+	margin-top:30px;
+	color:#003366;
+	letter-spacing:0.2em;
+}
+#article .item .artpic {
+	float:left;	
+	margin-right:50px;
+}
+#article .item .artpic img{
+	width:210px;
+	height:150px;
+}
+#article .item .artinfo {	
+	overflow:hidden;
+	zoom:1;
+}
+#article h3 {
+	font-size:1.3em;
+	color:#000033;	
+	font-weight:bold;
+}
+#article .item .artinfo li {
+	list-style:square inside;
+	text-indent: 2em;
+}
+/*
+.item { overflow:hidden;padding-left:132px;margin-bottom:3px; }
+.artpic { position:absolute;_display:inline;margin-left:-132px; }
+*/
+/*
+.item .artpic { float:left;margin-right:10px; }
+.item .artinfo { overflow:hidden;zoom:1; }
+*/
+
+#comments {
+	width:100%;	
+}
+#comments input[type="submit"]:hover,#comments input[type="reset"]:hover,#comments input[type="button"]:hover{
+	cursor:pointer;
+}
+.show_message,.to_leave {
+	font-weight:bold;
+	font-family:'方正舒体';
+	font-size:1.1em;
+	padding:7px 15px;
+	color:#003300;
+	background:#9966FF;
+	border:#FFFFFF 1px dashed;	
+	margin:20px;
+	cursor:pointer;
+}
+.show_message {
+	float:left;	
+}
+.to_leave {
+	float:right;	
+}
+#comments .message_num {
+	margin:5px 20px;
+	padding:5px;	
+	color:#336633;
+	clear:both;
+	border-top:1px dotted #0099CC;
+}
+#comments .message_board {
+	display:none;
+	border:#CCCCCC 1px solid;
+}
+/*
+#comments .message_board li{
+	border:1px #33FFFF dotted;
+}
+*/
+#comments .message_board li {
+	overflow:hidden;
+	zoom:1;
+}
+#comments .message_board .user_img {
+	float:left;
+	margin:20px;
+}
+#comments .message_board .user_leaved {
+	position:relative;
+	overflow:hidden;
+	zoom:1;
+	margin:20px 30px;
+}
+.message_board .user_leaved .user_name {
+	font-weight:bold;
+	color:#330000;
+}
+.message_board .user_leaved .at_that_time {
+	margin:0 5px;	
+	color:#666666;
+}
+.message_board .user_leaved .floor_num {
+	float:right;
+	display:inline;
+	color:#666666;
+}
+/*
+.floor_num {	解决IE 6/7  floor_num下移问题		暂未解决   还有 IE 6 7 的input边框 bug
+	_margin:-20px 0 0 0;	
+}
+*/
+.message_board .user_leaved p {
+	clear:both;
+}
+.message_board .user_leaved .to_reply {
+	float:right;
+	color:#660066;
+	padding:5px 10px;
+	font-family:'华文行楷';
+	background:#009966;
+	border:dashed 1px #FFFFFF;
+}
+#comments .leave_message {
+	margin:10px 20px;
+	color:#9966FF;
+	display:none;
+}
+#comments .leave_message span {
+	color:#990033;
+	font-size:1.2em;
+	font-weight:bold;	
+}
+#comments .leave_message .cancle_reply {
+	color:#9900FF;
+	border:#CC00CC 1px dotted;	
+	font-family:'华文行楷';
+	padding:2px 5px;
+	background:#FFFFFF;
+	cursor:pointer;
+	display:none;
+	
+}
+#comments .leave_message .cancle_reply:active {
+	color:#FF0000;	
+}
+#comments .leave_message .visiter_info {
+	width:250px;
+	height:20px;
+}
+#comments .leave_message .visiter_info,#comments .leave_message textarea {
+	margin:10px 0;	
+	border:1px solid #9966FF;
+}
+#comments .leave_message .now_leave,#comments .leave_message .now_reset {
+	font-size:1.1em;
+	font-weight:bold;
+	font-family:'华文新魏';
+	padding:5px 10px;
+}
+#comments .leave_message .now_leave {
+	margin:0 100px 10px 0;
+	color:#333333;
+	background:#FF0033;	
+	border:#333333 2px solid;	
+}
+#comments .leave_message .now_reset {
+	margin:0 0 10px 100px;	
+	color:#FF0033;
+	background:#333333;
+	border:#FF0033 2px solid;
+}
+/*footer*/
+#footer {
+	margin:50px 0;
+	text-align:center;
+	width:100%;
+	color:#333333;
+	letter-spacing:0.1em;
+}
+#footer a {
+	font-style:italic;
+	color:#CC66FF;
+}
+#footer a:hover {
+	color:#9933FF;	
+}
+
+
+
+
+
+
+

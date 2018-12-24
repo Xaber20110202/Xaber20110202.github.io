@@ -1,0 +1,766 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.8.0">
+  
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1">
+
+
+
+
+  <meta name="keywords" content="iframe,跨域,proxy,">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Xaber's Blog" type="application/atom+xml">
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1">
+
+
+<meta name="description" content="老话题常谈，不过对内部一些原理做一些释义，也解一些自己的惑。 流程在手，跨域不愁。">
+<meta name="keywords" content="iframe,跨域,proxy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="再谈跨域">
+<meta property="og:url" content="http://xaber.co/2015/07/22/再谈跨域/index.html">
+<meta property="og:site_name" content="Xaber&#39;s Blog">
+<meta property="og:description" content="老话题常谈，不过对内部一些原理做一些释义，也解一些自己的惑。 流程在手，跨域不愁。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-02-07T03:09:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="再谈跨域">
+<meta name="twitter:description" content="老话题常谈，不过对内部一些原理做一些释义，也解一些自己的惑。 流程在手，跨域不愁。">
+
+
+<script>
+(function () {
+    window.zhuge = window.zhuge || [];
+    window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
+    window.zhuge.factory = function(b) {
+        return function() {
+            var a = Array.prototype.slice.call(arguments);
+            a.unshift(b);
+            window.zhuge.push(a);
+            return window.zhuge
+        }
+    };
+    for (var i = 0; i < window.zhuge.methods.length; i++) {
+        var key = window.zhuge.methods[i];
+        window.zhuge[key] = window.zhuge.factory(key)
+    }
+    window.zhuge.load = function(b, x) {
+        if (!document.getElementById("zhuge-js")) {
+            var a = document.createElement("script");
+            var verDate = new Date();
+            var verStr = verDate.getFullYear().toString()
+                + verDate.getMonth().toString() + verDate.getDate().toString();
+
+            a.type = "text/javascript";
+            a.id = "zhuge-js";
+            a.async = !0;
+            a.src = (location.protocol == 'http:' ? "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" : 'https://zgsdk.zhugeio.com/zhuge-lastest.min.js?v=') + verStr;
+            var c = document.getElementsByTagName("script")[0];
+            c.parentNode.insertBefore(a, c);
+            window.zhuge._init(b, x)
+        }
+    };
+    
+    // 开发模式调试
+    
+    window.zhuge.load('49fc6625ddcc4004aa98d05e876a70e0');
+    
+})();
+</script>
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide'
+  };
+</script>
+
+  <title> 再谈跨域 | Xaber's Blog </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-47125735-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Xaber's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br>
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br>
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br>
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br>
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br>
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              再谈跨域
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-07-22T20:37:08+08:00" content="2015-07-22">
+            2015-07-22
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                  <span itemprop="name">JavaScript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/07/22/再谈跨域/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/07/22/再谈跨域/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>老话题常谈，不过对内部一些原理做一些释义，也解一些自己的惑。</p>
+<p>流程在手，跨域不愁。<br><a id="more"></a></p>
+<h4 id="1-jsonp"><a href="#1-jsonp" class="headerlink" title="1. jsonp"></a>1. jsonp</h4><p>a. 当前页面 <a href="http://www.bbeeii.com" target="_blank" rel="noopener">www.bbeeii.com</a> window下 有一个dosomething方法，用于处理获取的数据处理<br>b. 当前页面 <a href="http://www.bbeeii.com" target="_blank" rel="noopener">www.bbeeii.com</a> append一个script标签，src指向 <a href="http://www.baidu.com?callback=dosomething&amp;xxx=xxx" target="_blank" rel="noopener">www.baidu.com?callback=dosomething&amp;xxx=xxx</a><br>c. 要通信的页面 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 基于xxx 或者不基于xxx 处理出一些数据，并进行json_encode（PHP将数据转换成json格式的方法）<br>d. 要通信的页面 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 返回 dosomething(data)<br>e. 当前页面 <a href="http://www.bbeeii.com" target="_blank" rel="noopener">www.bbeeii.com</a> append进来的script请求成功，dosomething(data)代码自动执行<br>f. 一个jsonp请求发起、服务端处理、服务端返回、前端处理完成</p>
+<p>注意：<br>a. 要通信的页面 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 返回的数据格式需要是 dosomething(data) 这样的形式，因为他是直接放到页面里执行的。<br>b. 要通信的页面 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> 返回的数据的Content-Type 最好是 <a href="http://stackoverflow.com/questions/111302/best-content-type-to-serve-jsonp" target="_blank" rel="noopener">application/javascript</a><br>c. 因为 application/javascript 有时会被运营商劫持，因此（实际）也可以采用 application/json</p>
+<h4 id="2-document-domain-iframe"><a href="#2-document-domain-iframe" class="headerlink" title="2. document.domain / iframe"></a>2. document.domain / iframe</h4><p>注意：<br>a. 因为同源策略，当前页面 <a href="http://www.bbeeii.com" target="_blank" rel="noopener">www.bbeeii.com</a> 下放入 iframe（src为kuaidi100.com）在<strong>不同域下</strong>，当前页面的脚本不可以访问iframe里的内容，除了location属性（location.href也不行）。<br>b. 当当前页面和iframe在同一源下，当前页面就可以和iframe进行各种操作。比如：当前页面获取iframe中的元素、访问其window下的变量；iframe访问当前页面的元素、window下的变量…<br>c. 可以通过修改document.domain=bbeeii.com 来让当前页面 <a href="http://www.bbeeii.com" target="_blank" rel="noopener">www.bbeeii.com</a> 和 iframe d.bbeeii.com在同一个源下</p>
+<p>关于document.domain (<a href="http://javascript.info/tutorial/same-origin-security-policy" target="_blank" rel="noopener">reference</a>)<br>a. 主域名必须相同（不能将当前页面 <a href="http://www.bbeeii.com" target="_blank" rel="noopener">www.bbeeii.com</a> 的domain设置成 baidu.com）<br>b. 当前页面、iframe 都需要设置成相同的domain，才能被认为是同一个“域”</p>
+<p>不要觉得，我设置一个document.domain就可以完成一个跨域了。之前我也这么觉得的，后来才发现这里的水还是有点深。</p>
+<p>应用场景：需要完成一个a.example.com 与 b.example.com 的跨域ajax请求</p>
+<p>具体操作流程：（示例）<br>a. 当前页面 a.example.com 创建一个iframe，src为b.example.com/proxy.html<br>b. 当前页面 a.example.com 与嵌套的iframe页面 b.example.com/proxy.html 都设置document.domain为 example.com<br>c. 此时，同源策略不再限制，也就使得 <strong>a.example.com 可以访问 b.example.com/proxy.html 下的元素、变量等等</strong><br>d. <strong>因为iframe页面b.example.com/proxy.html 与具体要请求的页面b.example.com 是在同一个b.example.com域下，ajax也就不会有跨域问题</strong>，<strong>因此才可以</strong>通过控制iframe b.example.com/proxy.html 下的jQuery（或者其他、或者原生XMLHttpRequest）向b.example.com发起一个ajax请求<br>e. 通过iframe页面b.example.com/proxy.html 发起的请求，经过b.example.com处理返回数据后，再通过iframe页面可以访问当前页面a.example.com的特性，将数据传递给a.example.com做处理。<br>d. 自此完成a.example.com 传送数据，<strong>经由</strong>b.example.com/proxy.html发起的ajax请求到b.example.com，b.example.com处理返回数据，<strong>经由</strong>b.example.com/proxy.html 将数据返回给a.example.com 处理的流程</p>
+<p>附：<br><a href="http://stackoverflow.com/questions/15563611/why-doesnt-setting-document-domain-work-to-allow-ajax-requests-to-a-parent-doma" target="_blank" rel="noopener">为什么设置a.example.com b.example.com domain都是example.com还是不能进行ajax请求</a><br>简答：因为document.domain允许的是客户端到客户端的访问，而不是客户端到服务端的访问，例如：a.example.com 设置了domain为example.com，向b.example.com发起了一个ajax请求，请求是落在服务器的，还没有到达客户端，此时的b.example.com域名还是b.example.com，被认为是跨域。因此需要设置Access-Control-Allow-Origin</p>
+<h4 id="3-服务器proxy"><a href="#3-服务器proxy" class="headerlink" title="3. 服务器proxy"></a>3. 服务器proxy</h4><p>还是同源策略，通过iframe也不能访问不同源下的dom元素，window下的变量。<br>例如：<a href="http://www.bbeeii.com" target="_blank" rel="noopener">www.bbeeii.com</a> 想要展示kuaidi100.com的页面内容，只能iframe。但是不能在kuaidi100.com页面基础上做其他更进一步的操作（除了location）。但是想要去除kuaidi100.com页面上的广告…</p>
+<p>示例：<br>a. <a href="http://www.bbeeii.com" target="_blank" rel="noopener">www.bbeeii.com</a> 向 example.com 发起一个正常的ajax、或者jsonp、或者iframe跨子域请求。<br>b. example.com 服务器上接收传递来的url数据，抓取 kuaidi100.com的页面内容，进行一次处理然后返回<br>c. <a href="http://www.bbeeii.com" target="_blank" rel="noopener">www.bbeeii.com</a> 拿到对应的数据，进行展示。</p>
+<p>优点：可以完成任何跨域资源请求<br>缺点：经过了中间服务器这一层，请求效率相对比较低</p>
+<h4 id="4-HTML5-CORS-Ajax跨域"><a href="#4-HTML5-CORS-Ajax跨域" class="headerlink" title="4. HTML5  CORS Ajax跨域"></a>4. HTML5  CORS Ajax跨域</h4><ul>
+<li><a href="http://blog.smdcn.net/article/1386.html" target="_blank" rel="noopener">使用HTML5 CORS特性进行Ajax跨域POST请求</a></li>
+<li><a href="http://www.alloyteam.com/2012/11/html5-cors/" target="_blank" rel="noopener">使用HTML5 跨域共享特性解决AJAX跨域数据同步问题</a></li>
+<li><a href="https://hacks.mozilla.org/2009/07/cross-site-xmlhttprequest-with-cors/" target="_blank" rel="noopener">cross-site xmlhttprequest with CORS - Mozilla</a></li>
+<li><a href="http://blog.dzhuvinov.com/?p=848" target="_blank" rel="noopener">DETECTING CORS SUPPORT IN A BROWSER</a></li>
+<li><a href="http://stackoverflow.com/questions/7852225/is-it-safe-to-use-support-cors-true-in-jquery" target="_blank" rel="noopener">Is it safe to use $.support.cors = true; in jQuery?</a></li>
+<li>为什么PHP方法中，明明已经通过<code>CI $this-&gt;output-&gt;set_header(&#39;Access-Control-Allow-Origin: http://&#39; . $host);</code>设置了允许跨域，为什么在die之后跨域失败。（猜测：PHP控制器方法中尽管设置了这样的请求头，但是他还没执行到视图层，就在控制器阻止了，这个请求头实际也就没有被设置进去）</li>
+<li>默认的跨域请求是不提供凭据（cookie、HTTP认证及客户端SSL证明等）的，因此在预发布（通过host指定机器并通过cookie的方式）的测试不会成功。如果需要带上这些信息，需要设置ajax的withCredentials属性为true。（<a href="http://api.jquery.com/jquery.ajax/" target="_blank" rel="noopener">jQuery.ajax中withCredentials的设置方法</a>）</li>
+</ul>
+<h4 id="附加：坑点-cookie"><a href="#附加：坑点-cookie" class="headerlink" title="附加：坑点 - cookie"></a>附加：坑点 - cookie</h4><p>update 2015.09.02 —— 之前经历了这样一个场景，<code>m.bbeeii.com.cn</code>下的一个A页面使用一些信息，通过jsonp的请求方式，请求<code>www.bbeeii.com</code>进行登录（ <code>www.bbeeii.com</code> 设置session cookie）。而后，A页面继续发送跨域请求给 <code>api.bbeeii.com.cn</code>的一个POST接口，发现请求返回结果是未登录（因为是 <code>www.bbeeii.com</code> 下的接口做的“登录”，session cookie 被设置到 <code>bbeeii.com</code>下）。同理，即使将页面A迁移到<code>m.bbeeii.com</code> 也无用，还需要将接口也迁移到 <code>api.bbeeii.com</code>。类似这种 需要登录态的POST请求，需要注意。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/iframe/" rel="tag">#iframe</a>
+          
+            <a href="/tags/跨域/" rel="tag">#跨域</a>
+          
+            <a href="/tags/proxy/" rel="tag">#proxy</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/03/编程十宗罪 JS范例/" rel="prev">编程 JS范例</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/06/22/Pro-JavaScript-Design-Patterns-笔记-part-2/" rel="next">Pro JavaScript Design Patterns 笔记.part.2</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/6246962?v=3&s=460" alt="Xaber" itemprop="image">
+          <p class="site-author-name" itemprop="name">Xaber</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-jsonp"><span class="nav-number">1.</span> <span class="nav-text">1. jsonp</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-document-domain-iframe"><span class="nav-number">2.</span> <span class="nav-text">2. document.domain / iframe</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-服务器proxy"><span class="nav-number">3.</span> <span class="nav-text">3. 服务器proxy</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-HTML5-CORS-Ajax跨域"><span class="nav-number">4.</span> <span class="nav-text">4. HTML5  CORS Ajax跨域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#附加：坑点-cookie"><span class="nav-number">5.</span> <span class="nav-text">附加：坑点 - cookie</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xaber</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xaber';
+      var disqus_identifier = '2015/07/22/再谈跨域/';
+      var disqus_title = '再谈跨域';
+      var disqus_url = 'http://xaber.co/2015/07/22/再谈跨域/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+
+  </script>
+
+  
+  <script src="/js/fingerprint2.js"></script>
+<script>
+    $(function () {
+        if (!window.zhuge || !window.Fingerprint2) {
+            return;
+        }
+
+        var tb = function (num) {
+            return num < 10 ? ('0' + num) : num;
+        };
+
+        var getFormatTime = function () {
+            var a = new Date();
+            return a.getFullYear() + '-' + 
+                tb(a.getMonth() + 1) + '-' + 
+                tb(a.getDate()) + ' ' +
+                tb(a.getHours()) + ':' +
+                tb(a.getMinutes()) + ':' +
+                tb(a.getSeconds());
+        };
+
+        new Fingerprint2().get(function (result, components) {
+            //a hash, representing your device fingerprint
+            // console.log(result); 
+
+            // an array of FP components
+            // console.log(components);
+
+            // 已设备指纹作为一个用户记录
+            zhuge.identify(result, {});
+
+            zhuge.track('页面展示', {
+                'time': getFormatTime(),
+                'referrer_url': document.referrer,
+                'url': window.location.href
+            });
+        });
+    });
+</script>
+</body>
+</html>

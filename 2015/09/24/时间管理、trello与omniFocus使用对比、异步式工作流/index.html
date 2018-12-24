@@ -1,0 +1,792 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.8.0">
+  
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1">
+
+
+
+
+  <meta name="keywords" content="工具,细化,">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Xaber's Blog" type="application/atom+xml">
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1">
+
+
+<meta name="description" content="今天可能是我两月以来最轻松的一天。">
+<meta name="keywords" content="工具,细化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="时间管理、trello与omniFocus使用对比、异步式工作流">
+<meta property="og:url" content="http://xaber.co/2015/09/24/时间管理、trello与omniFocus使用对比、异步式工作流/index.html">
+<meta property="og:site_name" content="Xaber&#39;s Blog">
+<meta property="og:description" content="今天可能是我两月以来最轻松的一天。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://b0.hucdn.com/img/event/e1120/trello1.png">
+<meta property="og:image" content="http://b0.hucdn.com/img/event/e1120/trello2.png">
+<meta property="og:image" content="http://b0.hucdn.com/img/event/e1120/omnifocus1.png">
+<meta property="og:updated_time" content="2015-09-27T05:33:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="时间管理、trello与omniFocus使用对比、异步式工作流">
+<meta name="twitter:description" content="今天可能是我两月以来最轻松的一天。">
+<meta name="twitter:image" content="http://b0.hucdn.com/img/event/e1120/trello1.png">
+
+
+<script>
+(function () {
+    window.zhuge = window.zhuge || [];
+    window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
+    window.zhuge.factory = function(b) {
+        return function() {
+            var a = Array.prototype.slice.call(arguments);
+            a.unshift(b);
+            window.zhuge.push(a);
+            return window.zhuge
+        }
+    };
+    for (var i = 0; i < window.zhuge.methods.length; i++) {
+        var key = window.zhuge.methods[i];
+        window.zhuge[key] = window.zhuge.factory(key)
+    }
+    window.zhuge.load = function(b, x) {
+        if (!document.getElementById("zhuge-js")) {
+            var a = document.createElement("script");
+            var verDate = new Date();
+            var verStr = verDate.getFullYear().toString()
+                + verDate.getMonth().toString() + verDate.getDate().toString();
+
+            a.type = "text/javascript";
+            a.id = "zhuge-js";
+            a.async = !0;
+            a.src = (location.protocol == 'http:' ? "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" : 'https://zgsdk.zhugeio.com/zhuge-lastest.min.js?v=') + verStr;
+            var c = document.getElementsByTagName("script")[0];
+            c.parentNode.insertBefore(a, c);
+            window.zhuge._init(b, x)
+        }
+    };
+    
+    // 开发模式调试
+    
+    window.zhuge.load('49fc6625ddcc4004aa98d05e876a70e0');
+    
+})();
+</script>
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide'
+  };
+</script>
+
+  <title> 时间管理、trello与omniFocus使用对比、异步式工作流 | Xaber's Blog </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-47125735-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Xaber's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br>
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br>
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br>
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br>
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br>
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              时间管理、trello与omniFocus使用对比、异步式工作流
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-09-24T00:22:21+08:00" content="2015-09-24">
+            2015-09-24
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/总结系列/" itemprop="url" rel="index">
+                  <span itemprop="name">总结系列</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/09/24/时间管理、trello与omniFocus使用对比、异步式工作流/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/09/24/时间管理、trello与omniFocus使用对比、异步式工作流/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p><strong> 今天可能是我两月以来最轻松的一天。</strong></p>
+<a id="more"></a>
+<p>上面这么说，可能有点夸张，但是却非常符合我今天的现状。因为就本质来说，事情甚至比昨天多，但是我的心态却和昨天是天差地别。</p>
+<p>来说说我的具体情况吧，本身是偶尔会拖沓一下的人，但是大部分事情都会立马去做，并且加班加点也想要快点做完。但是却反而总有做不完的事情。</p>
+<p>而因为公司组织结构的调整，一方面不熟悉，另一方面这两个月来事情也确实非常多。原本习惯性会用<a href="https://trello.com/" target="_blank" rel="noopener">trello</a>记录下平时想要做的代码优化、流程优化以及其他各种各样的事项，类似：</p>
+<p><img src="http://b0.hucdn.com/img/event/e1120/trello1.png" alt="trello"></p>
+<p>以上只是其中的一小部分。随着事务的增多，trello面板上的事项越来越多，渐渐排满了面板。并且，就算区分了重要程度和紧急程度（比如列了重要且紧急、重要但不紧急、紧急但不重要、不紧急也不重要这四象限），也并没有什么卵用，该呈现的面板内容还是那么多。无法一目了然确定当前要做什么事，以及剩余哪些事是下一件要做的。</p>
+<p>另一方面，在时间、人员配置、以及组员时间安排上，无法很好处理。归根结底也还是面板展示内容杂乱，无法快速区分事务。</p>
+<p>trello在去年7月左右开始用，到现在也有一年多时间，从最初管理个人时间以及自己的每周每一项任务（周报不用愁）</p>
+<p><img src="http://b0.hucdn.com/img/event/e1120/trello2.png" alt="trello"></p>
+<p>期间也玩过各式各样的花样。但是越到后面，使用trello管理团队的时间和任务，越发察觉到瓶颈。也因为人员职责没有细分这一点，使得始终人不能尽其用，比如说不知道他们在做什么，做到什么程度，甚至东西做完没有还是等到周会才知道（因为没有一个时间节点提醒去跟进）。</p>
+<p>并且伴随最近的事情越发地多，没有合理分配任务，以及部分重要任务积压。有时候做着这件事，做着做着，想到另一件事情、或者另外几件事情；或者别人一个QQ，就整个思绪被打乱了。导致工作着工作着，突然就有点喘不过气来，心脏都难受，写不动代码。</p>
+<p>这样的状态持续着也将近两个月了，也将近两个月几乎每天两三点睡。好不容易正常了点的生物钟又彻底乱了。健康丢失，第二天没精神，情绪反复不定，消极。</p>
+<p>我觉得需要这样一个工具来试着解决我当前遇到的问题，网上一直看到将omniFocus奉为神坛。于是昨晚硬是抽出没有的三个小时，熟悉了下概念与使用、并将trello的事务迁移到omniFocus上。</p>
+<p>然后，不确定是否心理作用。心里的恐惧感，在今天，几乎没再出现。</p>
+<p><img src="http://b0.hucdn.com/img/event/e1120/omnifocus1.png" alt="omnifocus"></p>
+<p>收件箱（inbox），用来记录日常任何事情任何想法，这与之前trello的使用类似，但是日常工作中（其实也就今天）不太会关心inbox中的内容，这样也就不会给我造成事情好多，我该做什么，我该怎么做的一连串错觉。</p>
+<p>每天整理，从inbox中挑选事务，安排到项目、以及指定上下文（类似谁、哪个地方），并安排好<strong>开始时间和结束时间</strong>。</p>
+<p>这样，项目视图中，我就知道了自己在什么时间要做什么，并且，没有在时间排期内的不提醒，也就无需关心当前时间之外的事务（即使关心了也无暇去顾及）。我只需要关注上图中右侧的提醒里具体的项即可。甚至，如果这都看着乱，可以点击聚焦，只聚焦到一个项目的一件事情上。</p>
+<p>上下文视图中，因为我设置了人员配置。他们在什么时间做什么也是一目了然，也就可以合理安排自己的时间和他们的时间。</p>
+<p>此外，它还解决了我以下的几个实际问题：</p>
+<ul>
+<li>有时候记性差：一些小改动项别人说完就忘了，现在只要随手记到inbox中就好</li>
+<li>记性太好：做事，看到trello看板上那么多事情，没法集中注意力，精神恍惚想到其他事情上去。而omniFocus的几个筛选，可以只关心在做的、马上要做的事情，或者聚焦的单独一件事情。</li>
+<li>事情太少，没有规划：inbox中一堆事情每天都可以安排着去做。</li>
+<li>事情太多，做不完：主要是心理的慌张导致。在不紧急的事情之外，处理掉inbox中一些耗时少的简单事务，其他时间，关注自己当前的事情即可。</li>
+<li>事情多而主次不分：整理完后条理清晰，排期外的事情，急着需要完成，能交接则交接，无法交接则评估优先级重新排期。</li>
+</ul>
+<p>另外，基于前端写JavaScript的异步编程、事件型驱动，其实也大致可以理出一份做事准则。</p>
+<p>先参阅这篇文章：<a href="JavaScript 运行机制详解：再谈Event Loop">JavaScript 运行机制详解：再谈Event Loop</a>。</p>
+<blockquote>
+<p>所有任务可以分成两种，一种是同步任务（synchronous），另一种是异步任务（asynchronous）。同步任务指的是，在主线程上排队执行的任务，只有前一个任务执行完毕，才能执行后一个任务；异步任务指的是，不进入主线程、而进入“任务队列”（task queue）的任务，只有”任务队列”通知主线程，某个异步任务可以执行了，该任务才会进入主线程执行。</p>
+</blockquote>
+<p>js代码是单线程的，顺序执行。当一个元素绑定了一个click事件，用户点击了这个元素，这个事件函数被放到任务队列中。当主线程空闲，异步任务就会结束等待状态，进入执行栈，开始执行。</p>
+<p>这和我们的日常工作生活是否很类似？</p>
+<p>但是有个不同点是，js的异步是先进先出，而日常工作生活却需要依据重要性、难易程度来重新编排执行顺序。当优先级非常高，甚至需要暂停手上的工作进行高优先级任务；当自己空闲时，实际需要评估下自己的时间，然后快速解决一些简单、但是比较重要的事务。</p>
+<p>而至于在“任务队列”的，相对重要但是不至于需要暂停手上更重要的事务的任务，实际上并不应该被“主线程”（大脑）关心的。“主线程”（大脑）只需要负责处理事务就好了，处理完了，去“任务队列”取一件安排好的事情或者未安排的小事情来做，大脑的工作其实也应该是这样。</p>
+<p>而现实中的“任务队列”，实际上应该是自己在 <strong>其他时间</strong> 安排好优先级的事务列表。</p>
+<p>这又让我想起了函数式编程，每个函数只负责细微的处理；也让我想起了代码最小模块化细分（<a href="http://xaber.co/2015/06/20/%E4%BB%A3%E7%A0%81%E5%B0%81%E8%A3%85%E4%B8%8E%E7%BB%86%E5%8C%96%E5%8F%8A%E5%85%B6%E4%BB%96%E6%80%9D%E8%80%83/">代码封装与细化及其他思考</a>）。</p>
+<p>感谢：</p>
+<ul>
+<li><a href="https://trello.com/" target="_blank" rel="noopener">trello</a></li>
+<li><a href="https://www.omnigroup.com/omnifocus" target="_blank" rel="noopener">omniFocus</a></li>
+<li><a href="http://www.jianshu.com/p/9257e1e7ac39" target="_blank" rel="noopener">OmniFocus 2 for Mac 的使用指南</a></li>
+</ul>
+<p>感谢omniFocus，带给我的轻松愉悦。现在我只要把每天的事务，脑子里的东西倒到里面就好了。每个晚上的我，会花很少的时间整理事务的顺序和事务的具体内容。每个白天的我，只要负责处理既定的事务，不必再纠结于我要做什么、还有多少事情要做、时间怎么安排这类问题。</p>
+<p>事情还是那么多事情，而我那紧锁的眉头放下了。</p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/工具/" rel="tag">#工具</a>
+          
+            <a href="/tags/细化/" rel="tag">#细化</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/20/JSON-schema-使用教程文档/" rel="prev">JSON Schema 使用教程文档</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/08/03/编程十宗罪 JS范例/" rel="next">编程 JS范例</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/6246962?v=3&s=460" alt="Xaber" itemprop="image">
+          <p class="site-author-name" itemprop="name">Xaber</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xaber</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xaber';
+      var disqus_identifier = '2015/09/24/时间管理、trello与omniFocus使用对比、异步式工作流/';
+      var disqus_title = '时间管理、trello与omniFocus使用对比、异步式工作流';
+      var disqus_url = 'http://xaber.co/2015/09/24/时间管理、trello与omniFocus使用对比、异步式工作流/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+
+  </script>
+
+  
+  <script src="/js/fingerprint2.js"></script>
+<script>
+    $(function () {
+        if (!window.zhuge || !window.Fingerprint2) {
+            return;
+        }
+
+        var tb = function (num) {
+            return num < 10 ? ('0' + num) : num;
+        };
+
+        var getFormatTime = function () {
+            var a = new Date();
+            return a.getFullYear() + '-' + 
+                tb(a.getMonth() + 1) + '-' + 
+                tb(a.getDate()) + ' ' +
+                tb(a.getHours()) + ':' +
+                tb(a.getMinutes()) + ':' +
+                tb(a.getSeconds());
+        };
+
+        new Fingerprint2().get(function (result, components) {
+            //a hash, representing your device fingerprint
+            // console.log(result); 
+
+            // an array of FP components
+            // console.log(components);
+
+            // 已设备指纹作为一个用户记录
+            zhuge.identify(result, {});
+
+            zhuge.track('页面展示', {
+                'time': getFormatTime(),
+                'referrer_url': document.referrer,
+                'url': window.location.href
+            });
+        });
+    });
+</script>
+</body>
+</html>

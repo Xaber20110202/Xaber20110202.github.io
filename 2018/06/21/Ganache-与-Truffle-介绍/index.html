@@ -1,0 +1,800 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.8.0">
+  
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1">
+
+
+
+
+  <meta name="keywords" content="ethereum,solidity,Tools,">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Xaber's Blog" type="application/atom+xml">
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1">
+
+
+<meta name="description" content="Ganache主要功能为在本地启动一个以太坊私有网络，并在一开始，创建10个account，供开发者使用。 下载开箱即用 ganache Truffle官网介绍：以太坊智能合约开发、测试的一把瑞士军刀。">
+<meta name="keywords" content="ethereum,solidity,Tools">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ganache 与 Truffle 介绍">
+<meta property="og:url" content="http://xaber.co/2018/06/21/Ganache-与-Truffle-介绍/index.html">
+<meta property="og:site_name" content="Xaber&#39;s Blog">
+<meta property="og:description" content="Ganache主要功能为在本地启动一个以太坊私有网络，并在一开始，创建10个account，供开发者使用。 下载开箱即用 ganache Truffle官网介绍：以太坊智能合约开发、测试的一把瑞士军刀。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-21T11:39:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ganache 与 Truffle 介绍">
+<meta name="twitter:description" content="Ganache主要功能为在本地启动一个以太坊私有网络，并在一开始，创建10个account，供开发者使用。 下载开箱即用 ganache Truffle官网介绍：以太坊智能合约开发、测试的一把瑞士军刀。">
+
+
+<script>
+(function () {
+    window.zhuge = window.zhuge || [];
+    window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
+    window.zhuge.factory = function(b) {
+        return function() {
+            var a = Array.prototype.slice.call(arguments);
+            a.unshift(b);
+            window.zhuge.push(a);
+            return window.zhuge
+        }
+    };
+    for (var i = 0; i < window.zhuge.methods.length; i++) {
+        var key = window.zhuge.methods[i];
+        window.zhuge[key] = window.zhuge.factory(key)
+    }
+    window.zhuge.load = function(b, x) {
+        if (!document.getElementById("zhuge-js")) {
+            var a = document.createElement("script");
+            var verDate = new Date();
+            var verStr = verDate.getFullYear().toString()
+                + verDate.getMonth().toString() + verDate.getDate().toString();
+
+            a.type = "text/javascript";
+            a.id = "zhuge-js";
+            a.async = !0;
+            a.src = (location.protocol == 'http:' ? "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" : 'https://zgsdk.zhugeio.com/zhuge-lastest.min.js?v=') + verStr;
+            var c = document.getElementsByTagName("script")[0];
+            c.parentNode.insertBefore(a, c);
+            window.zhuge._init(b, x)
+        }
+    };
+    
+    // 开发模式调试
+    
+    window.zhuge.load('49fc6625ddcc4004aa98d05e876a70e0');
+    
+})();
+</script>
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide'
+  };
+</script>
+
+  <title> Ganache 与 Truffle 介绍 | Xaber's Blog </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-47125735-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Xaber's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br>
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br>
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br>
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br>
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br>
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              Ganache 与 Truffle 介绍
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2018-06-21T19:36:28+08:00" content="2018-06-21">
+            2018-06-21
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/Blockchain/" itemprop="url" rel="index">
+                  <span itemprop="name">Blockchain</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2018/06/21/Ganache-与-Truffle-介绍/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/06/21/Ganache-与-Truffle-介绍/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="Ganache"><a href="#Ganache" class="headerlink" title="Ganache"></a>Ganache</h2><p>主要功能为在本地启动一个以太坊私有网络，并在一开始，创建10个account，供开发者使用。</p>
+<p>下载开箱即用 <a href="https://truffleframework.com/ganache" target="_blank" rel="noopener">ganache</a></p>
+<h2 id="Truffle"><a href="#Truffle" class="headerlink" title="Truffle"></a>Truffle</h2><p>官网介绍：以太坊智能合约开发、测试的一把瑞士军刀。</p>
+<a id="more"></a>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p><code>npm install -g truffle</code></p>
+<h3 id="教程系列"><a href="#教程系列" class="headerlink" title="教程系列"></a>教程系列</h3><p>运行完以下四个教程，基本能掌握 <code>truffle</code> 的大致用法（此文可不看）。</p>
+<ol>
+<li><a href="https://truffleframework.com/tutorials/debugger-variable-inspection" target="_blank" rel="noopener">VARIABLE INSPECTION: GOING DEEPER WITH THE TRUFFLE SOLIDITY DEBUGGER</a></li>
+<li><a href="https://truffleframework.com/tutorials/debugging-a-smart-contract" target="_blank" rel="noopener">DEBUGGING A SMART CONTRACT</a></li>
+<li><a href="https://truffleframework.com/tutorials/robust-smart-contracts-with-openzeppelin" target="_blank" rel="noopener">BUILDING ROBUST SMART CONTRACTS WITH OPENZEPPELIN</a></li>
+<li><a href="https://truffleframework.com/tutorials/pet-shop" target="_blank" rel="noopener">ETHEREUM PET SHOP</a></li>
+</ol>
+<h3 id="基本用法"><a href="#基本用法" class="headerlink" title="基本用法"></a>基本用法</h3><p><code>truffle init</code> 通过脚本工具创建一个初始化，里面包含</p>
+<ol>
+<li><code>contracts</code></li>
+<li><code>migrations</code></li>
+<li><code>tests</code></li>
+<li><code>truffle.js</code></li>
+</ol>
+<p>其中 <code>truffle.js</code> 中配置项，用于连接对应的网络。例如 <code>Ganache</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = &#123;</span><br><span class="line">  <span class="comment">// See &lt;http://truffleframework.com/docs/advanced/configuration&gt;</span></span><br><span class="line">  <span class="comment">// for more about customizing your Truffle configuration!</span></span><br><span class="line">  networks: &#123;</span><br><span class="line">    development: &#123;</span><br><span class="line">      host: <span class="string">"127.0.0.1"</span>,</span><br><span class="line">      port: <span class="number">7545</span>,</span><br><span class="line">      network_id: <span class="string">"*"</span> <span class="comment">// Match any network id</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>contracts</code> 目录下编写智能合约。</p>
+<p><code>migrations</code> 目录下对应文件用于部署智能合约到区块链上，以 1、2、3… 等序号开头。</p>
+<p><code>test</code> 目录下，用于编写测试。支持 智能合约<code>.sol</code>的测试，以及支持使用 <code>javascript</code> 进行测试（使用 <a href="https://github.com/mochajs/mocha" target="_blank" rel="noopener">mocha</a> 和 <a href="https://github.com/chaijs/chai" target="_blank" rel="noopener">chai</a>）。</p>
+<h3 id="truffle-boxes"><a href="#truffle-boxes" class="headerlink" title="truffle boxes"></a>truffle boxes</h3><p><code>truffle init</code> 构建一个空项目。而 <code>truffle unbox &lt;boxname&gt;</code> 用于从远程仓库拉一个box下来做初始化。</p>
+<p>当前已有的 box 列表见：<a href="https://truffleframework.com/boxes" target="_blank" rel="noopener">TRUFFLE BOXES</a></p>
+<h3 id="truffle-compile"><a href="#truffle-compile" class="headerlink" title="truffle compile"></a>truffle compile</h3><p><code>truffle compile</code> 编译 <code>contracts</code> 目录下 <code>.sol</code> 文件，在 <code>build/contracts</code> 目录下生成对应 artifacts JSON 文件。</p>
+<p>如果需要重新编译，使用 <code>truffle compile --all</code></p>
+<p>其他内容具体见：<a href="https://truffleframework.com/docs/getting_started/compile" target="_blank" rel="noopener">COMPILING CONTRACTS</a></p>
+<h3 id="truffle-migrate"><a href="#truffle-migrate" class="headerlink" title="truffle migrate"></a>truffle migrate</h3><p><code>truffle migrate</code> 按照 <code>migrations</code> 下的序号命名顺序，进行调用并部署。</p>
+<p>此部分功能，主要使用 <a href="https://github.com/trufflesuite/truffle-contract" target="_blank" rel="noopener">truffle-contract</a> 工具实现。</p>
+<p>一般形态为：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> Migrations = artifacts.require(<span class="string">"./Migrations.sol"</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">deployer</span>) </span>&#123;</span><br><span class="line">  deployer.deploy(Migrations);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p><code>artifacts</code> 是 <code>truffle-contract</code> 提供的功能，<code>require</code> 需要是 <code>contracts/&lt;name&gt;.sol</code> 文件中同名的 <code>name</code></p>
+<p>而如果同一个<code>.sol</code>文件中，定义了两个 <code>contract</code>，可通过 <code>require(&lt;contract-name&gt;)</code> 的形式来引入。</p>
+<p><code>function</code> 除了接收 <code>deployer</code> 之外，还接收 <code>network</code> 参数，<code>deployer.deploy</code> 也支持其他的参数形式传递。</p>
+<p>具体见：<a href="https://truffleframework.com/docs/getting_started/migrations" target="_blank" rel="noopener">RUNNING MIGRATIONS</a></p>
+<h3 id="truffle-test"><a href="#truffle-test" class="headerlink" title="truffle test"></a>truffle test</h3><p>详见：</p>
+<ol>
+<li><a href="https://truffleframework.com/docs/getting_started/testing" target="_blank" rel="noopener">TESTING YOUR CONTRACTS</a></li>
+<li><a href="https://truffleframework.com/docs/getting_started/javascript-tests" target="_blank" rel="noopener">WRITING TESTS IN JAVASCRIPT</a></li>
+<li><a href="https://truffleframework.com/docs/getting_started/solidity-tests" target="_blank" rel="noopener">WRITING TESTS IN SOLIDITY</a></li>
+</ol>
+<h3 id="packages"><a href="#packages" class="headerlink" title="packages"></a>packages</h3><p><code>import</code> 优先引用 <code>.sol</code> 模块（同名情况下）</p>
+<h3 id="contract-packages"><a href="#contract-packages" class="headerlink" title="contract packages"></a>contract packages</h3><h4 id="ethpm"><a href="#ethpm" class="headerlink" title="ethpm"></a>ethpm</h4><p><code>truffle install &lt;eth-package-name&gt;</code></p>
+<p>包列表（界面较为简陋，基本没什么人提交，时间戳还是错的，文件存在 ipfs 上）—— <a href="https://www.ethpm.com/registry/packages" target="_blank" rel="noopener">Ethereum Package Management</a></p>
+<p>更多内容见：<a href="https://truffleframework.com/docs/getting_started/packages-ethpm" target="_blank" rel="noopener">PACKAGE MANAGEMENT VIA ETHPM</a></p>
+<h4 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h4><p>一些example contracts 可直接拿来使用：<a href="https://github.com/ConsenSys/example-truffle-library" target="_blank" rel="noopener">example-truffle-library</a> —— 包已经被移除了 😊</p>
+<h3 id="Debug"><a href="#Debug" class="headerlink" title="Debug"></a>Debug</h3><ol>
+<li>教程 <a href="https://truffleframework.com/tutorials/debugger-variable-inspection" target="_blank" rel="noopener">VARIABLE INSPECTION: GOING DEEPER WITH THE TRUFFLE SOLIDITY DEBUGGER</a></li>
+<li>文档 <a href="https://truffleframework.com/docs/getting_started/debugging" target="_blank" rel="noopener">DEBUGGING YOUR CONTRACTS</a></li>
+</ol>
+<h3 id="Console-与-debug"><a href="#Console-与-debug" class="headerlink" title="Console 与 debug"></a>Console 与 debug</h3><p><code>truffle console</code>、<code>truffle develop</code> 都是进入 <code>truffle</code> 环境，相应的 <code>compile</code> 等命令，只需要敲一个 <code>compile</code> 即可，不需要 <code>truffle compile</code></p>
+<p>另外一些高级选项，如在写、调试智能合约，如果有需要，可以再参考配置与更多参数选项 —— 见 <strong>ADVANCED</strong> 部分。<a href="https://truffleframework.com/docs/advanced/configuration" target="_blank" rel="noopener">CONFIGURATION</a></p>
+<h3 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h3><ol>
+<li><a href="https://github.com/trufflesuite/truffle-hdwallet-provider" target="_blank" rel="noopener">truffle-hdwallet-provider</a> 通过助记词构建一个 web3 provider。</li>
+<li><a href="https://github.com/OpenZeppelin/openzeppelin-solidity" target="_blank" rel="noopener">openzeppelin-solidity</a> 已存在的、安全的智能合约通用代码，例如 <code>SafeMath</code> 等，降低出问题的风险。</li>
+<li><a href="https://truffleframework.com/docs/drizzle/getting-started" target="_blank" rel="noopener">DRIZZLE</a> 前端开发Dapp的工具</li>
+</ol>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ethereum/" rel="tag">#ethereum</a>
+          
+            <a href="/tags/solidity/" rel="tag">#solidity</a>
+          
+            <a href="/tags/Tools/" rel="tag">#Tools</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/13/Jest文档备注/" rel="next">Jest文档备注</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/6246962?v=3&s=460" alt="Xaber" itemprop="image">
+          <p class="site-author-name" itemprop="name">Xaber</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Ganache"><span class="nav-number">1.</span> <span class="nav-text">Ganache</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Truffle"><span class="nav-number">2.</span> <span class="nav-text">Truffle</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#教程系列"><span class="nav-number">2.2.</span> <span class="nav-text">教程系列</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基本用法"><span class="nav-number">2.3.</span> <span class="nav-text">基本用法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#truffle-boxes"><span class="nav-number">2.4.</span> <span class="nav-text">truffle boxes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#truffle-compile"><span class="nav-number">2.5.</span> <span class="nav-text">truffle compile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#truffle-migrate"><span class="nav-number">2.6.</span> <span class="nav-text">truffle migrate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#truffle-test"><span class="nav-number">2.7.</span> <span class="nav-text">truffle test</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#packages"><span class="nav-number">2.8.</span> <span class="nav-text">packages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#contract-packages"><span class="nav-number">2.9.</span> <span class="nav-text">contract packages</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ethpm"><span class="nav-number">2.9.1.</span> <span class="nav-text">ethpm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#npm"><span class="nav-number">2.9.2.</span> <span class="nav-text">npm</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Debug"><span class="nav-number">2.10.</span> <span class="nav-text">Debug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Console-与-debug"><span class="nav-number">2.11.</span> <span class="nav-text">Console 与 debug</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他"><span class="nav-number">2.12.</span> <span class="nav-text">其他</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xaber</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xaber';
+      var disqus_identifier = '2018/06/21/Ganache-与-Truffle-介绍/';
+      var disqus_title = 'Ganache 与 Truffle 介绍';
+      var disqus_url = 'http://xaber.co/2018/06/21/Ganache-与-Truffle-介绍/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+
+  </script>
+
+  
+  <script src="/js/fingerprint2.js"></script>
+<script>
+    $(function () {
+        if (!window.zhuge || !window.Fingerprint2) {
+            return;
+        }
+
+        var tb = function (num) {
+            return num < 10 ? ('0' + num) : num;
+        };
+
+        var getFormatTime = function () {
+            var a = new Date();
+            return a.getFullYear() + '-' + 
+                tb(a.getMonth() + 1) + '-' + 
+                tb(a.getDate()) + ' ' +
+                tb(a.getHours()) + ':' +
+                tb(a.getMinutes()) + ':' +
+                tb(a.getSeconds());
+        };
+
+        new Fingerprint2().get(function (result, components) {
+            //a hash, representing your device fingerprint
+            // console.log(result); 
+
+            // an array of FP components
+            // console.log(components);
+
+            // 已设备指纹作为一个用户记录
+            zhuge.identify(result, {});
+
+            zhuge.track('页面展示', {
+                'time': getFormatTime(),
+                'referrer_url': document.referrer,
+                'url': window.location.href
+            });
+        });
+    });
+</script>
+</body>
+</html>

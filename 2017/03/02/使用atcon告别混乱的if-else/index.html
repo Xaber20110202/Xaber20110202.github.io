@@ -1,0 +1,785 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.8.0">
+  
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1">
+
+
+
+
+  <meta name="keywords" content="可维护性,if else,">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Xaber's Blog" type="application/atom+xml">
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1">
+
+
+<meta name="description" content="这一篇，来聊聊混乱的if、else是怎么来的，怎么和他们说再见，以及写的一个工具函数atcon。">
+<meta name="keywords" content="可维护性,if else">
+<meta property="og:type" content="article">
+<meta property="og:title" content="使用atcon告别混乱的if else">
+<meta property="og:url" content="http://xaber.co/2017/03/02/使用atcon告别混乱的if-else/index.html">
+<meta property="og:site_name" content="Xaber&#39;s Blog">
+<meta property="og:description" content="这一篇，来聊聊混乱的if、else是怎么来的，怎么和他们说再见，以及写的一个工具函数atcon。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-03-02T06:37:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="使用atcon告别混乱的if else">
+<meta name="twitter:description" content="这一篇，来聊聊混乱的if、else是怎么来的，怎么和他们说再见，以及写的一个工具函数atcon。">
+
+
+<script>
+(function () {
+    window.zhuge = window.zhuge || [];
+    window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
+    window.zhuge.factory = function(b) {
+        return function() {
+            var a = Array.prototype.slice.call(arguments);
+            a.unshift(b);
+            window.zhuge.push(a);
+            return window.zhuge
+        }
+    };
+    for (var i = 0; i < window.zhuge.methods.length; i++) {
+        var key = window.zhuge.methods[i];
+        window.zhuge[key] = window.zhuge.factory(key)
+    }
+    window.zhuge.load = function(b, x) {
+        if (!document.getElementById("zhuge-js")) {
+            var a = document.createElement("script");
+            var verDate = new Date();
+            var verStr = verDate.getFullYear().toString()
+                + verDate.getMonth().toString() + verDate.getDate().toString();
+
+            a.type = "text/javascript";
+            a.id = "zhuge-js";
+            a.async = !0;
+            a.src = (location.protocol == 'http:' ? "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" : 'https://zgsdk.zhugeio.com/zhuge-lastest.min.js?v=') + verStr;
+            var c = document.getElementsByTagName("script")[0];
+            c.parentNode.insertBefore(a, c);
+            window.zhuge._init(b, x)
+        }
+    };
+    
+    // 开发模式调试
+    
+    window.zhuge.load('49fc6625ddcc4004aa98d05e876a70e0');
+    
+})();
+</script>
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide'
+  };
+</script>
+
+  <title> 使用atcon告别混乱的if else | Xaber's Blog </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-47125735-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Xaber's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br>
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br>
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br>
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br>
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br>
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              使用atcon告别混乱的if else
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2017-03-02T00:23:45+08:00" content="2017-03-02">
+            2017-03-02
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/编程系列/" itemprop="url" rel="index">
+                  <span itemprop="name">编程系列</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2017/03/02/使用atcon告别混乱的if-else/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/02/使用atcon告别混乱的if-else/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><p>这一篇，来聊聊混乱的<code>if、else</code>是怎么来的，怎么和他们说再见，以及写的一个工具函数<code>atcon</code>。</p>
+<a id="more"></a>
+<h3 id="一、代码是怎样混乱的"><a href="#一、代码是怎样混乱的" class="headerlink" title="一、代码是怎样混乱的"></a>一、代码是怎样混乱的</h3><p>最简单的一个需求：根据活动改变二维码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">qrcode = &apos;img_a&apos;;</span><br><span class="line"></span><br><span class="line">// 活动二</span><br><span class="line">if (activity === 2) &#123;</span><br><span class="line">    qrcode = &apos;img_b&apos;;</span><br><span class="line">// 活动三</span><br><span class="line">&#125; else if (activity === 3) &#123;</span><br><span class="line">    qrcode = &apos;img_c&apos;;</span><br><span class="line">// 活动四</span><br><span class="line">&#125; else if (activity === 4) &#123;</span><br><span class="line">    qrcode = &apos;img_d&apos;;</span><br><span class="line">// 活动五</span><br><span class="line">&#125; else if (activity === 5) &#123;</span><br><span class="line">    qrcode = &apos;img_e&apos;;</span><br><span class="line">// 活动六</span><br><span class="line">&#125; else if (activity === 6) &#123;</span><br><span class="line">    qrcode = &apos;img_f&apos;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>嗯，这个逻辑看起来还是挺简单的。这时候，我们增加一个变量<code>notice</code>，因为需要根据活动改变文案，而且只在某些特殊情况变更，于是它可能变成了这样子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">qrcode = &apos;img_a&apos;;</span><br><span class="line">notice = &apos;文案一&apos;;</span><br><span class="line"></span><br><span class="line">// 活动二</span><br><span class="line">if (activity === 2) &#123;</span><br><span class="line">    qrcode = &apos;img_b&apos;;</span><br><span class="line">// 活动三</span><br><span class="line">&#125; else if (activity === 3) &#123;</span><br><span class="line">    qrcode = &apos;img_c&apos;;</span><br><span class="line">    notice = &apos;文案三&apos;;</span><br><span class="line">// 活动四</span><br><span class="line">&#125; else if (activity === 4) &#123;</span><br><span class="line">    qrcode = &apos;img_d&apos;;</span><br><span class="line">// 活动五</span><br><span class="line">&#125; else if (activity === 5) &#123;</span><br><span class="line">    qrcode = &apos;img_e&apos;;</span><br><span class="line">    notice = &apos;文案五&apos;;</span><br><span class="line">// 活动六</span><br><span class="line">&#125; else if (activity === 6) &#123;</span><br><span class="line">    qrcode = &apos;img_f&apos;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看起来也没什么。但是这时候，产品跑来说，活动下线了，二维码需要做区分。于是代码可能又变成了这样子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">qrcode = &apos;img_a&apos;;</span><br><span class="line">notice = &apos;文案零&apos;;</span><br><span class="line"></span><br><span class="line">// 活动二</span><br><span class="line">if (activity === 2) &#123;</span><br><span class="line">    qrcode = &apos;img_b&apos;;</span><br><span class="line">    if (isEnd) &#123;</span><br><span class="line">        qrcode = &apos;img_h&apos;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">// 活动三</span><br><span class="line">&#125; else if (activity === 3) &#123;</span><br><span class="line">    qrcode = &apos;img_c&apos;;</span><br><span class="line">    notice = &apos;文案三&apos;;</span><br><span class="line">    if (isEnd) &#123;</span><br><span class="line">        qrcode = &apos;img_i&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">// 活动四</span><br><span class="line">&#125; else if (activity === 4) &#123;</span><br><span class="line">    qrcode = &apos;img_d&apos;;</span><br><span class="line">    if (isEnd) &#123;</span><br><span class="line">        qrcode = &apos;img_j&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">// 活动五</span><br><span class="line">&#125; else if (activity === 5) &#123;</span><br><span class="line">    qrcode = &apos;img_e&apos;;</span><br><span class="line">    notice = &apos;文案五&apos;;</span><br><span class="line">    if (isEnd) &#123;</span><br><span class="line">        qrcode = &apos;img_k&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">// 活动六</span><br><span class="line">&#125; else if (activity === 6) &#123;</span><br><span class="line">    qrcode = &apos;img_f&apos;;</span><br><span class="line">    if (isEnd) &#123;</span><br><span class="line">        qrcode = &apos;img_l&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if (isEnd) &#123;</span><br><span class="line">    notice = &apos;下线了&apos;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>是不是开始有点懵逼了？Hold on，隔了几天，产品又跑来跟我们说，活动三、四、五效果不是特别好，我们准备改一版样式，做下ABTEST看看效果。</p>
+<p>这意味着我们的代码里又要增加一个变量，于是我们只能说，卧槽。</p>
+<h3 id="二、如何改造"><a href="#二、如何改造" class="headerlink" title="二、如何改造"></a>二、如何改造</h3><p>或者说，如何在一开始给自己留好后路。</p>
+<p>我们先从第1步重新开始，如果用对象保存这些关联，是不是就会简单很多呢。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">imgMap = &#123;</span><br><span class="line">    &apos;2&apos;: &apos;img_b&apos;,</span><br><span class="line">    &apos;3&apos;: &apos;img_c&apos;,</span><br><span class="line">    &apos;4&apos;: &apos;img_d&apos;,</span><br><span class="line">    &apos;5&apos;: &apos;img_e&apos;,</span><br><span class="line">    &apos;6&apos;: &apos;img_f&apos;</span><br><span class="line">&#125;;</span><br><span class="line">qrcode = imgMap[activity] || &apos;img_a&apos;;</span><br></pre></td></tr></table></figure>
+<p>第2步，增加的notice，其实和qrcode没有任何关联。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">noticeMap = &#123;</span><br><span class="line">    &apos;3&apos;: &apos;文案三&apos;,</span><br><span class="line">    &apos;5&apos;: &apos;文案五&apos;</span><br><span class="line">&#125;;</span><br><span class="line">notice = noticeMap[activity] || &apos;文案零&apos;;</span><br></pre></td></tr></table></figure>
+<p>活动下线区分，我们稍稍改变下结构好了，几分钟的事。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">imgMap = &#123;</span><br><span class="line">    online: &#123;</span><br><span class="line">        &apos;2&apos;: &apos;img_b&apos;,</span><br><span class="line">        // .....etc.</span><br><span class="line">    &#125;,</span><br><span class="line">    offline: &#123;</span><br><span class="line">        &apos;2&apos;: &apos;img_h&apos;,</span><br><span class="line">        // .....etc.</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line">var noticeMap = &#123;</span><br><span class="line">    online: &#123;</span><br><span class="line">        &apos;3&apos;: &apos;文案三&apos;,</span><br><span class="line">        &apos;5&apos;: &apos;文案五&apos;</span><br><span class="line">    &#125;,</span><br><span class="line">    offline: &apos;下线了&apos;</span><br><span class="line">&#125;;</span><br><span class="line">qrcode = imgMap[isEnd ? &apos;offline&apos; : &apos;online&apos;][activity] || &apos;img_a&apos;;</span><br><span class="line"></span><br><span class="line">if (isEnd) &#123;</span><br><span class="line">    notice = noticeMap.offline;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    notice = noticeMap.online[activity] || &apos;文案零&apos;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面，我们的编码方式，整体还是挺不错的，每种状态都差不多能对应一个结果。</p>
+<p>但是，有没有发现，我们在<code>notice</code>的处理上，又开始写<code>if、else</code>了。</p>
+<p>这里先不提，我们继续下面一步。</p>
+<p>如果只是对在线的活动二、三做abtest，并改变里面的二维码和图片，我们该怎么做呢？</p>
+<p>如果采用上面imgMap一一对应的关系，数据结构就变成了这样子：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">imgMap = &#123;</span><br><span class="line">    online: &#123;</span><br><span class="line">        &apos;2&apos;: &#123;</span><br><span class="line">            a: &apos;img_b&apos;,</span><br><span class="line">            b: &apos;img_o&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        &apos;3&apos;: &#123;</span><br><span class="line">            a: &apos;img_b&apos;,</span><br><span class="line">            b: &apos;img_p&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        &apos;4&apos;: &#123;</span><br><span class="line">            a: &apos;img_c&apos;,</span><br><span class="line">            d: &apos;img_c&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        // .....etc.</span><br><span class="line">        </span><br><span class="line">    &#125;,</span><br><span class="line">    offline: &#123;</span><br><span class="line">        &apos;2&apos;: &#123;</span><br><span class="line">            a: &apos;img_h&apos;,</span><br><span class="line">            b: &apos;img_h&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        &apos;3&apos;: &#123;</span><br><span class="line">            a: &apos;img_b&apos;,</span><br><span class="line">            b: &apos;img_b&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        &apos;4&apos;: &#123;</span><br><span class="line">            a: &apos;img_c&apos;,</span><br><span class="line">            d: &apos;img_c&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        // .....etc.</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>有没有发现，为了保证我们可以一次性访问到具体对应的值，我们做了<strong>非常多重复配置</strong>。</p>
+<p>我们当然不希望进行重复配置，而是希望处理的结构可以像这样简单：</p>
+<p>var noticeMap = {<br>    online: {<br>        ‘2’: {<br>            a: ‘abtest文案二’<br>        },<br>        ‘3’: {<br>            a: ‘abtest文案三’,<br>            b: ‘文案三’<br>        },<br>        ‘5’: ‘文案五’<br>    },<br>    offline: ‘下线了’<br>};</p>
+<p>但是我们怎么提取对应的值，又如何避免提取的过程不会出错呢。</p>
+<p>像上面notice一样，我们只能写<code>if、else</code>判断代码，外加循环判断对应属性的值是否存在，好像又要重走以前的老路。</p>
+<h3 id="三、使用-atcon"><a href="#三、使用-atcon" class="headerlink" title="三、使用 atcon"></a>三、使用 atcon</h3><p>atcon就是用来解决这个问题，封装了属性值提取、reduce循环判断等处理，让大家可以拥有清晰美妙的结构的同时，也能非常方便地提取对应条件分支的值。</p>
+<p>使用方式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">imgMap = &#123;</span><br><span class="line">    online: &#123;</span><br><span class="line">        &apos;2&apos;: &#123;</span><br><span class="line">            a: &apos;img_b&apos;,</span><br><span class="line">            b: &apos;img_o&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        &apos;3&apos;: &#123;</span><br><span class="line">            a: &apos;img_b&apos;,</span><br><span class="line">            b: &apos;img_p&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        &apos;4&apos;: &apos;img_c&apos;,</span><br><span class="line">        &apos;5&apos;: &apos;img_d&apos;,</span><br><span class="line">        &apos;6&apos;: &apos;img_e&apos;</span><br><span class="line">    &#125;,</span><br><span class="line">    offline: &#123;</span><br><span class="line">        &apos;2&apos;: &apos;img_h&apos;,</span><br><span class="line">        &apos;3&apos;: &apos;img_i&apos;,</span><br><span class="line">        &apos;4&apos;: &apos;img_j&apos;,</span><br><span class="line">        &apos;5&apos;: &apos;img_k&apos;,</span><br><span class="line">        &apos;6&apos;: &apos;img_l&apos;</span><br><span class="line">    &#125;,</span><br><span class="line">    __DEFAULT__: &apos;img_a&apos;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">noticeMap = &#123;</span><br><span class="line">    online: &#123;</span><br><span class="line">        &apos;2&apos;: &#123;</span><br><span class="line">            a: &apos;abtest文案二&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        &apos;3&apos;: &#123;</span><br><span class="line">            a: &apos;abtest文案三&apos;,</span><br><span class="line">            b: &apos;文案三&apos;</span><br><span class="line">        &#125;,</span><br><span class="line">        &apos;5&apos;: &apos;文案五&apos;</span><br><span class="line">    &#125;,</span><br><span class="line">    offline: &apos;下线了&apos;</span><br><span class="line">    __DEFAULT__: &apos;文案零&apos;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">isImg = img =&gt; img.search(/\.(png|jpg)$/) !== -1;</span><br><span class="line">isString = str =&gt; Object.prototype.toString.call(str) === &apos;[object String]&apos;;</span><br><span class="line"></span><br><span class="line">qrcode = atcon(imgMap, [isEnd ? &apos;offline&apos; : &apos;online&apos;, activity, isAbtest ? &apos;a&apos; : &apos;b&apos;], isImg);</span><br><span class="line">notice = atcon(noticeMap, [isEnd ? &apos;offline&apos; : &apos;online&apos;, activity, isAbtest ? &apos;a&apos; : &apos;b&apos;], isString);</span><br></pre></td></tr></table></figure>
+<p>atcon将我们一开始的默认值，也通过<code>__DEFAULT__</code>的提取，做了指定。因此，复杂的分支判断，只要先通过细致设想的结构，然后与atcon完美地结合起来，就可以开始和<code>if else</code>说再见了。</p>
+<h3 id="四、结构变更"><a href="#四、结构变更" class="headerlink" title="四、结构变更"></a>四、结构变更</h3><p>如果这时候，需要把所有abtest的a，文案全部改成一样的，而下线的文案保持跟上线的文案一致，我们甚至能够直接改变noticeMap结构。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">noticeMap = &#123;</span><br><span class="line">    b: &#123;</span><br><span class="line">        &apos;3&apos;: &apos;文案三&apos;,</span><br><span class="line">        &apos;5&apos;: &apos;文案五&apos;</span><br><span class="line">    &#125;,</span><br><span class="line">    a: &apos;一样的ABTEST文案&apos;,</span><br><span class="line">    __DEFAULT__: &apos;文案零&apos;</span><br><span class="line">&#125;;</span><br><span class="line">notice = atcon(noticeMap, [isAbtest ? &apos;a&apos; : &apos;b&apos;, activity], isString);</span><br></pre></td></tr></table></figure>
+<p>我们改变思路、结构的同时，改变atcon第二个数组参数的数组项位置和数量，就达到了调整复杂<code>if else</code>逻辑的目的。</p>
+<h3 id="五、最后"><a href="#五、最后" class="headerlink" title="五、最后"></a>五、最后</h3><p>我们不改逻辑，基本不改代码，我们只改配置。</p>
+<p>从现在起，告别混乱的<code>if else</code>。</p>
+<p>具体见：<a href="https://github.com/Xaber20110202/atcon" target="_blank" rel="noopener">atcon</a></p>
+<hr>
+<h3 id="思路来源"><a href="#思路来源" class="headerlink" title="思路来源"></a>思路来源</h3><ul>
+<li><a href="https://book.douban.com/subject/4822685/" target="_blank" rel="noopener">编码 隐匿在计算机软硬件背后的语言</a> —— 用符号代替语言</li>
+<li><a href="https://book.douban.com/subject/26382780/" target="_blank" rel="noopener">JavaScript设计模式与开发实践</a> —— 策略模式、职责链模式</li>
+<li><a href="https://github.com/milan-hwj/judgment" target="_blank" rel="noopener">milan-hwj</a></li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/可维护性/" rel="tag">#可维护性</a>
+          
+            <a href="/tags/if-else/" rel="tag">#if else</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/30/前端职场技术路径/" rel="prev">前端职场技术路径</a>
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/22/微信授权登录流程/" rel="next">微信授权登录流程</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/6246962?v=3&s=460" alt="Xaber" itemprop="image">
+          <p class="site-author-name" itemprop="name">Xaber</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、代码是怎样混乱的"><span class="nav-number">1.</span> <span class="nav-text">一、代码是怎样混乱的</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、如何改造"><span class="nav-number">2.</span> <span class="nav-text">二、如何改造</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、使用-atcon"><span class="nav-number">3.</span> <span class="nav-text">三、使用 atcon</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、结构变更"><span class="nav-number">4.</span> <span class="nav-text">四、结构变更</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、最后"><span class="nav-number">5.</span> <span class="nav-text">五、最后</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#思路来源"><span class="nav-number">6.</span> <span class="nav-text">思路来源</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xaber</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xaber';
+      var disqus_identifier = '2017/03/02/使用atcon告别混乱的if-else/';
+      var disqus_title = '使用atcon告别混乱的if else';
+      var disqus_url = 'http://xaber.co/2017/03/02/使用atcon告别混乱的if-else/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+
+  </script>
+
+  
+  <script src="/js/fingerprint2.js"></script>
+<script>
+    $(function () {
+        if (!window.zhuge || !window.Fingerprint2) {
+            return;
+        }
+
+        var tb = function (num) {
+            return num < 10 ? ('0' + num) : num;
+        };
+
+        var getFormatTime = function () {
+            var a = new Date();
+            return a.getFullYear() + '-' + 
+                tb(a.getMonth() + 1) + '-' + 
+                tb(a.getDate()) + ' ' +
+                tb(a.getHours()) + ':' +
+                tb(a.getMinutes()) + ':' +
+                tb(a.getSeconds());
+        };
+
+        new Fingerprint2().get(function (result, components) {
+            //a hash, representing your device fingerprint
+            // console.log(result); 
+
+            // an array of FP components
+            // console.log(components);
+
+            // 已设备指纹作为一个用户记录
+            zhuge.identify(result, {});
+
+            zhuge.track('页面展示', {
+                'time': getFormatTime(),
+                'referrer_url': document.referrer,
+                'url': window.location.href
+            });
+        });
+    });
+</script>
+</body>
+</html>

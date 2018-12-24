@@ -1,0 +1,138 @@
+body {
+	font-family:'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+h1 {
+	font-size:2em;
+}
+#wrapper {
+	width:100%;
+	height:100%;
+	overflow: hidden;
+	background: #f0f0f0;
+}
+#wrapper .title {
+	width:15em;
+	margin:1em auto;
+	border-top:2px #FFCC33 solid;
+	text-align: center;
+	padding:0.5em;
+}
+.title h1 span {
+	margin-top:1em;
+	width:7em;
+}
+.effect {
+	background:url(../images/p1_bg.jpg) no-repeat;
+	height:1500px;
+	overflow: hidden;
+	width:1080px;
+	margin:0 auto;
+}
+.effect .home {
+	text-decoration: none;
+	text-indent: -999px;
+	overflow:hidden;
+	display: block;
+	width:200px;
+	height:112px;
+	background: url(../images/4197195_1364475495_3.jpg) no-repeat;
+	margin-top: 180px;
+	margin-right: auto;
+	margin-bottom: 50px;
+	margin-left: auto;
+	border-radius: 40px;
+}
+.effect span, .effect b, .effect i, .effect strong {
+	display:block;
+	line-height:1.5em;
+}
+.effect i {
+	color:#FFFFCC;
+	font-size: 2em;
+	font-style: normal;
+}
+.effect b {
+	font-size:2.2em;
+	color:#FF9900;
+}
+.effect strong {
+	font-size:1.5em;
+	color:#FFFFCC;
+}
+.effect {
+	position:relative;
+}
+.effect div {
+	position:absolute;
+	border-radius: 50%;
+	width:185px;
+	height:185px;
+	text-align: center;
+	overflow: hidden;
+}
+.effect div :first-child {
+	margin-top:45px;
+}
+.effect div img:first-child {
+	margin-top:0;
+}
+.effect .most_other_ef {
+	background:#D9D9D9;
+	width:150px;
+	height:150px;
+}
+.effect .most_other_ef :first-child {
+	margin-top:30px;
+}
+.effect .listened {
+	background:#FF6666;
+	top:0;
+	right:10px;
+}
+.effect .comment {
+	background:#9933FF;
+	top:130px;
+	left:130px;
+}
+.effect .made {
+	background:#0099CC;
+	top:270px;
+	right:180px;
+}
+.effect .most_album_1 {
+	top:380px;
+	left:100px;
+}
+.effect .most_album_2 {
+	top:680px;
+	left:140px;
+}
+.effect .most_album_3 {
+	top:500px;
+	left:200px;
+}
+.effect .most_artist_1 {
+	top:780px;
+	right:0;
+}
+.effect .most_artist_2 {
+	top:550px;
+	right:350px;
+}
+.effect .most_artist_3 {
+	top:700px;
+	right:230px;
+}
+.effect .most_song_1 {
+	top:850px;
+	left:10px;
+}
+.effect .most_song_2 {
+	background: #006633;
+	top:880px;
+	left:200px;
+}
+.effect .most_song_3 {
+	top:1100px;
+	left:160px;
+}
