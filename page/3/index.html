@@ -1092,7 +1092,7 @@
 <li>html已更新，引用的脚本地址也是新的：/production/a-rfgt45jfsg.js</li>
 </ol>
 <p>因为/production/a-gthdtyh65.js和/production/a-rfgt45jfsg.js实际已经不是同一个文件（同一文件的不同版本），那么也就不会有缓存的问题了。</p>
-<p>优化后的用户访问流程：<br><img src="http://i937.photobucket.com/albums/ad214/forblog6/_zpsvhu5jhl3.png" alt="用户访问流程图"></p>
+<p>优化后的用户访问流程：<br><img src="/images/zpsvhu5jhl3.png" alt="用户访问流程图"></p>
 <p>静态资源的访问，始终经过本地缓存、cdn。<br>此外，如果版本信息文件处理错误，为避免工具或者人工问题，导致/production/a-gthdtyh65.js文件的访问活着全站性的版本文件没有更新，得到的404，本地服务器在请求获得时将返回一个302 redirect，将文件重定向到/production/a.js，然后返回。</p>
 <p>更深的优化项：</p>
 <ol>

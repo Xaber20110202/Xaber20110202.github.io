@@ -46,12 +46,12 @@
 <meta property="og:site_name" content="Xaber&#39;s Blog">
 <meta property="og:description" content="缓存问题可以算是至今为止遇到最多维持很久的一个问题。这个问题的发生，导致了脚本报错页面不可访问、样式错乱的情况，而且持续时间长。 缓存可以归为两部分，一部分是页面的缓存，一部分是js、css引用的文件缓存。于是具体缓存问题的发生，可以归为两类：  html已经更新了，但是js、css文件取到的还是缓存的文件。 js、css文件已经更新了，但是html缓存还没有更新。  因为两部分缓存的设置大部分">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://i937.photobucket.com/albums/ad214/forblog6/_zpsvhu5jhl3.png">
-<meta property="og:updated_time" content="2017-02-07T03:09:15.000Z">
+<meta property="og:image" content="http://xaber.co/images/zpsvhu5jhl3.png">
+<meta property="og:updated_time" content="2018-12-26T16:51:47.793Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="静态资源文件配置及缓存问题解决">
 <meta name="twitter:description" content="缓存问题可以算是至今为止遇到最多维持很久的一个问题。这个问题的发生，导致了脚本报错页面不可访问、样式错乱的情况，而且持续时间长。 缓存可以归为两部分，一部分是页面的缓存，一部分是js、css引用的文件缓存。于是具体缓存问题的发生，可以归为两类：  html已经更新了，但是js、css文件取到的还是缓存的文件。 js、css文件已经更新了，但是html缓存还没有更新。  因为两部分缓存的设置大部分">
-<meta name="twitter:image" content="http://i937.photobucket.com/albums/ad214/forblog6/_zpsvhu5jhl3.png">
+<meta name="twitter:image" content="http://xaber.co/images/zpsvhu5jhl3.png">
 
 
 <script>
@@ -304,7 +304,7 @@
 <li>html已更新，引用的脚本地址也是新的：/production/a-rfgt45jfsg.js</li>
 </ol>
 <p>因为/production/a-gthdtyh65.js和/production/a-rfgt45jfsg.js实际已经不是同一个文件（同一文件的不同版本），那么也就不会有缓存的问题了。</p>
-<p>优化后的用户访问流程：<br><img src="http://i937.photobucket.com/albums/ad214/forblog6/_zpsvhu5jhl3.png" alt="用户访问流程图"></p>
+<p>优化后的用户访问流程：<br><img src="/images/zpsvhu5jhl3.png" alt="用户访问流程图"></p>
 <p>静态资源的访问，始终经过本地缓存、cdn。<br>此外，如果版本信息文件处理错误，为避免工具或者人工问题，导致/production/a-gthdtyh65.js文件的访问活着全站性的版本文件没有更新，得到的404，本地服务器在请求获得时将返回一个302 redirect，将文件重定向到/production/a.js，然后返回。</p>
 <p>更深的优化项：</p>
 <ol>

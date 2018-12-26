@@ -46,12 +46,12 @@
 <meta property="og:site_name" content="Xaber&#39;s Blog">
 <meta property="og:description" content="标题要长，tag要多，呵，其实我也不知道该取什么标题XD。言归正传，昨天点了几下虾米网，发现这个年终盘点的页面还是挺有意思的。这样的效果也见得比较多，记得知乎之前也出过这样的东西。此外，大大小小的网页首页上的活动啊这类的，很多都是这样子。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://i937.photobucket.com/albums/ad214/forblog6/QQ622A56FE20140120172800_zpsf32ddb08.jpg">
-<meta property="og:updated_time" content="2014-10-26T14:45:10.000Z">
+<meta property="og:image" content="http://xaber.co/images/QQ622A56FE20140120172800_zpsf32ddb08.jpg">
+<meta property="og:updated_time" content="2018-12-26T16:38:02.817Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="闭包实现滚动条上下的判定 - 年终盘点效果的Demo">
 <meta name="twitter:description" content="标题要长，tag要多，呵，其实我也不知道该取什么标题XD。言归正传，昨天点了几下虾米网，发现这个年终盘点的页面还是挺有意思的。这样的效果也见得比较多，记得知乎之前也出过这样的东西。此外，大大小小的网页首页上的活动啊这类的，很多都是这样子。">
-<meta name="twitter:image" content="http://i937.photobucket.com/albums/ad214/forblog6/QQ622A56FE20140120172800_zpsf32ddb08.jpg">
+<meta name="twitter:image" content="http://xaber.co/images/QQ622A56FE20140120172800_zpsf32ddb08.jpg">
 
 
 <script>
@@ -276,7 +276,7 @@
       
 
       
-        <span itemprop="articleBody"><p>标题要长，tag要多，呵，其实我也不知道该取什么标题XD。<br>言归正传，昨天点了几下<a href="http://www.xiami.com/" target="_blank" rel="noopener">虾米网</a>，发现这个<a href="http://www.xiami.com/event/xiami2013?spm=a1z1s.6843761.1478643741.1.Z41CAz" target="_blank" rel="noopener">年终盘点</a>的页面还是挺有意思的。这样的效果也见得比较多，记得<a href="http://www.zhihu.com/" target="_blank" rel="noopener">知乎</a>之前也出过这样的东西。此外，大大小小的网页首页上的活动啊这类的，很多都是这样子。<br><a id="more"></a><br>所以试着也做了这样一个页面。<img src="http://i937.photobucket.com/albums/ad214/forblog6/QQ622A56FE20140120172800_zpsf32ddb08.jpg" alt="年终盘点效果">效果其实挺简单，只要分析下实现即可。</p>
+        <span itemprop="articleBody"><p>标题要长，tag要多，呵，其实我也不知道该取什么标题XD。<br>言归正传，昨天点了几下<a href="http://www.xiami.com/" target="_blank" rel="noopener">虾米网</a>，发现这个<a href="http://www.xiami.com/event/xiami2013?spm=a1z1s.6843761.1478643741.1.Z41CAz" target="_blank" rel="noopener">年终盘点</a>的页面还是挺有意思的。这样的效果也见得比较多，记得<a href="http://www.zhihu.com/" target="_blank" rel="noopener">知乎</a>之前也出过这样的东西。此外，大大小小的网页首页上的活动啊这类的，很多都是这样子。<br><a id="more"></a><br>所以试着也做了这样一个页面。<img src="/images/QQ622A56FE20140120172800_zpsf32ddb08.jpg" alt="年终盘点效果">效果其实挺简单，只要分析下实现即可。</p>
 <p>这些圈圈是一些div，当宽高都相等的情况下，border-radius给个50%，也就成了圆圈。<br>至于居中，我给了这些效果div<code>text-align:center</code>。而上边的留空，用了<code>first-child</code>伪类给了<code>margin-top</code>。然后就是<code>position:absolute</code>的工作了。</p>
 <p>布局完毕，剩下的也就交给JS来完成吧。</p>
 <p>1.判断滚动条是向上还是向下。尽管有一个mousewheel的鼠标滚轮事件，但是如果有人鼠标滚轮坏了呢（比如我），这个滚轮事件我没用，其实用简单的几行代码就可以完成判定。比如：</p>

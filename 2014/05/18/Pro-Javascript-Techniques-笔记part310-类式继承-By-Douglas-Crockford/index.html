@@ -46,12 +46,12 @@
 <meta property="og:site_name" content="Xaber&#39;s Blog">
 <meta property="og:description" content="工作后，将近半年没怎么动Blog，终于是可以挤出点时间看点书学点更深层次的东西。毕业在即，还有挺多要忙的东西，希望能在五月份把这本书看完吧。闲话不多扯，这本书是John Resig在08年出的，不过里面的内容，自然放到什么时候都是不会过时的。 继承，有很多多种多样的方式，主要还是看需求。研究这部分内容，我是想要获得一个简单的方式，可以调用父类型、乃至父类型的父类型…的同名方法，当然，我在本篇找到了">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://i937.photobucket.com/albums/ad214/forblog6/QQ622A56FE20140518144533_zpsa85b0407.jpg">
-<meta property="og:updated_time" content="2014-10-26T14:45:24.000Z">
+<meta property="og:image" content="http://xaber.co/images/QQ622A56FE20140518144533_zpsa85b0407.jpg">
+<meta property="og:updated_time" content="2018-12-26T16:38:02.823Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Pro JavaScript Techniques 笔记.part.3.1.0 类式继承 by Douglas Crockford">
 <meta name="twitter:description" content="工作后，将近半年没怎么动Blog，终于是可以挤出点时间看点书学点更深层次的东西。毕业在即，还有挺多要忙的东西，希望能在五月份把这本书看完吧。闲话不多扯，这本书是John Resig在08年出的，不过里面的内容，自然放到什么时候都是不会过时的。 继承，有很多多种多样的方式，主要还是看需求。研究这部分内容，我是想要获得一个简单的方式，可以调用父类型、乃至父类型的父类型…的同名方法，当然，我在本篇找到了">
-<meta name="twitter:image" content="http://i937.photobucket.com/albums/ad214/forblog6/QQ622A56FE20140518144533_zpsa85b0407.jpg">
+<meta name="twitter:image" content="http://xaber.co/images/QQ622A56FE20140518144533_zpsa85b0407.jpg">
 
 
 <script>
@@ -413,7 +413,7 @@ Admin.method(&apos;getName&apos;, function () {
 var admin = new Admin(&apos;Xaber&apos;, &apos;x&apos;);
 admin.getName();
 </code></pre><p>然后问题出现了，<code>user.getName()</code>调用正常，返回<code>My name is Xaber</code>，而当调用<code>admin.getName()</code>时，问题出现了，内存泄漏了。然后经过调试，其实就是自作聪明添加的<code>this.prototype.constructor = this;</code>导致的无限循环（调试代码保留在上方注释中）。下方图片是在中间<code>return</code>后的结果。</p>
-<p><img src="http://i937.photobucket.com/albums/ad214/forblog6/QQ622A56FE20140518144533_zpsa85b0407.jpg" alt=""></p>
+<p><img src="/images/QQ622A56FE20140518144533_zpsa85b0407.jpg" alt=""></p>
 <p>而当我把添加的<code>this.prototype.constructor = this;</code>注释掉之后，控制台输出</p>
 <pre><code>&quot;depth&quot;  0
 &quot;t&quot;      1
