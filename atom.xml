@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xaber.co/"/>
-  <updated>2018-06-21T11:39:34.000Z</updated>
+  <updated>2019-07-11T03:20:43.768Z</updated>
   <id>http://xaber.co/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>node 代理转发与 Google Cloud、域名配置</title>
+    <link href="http://xaber.co/2018/12/28/node-%E4%BB%A3%E7%90%86%E8%BD%AC%E5%8F%91%E4%B8%8E-Google-Cloud%E3%80%81%E5%9F%9F%E5%90%8D%E9%85%8D%E7%BD%AE/"/>
+    <id>http://xaber.co/2018/12/28/node-代理转发与-Google-Cloud、域名配置/</id>
+    <published>2018-12-27T16:15:03.000Z</published>
+    <updated>2019-07-11T03:20:43.768Z</updated>
+    
+    <content type="html"><![CDATA[<p>此文介绍 node 简单搭建一个代理转发服务，部署至 Google Cloud 服务器，并为该服务绑定域名。</p><a id="more"></a><h3 id="业务场景"><a href="#业务场景" class="headerlink" title="业务场景"></a>业务场景</h3><p>需要访问的域名被拦截在墙外，而代码部署的服务器在墙内，无法访问外网服务。</p><h3 id="node-搭建服务"><a href="#node-搭建服务" class="headerlink" title="node 搭建服务"></a>node 搭建服务</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">'express'</span>)</span><br><span class="line"><span class="keyword">const</span> app = express()</span><br><span class="line"><span class="keyword">const</span> proxy = <span class="built_in">require</span>(<span class="string">'http-proxy-middleware'</span>)</span><br><span class="line"><span class="keyword">const</span> port = <span class="number">80</span></span><br><span class="line"></span><br><span class="line">app.use(<span class="string">'*'</span>, proxy(&#123;</span><br><span class="line">  target: <span class="string">'https://api.proxydemo.com/'</span>,</span><br><span class="line">  changeOrigin: <span class="literal">true</span></span><br><span class="line">&#125;))</span><br><span class="line"></span><br><span class="line">app.listen(port)</span><br></pre></td></tr></table></figure><h3 id="Google-Cloud"><a href="#Google-Cloud" class="headerlink" title="Google Cloud"></a>Google Cloud</h3><ol><li>Compute Engine 创建 vm 实例</li><li>SSH 连接服务器</li><li>部署上方 node 服务</li><li>生成（一般会自动生成）静态 IP 地址（外部 IP） <code>xxx.xxx.xxx.xxx</code></li></ol><h3 id="DNS-解析"><a href="#DNS-解析" class="headerlink" title="DNS 解析"></a>DNS 解析</h3><p>配置域名 <code>https://api.proxymiddle.com/</code> 解析至 <code>xxx.xxx.xxx.xxx</code></p><h3 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h3><p>请求 <code>https://api.proxymiddle.com/</code> 查看最终结果是否为墙外 <code>https://api.proxydemo.com/</code> 的返回结果</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;此文介绍 node 简单搭建一个代理转发服务，部署至 Google Cloud 服务器，并为该服务绑定域名。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="node" scheme="http://xaber.co/categories/node/"/>
+    
+    
+      <category term="proxy" scheme="http://xaber.co/tags/proxy/"/>
+    
+      <category term="node" scheme="http://xaber.co/tags/node/"/>
+    
+      <category term="http-proxy-middleware" scheme="http://xaber.co/tags/http-proxy-middleware/"/>
+    
+  </entry>
   
   <entry>
     <title>Ganache 与 Truffle 介绍</title>
@@ -466,28 +492,6 @@
     
     
       <category term="底层基础" scheme="http://xaber.co/tags/%E5%BA%95%E5%B1%82%E5%9F%BA%E7%A1%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>论流程化带来的利与弊</title>
-    <link href="http://xaber.co/2015/11/28/%E8%AE%BA%E6%B5%81%E7%A8%8B%E5%8C%96%E5%B8%A6%E6%9D%A5%E7%9A%84%E5%88%A9%E4%B8%8E%E5%BC%8A/"/>
-    <id>http://xaber.co/2015/11/28/论流程化带来的利与弊/</id>
-    <published>2015-11-28T12:37:56.000Z</published>
-    <updated>2015-11-28T13:57:41.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>在我个人看来，流程化就是一系列流程，一系列封装的基本操作。例如：早饭、中饭、晚饭。人们常说，你怎么又忘了呀，也没见你忘了吃饭。我想流程化的目的，就是让你在不用记的同时，也没有忘。</p><a id="more"></a><p>第一次正式接触或者说构建流程化，是这样一个过程：</p><p>当时正值所在公司投了很多广告费（各种电视广告），做一场公司空前的电商活动。我想做过活动的同学，大概都会晓得活动的繁琐性，特别是运营临时的修改、动不动换商品id等等。</p><p>简单、无味、繁琐的操作，以及频繁的加班，也就势必会造成开发不耐烦的心理，至于活动，也难免或者说肯定会有或多或少各种各样的问题、bug。</p><p>那像之前，其实每个月公司也都有各种各样的大促活动，也是各种各样的问题，也会来各种各样的所谓复盘，但是最后是怎样还是怎样，并无卵用。</p><p>而像这样一场<strong>重要</strong>的活动，再以之前的操作，呈现各种问题的页面，那就变得有点不负责任了。</p><p>于是挑着活动上线前那一周末的一晚，调整了页面里的代码，调整px单位，调整图片尺寸，添加懒加载，调整图片质量。对于我来说，异常繁琐。这个活动不是由我来做，但是又是我这边负责。所以那一晚，几乎是骂着娘擦掉了别人的屁股填掉了别人的坑。</p><p>于是我想，怎么样不用下次再擦屁股再填坑，怎么样提高他们做活动的质量（毕竟每个月的大促才是带来每个月销量的奇点）。</p><p>于是第二天，发了一份邮件，整理了自己前一天晚上发现的最普遍的一些问题（包括但不限于）：</p><ol><li>图片未压缩，直接拿过来用，一张图片两三百kb，图片质量差</li><li>一张大图，高度1000多px，未做切片，直接拿来作为背景</li><li>结构问题，ul标签子元素直接是a标签，a标签放了两个href，没有闭合双引号</li><li>复制操作的问题。复制出来的代码，图片src直接放了图片地址，几百张的图片页面加载时直接请求，没有做lazyload</li><li>图片质量模糊问题</li><li>IE7问题（兼容性）</li><li>内容区宽度问题，目前首页是1080，但是这个尺寸写的却是1090</li><li>对齐问题（就产品或设计观点上来说，1px的偏差实际上定义为一个bug）</li><li>列表最后一个会场入口，边框问题（至少不应该带边框，而且还有hover效果）（细节问题）</li><li>商品图片没有使用剪裁的版本</li><li>……</li></ol><p>于是你会发现，如果后续每一次的代码编写、上线之前，走一遍流程，可以把大部分可能会疏漏的问题，都规避了。</p><p>渐渐地，我尝到了甜头；不知不觉的，整理了沉淀了各种各样的规范文档流程文档，例如需求开发流程：</p><ol><li>需求get，立即沟通</li><li>沟通好，做什么，目的是什么，<strong>是否必要</strong></li><li>思考具体的做法，怎么做或者怎么实现，怎么实现更好</li><li>根据<strong>优雅</strong>实现的复杂度，需要花费的时间，review 时间，测试（自测或是测试介入）时间来评估完成时间</li><li>完成时间是否符合需求方预期，如果不符合，平衡后，决定是推迟需求上线时间（需求不紧急）或是 <strong>稍微</strong> 降低实现标准（需求紧急，但不允许杂乱的代码）。如果实在无法协调，反馈给上级进行资源协调</li><li>just do it</li><li><strong>review 自己的代码</strong>（代码是否优雅，实现是否有更优方式；如果没有，是否有时间顺势改进）</li><li><strong>线下自测</strong></li><li>如果有测试介入，提交测试测试通过</li><li>如果有需要build的文件，重新build，避免build文件忘记提交</li><li>提交给其他人review（review 有review的流程）</li><li>review 通过</li><li>告知需求方准备上线，需求方确认后，代码提交发布</li><li><strong>线上 仔细 确认</strong>（最关键的一步，无论本地怎么开发是否ok，最终作用的都是线上的代码）</li><li><strong>通知需求方验收</strong></li></ol><p>注意：</p><ol><li>如果需求变更，需要重新评估带来的影响，重走上述流程</li><li>流程中最重要的是：沟通，反馈，确认。避免：<ul><li>需求临时不做了，开发耗费时间做了无用功；（太多次了，花了很大时间做了很复杂的功能，说不要了）</li><li>需求发布时间调整，需要提前上线或是延后上线</li></ul></li></ol><p>以及其他各式各样的流程化的东西。例如现在用了omniFocus，每次有件小事，或者其他人提了什么事，记录下来；需求过来待分配，分配完了记录到omniFocus中；omniFocus到点了该做某件事了，做。如此，觉得自己忘不了什么事，而且能只花做事的时间做事，并能把大部分事情做好。</p><p>但是感觉好像<strong>缺了什么</strong>。</p><p>流程化确实带来了非常多的便利，而且按照流程走，基本不会出什么大问题。好比做活动走上面的活动检查流程，也不会再忘记什么而导致问题发生（后面组织结构调掉了，sad）；好比需求开发走上述开发流程，至少能保证90%不会出bug而且代码是能看的。</p><p>但是就好比高速服务站的工作人员，车子到门前，微笑，接卡，“台词：一路顺风”，下一辆。感觉就像是，人如机器，没有了人性，没有了生机、没有了乐趣。而且按照流程，大部分人都能把事情做好，也就意味着只要是普通人、能做事，就好了（虽然说都是普通人）。</p><p>但是流程化这东西，给予人以自我约束，总归是利大于弊，至少于管理来说（管理自己、管理别人）。只是说，人不能被流程所束缚，特别是无用的流程；在大致走流程的同时，能发现流程中的乐趣，并能随机而变，我想这会是极好的。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;在我个人看来，流程化就是一系列流程，一系列封装的基本操作。例如：早饭、中饭、晚饭。人们常说，你怎么又忘了呀，也没见你忘了吃饭。我想流程化的目的，就是让你在不用记的同时，也没有忘。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="总结系列" scheme="http://xaber.co/categories/%E6%80%BB%E7%BB%93%E7%B3%BB%E5%88%97/"/>
-    
-    
-      <category term="流程化" scheme="http://xaber.co/tags/%E6%B5%81%E7%A8%8B%E5%8C%96/"/>
     
   </entry>
   

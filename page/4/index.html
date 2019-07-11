@@ -222,6 +222,129 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/26/静态资源文件配置及缓存问题解决/" itemprop="url">
+                静态资源文件配置及缓存问题解决
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-05-26T13:03:05+08:00" content="2015-05-26">
+            2015-05-26
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/前端工程化/" itemprop="url" rel="index">
+                  <span itemprop="name">前端工程化</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/26/静态资源文件配置及缓存问题解决/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/26/静态资源文件配置及缓存问题解决/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><a id="more"></a>
+<p>缓存问题可以算是至今为止遇到最多维持很久的一个问题。这个问题的发生，导致了脚本报错页面不可访问、样式错乱的情况，而且持续时间长。</p>
+<p>缓存可以归为两部分，一部分是页面的缓存，一部分是js、css引用的文件缓存。于是具体缓存问题的发生，可以归为两类：</p>
+<ol>
+<li>html已经更新了，但是js、css文件取到的还是缓存的文件。</li>
+<li>js、css文件已经更新了，但是html缓存还没有更新。</li>
+</ol>
+<p>因为两部分缓存的设置大部分不同，所以缓存更新不同步，导致了文件的不对应，从而脚本报错页面不可访问、样式错乱。</p>
+<p>以某一现状为例，线上js、css文件的缓存控制方案是这样的：<br>发布的过程会跑一个本地node的一个命令，遍历存放js、css生产文件，通过node crypto模块来获取文件唯一的版本信息，然后将version对象写入到一个单独的json文件version.json中。</p>
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> md5 = crypto.createHash(<span class="string">'md5'</span>),</span><br><span class="line">    file = folder + <span class="string">'/production/'</span> + name + <span class="string">'.'</span> + type;</span><br><span class="line"></span><br><span class="line">md5.update(grunt.file.read(file));</span><br><span class="line">md5 = md5.digest(<span class="string">'hex'</span>);</span><br><span class="line">version[type][name] = &#123;</span><br><span class="line">    md5: md5</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</code></pre><p>js、css文件的引入，是通过一个后端的方法，读取version.json文件配置，将文件名拼上部分md5信息放入到页面中。类似<a href="http://st.bbeeii.com/script/production/a.js" target="_blank" rel="noopener">http://st.bbeeii.com/script/production/a.js</a> 这个文件的引入，线上实际引入的链接则是<a href="http://st.bbeeii.com/script/production/a-rfgt45jfsg.js" target="_blank" rel="noopener">http://st.bbeeii.com/script/production/a-rfgt45jfsg.js</a> ，其中rfgt45jfsg是32位md5信息做了10位截取的。</p>
+<p><a href="http://st.bbeeii.com/script/production/a-rfgt45jfsg.js" target="_blank" rel="noopener">http://st.bbeeii.com/script/production/a-rfgt45jfsg.js</a> 这个文件请求的发起，会先经过cdn。cdn如果发现有这个文件立即返回。否则cdn向我们的服务器回源，请求/production/a-rfgt45jfsg.js 文件，再返回回去。</p>
+<p>自己的服务器这边是没有/production/a-rfgt45jfsg.js 这个实体文件的，这个请求，通过nginx rewrite返回了/production/a.js 。</p>
+<p>因为js、css代码文件与后端动态脚本文件是在一个代码库内，通过svn提交到trunk，然后所有的机器<code>svn up</code>更新代码。代码发布svn up的时间会有时间间隔，如果version.json文件先更新，后端脚本读取到这个文件，前台用户发起请求，cdn回源，一气呵成。然后/production/a.js文件实际还没有更新，反而返回回去了。于是cdn就拿到了老的代码，并且是一段比较长的缓存。除非手动更新缓存，缓存期间页面始终都是错误的。</p>
+<p>另外，因为用户访问js、css文件并不是定向到cdn服务器（不稳定），有可能请求是到自己的服务器上，从而也会有html文件（缓存较久）还没更新，而js、css文件已经更新的情况。</p>
+<p>如果请求的文件/production/a-rfgt45jfsg.js以及上一个版本/production/a-gthdtyh65.js在我们的服务器上实际存在会怎么样呢（多版本共存）？</p>
+<p>优化后的发布流程为：</p>
+<ol>
+<li>先发布静态部署文件例如/production/a.js 和版本文件version.json。</li>
+<li>本地任务通过/production/a.js和version.json这两个文件，生成新的/production/a-rfgt45jfsg.js存放到单独的两台机器上（主、备）。</li>
+<li>这两台机器上，跑一个任务，匹配文件前缀，比对last modified时间，保留最新的三到五个版本，其余清除。例如/production/a.js的版本多余限定，将最老的版本清除。</li>
+</ol>
+<p>页面中引入的脚本、样式地址，例如：</p>
+<ol>
+<li>html缓存，引用的脚本地址也是老的： /production/a-gthdtyh65.js</li>
+<li>html已更新，引用的脚本地址也是新的：/production/a-rfgt45jfsg.js</li>
+</ol>
+<p>因为/production/a-gthdtyh65.js和/production/a-rfgt45jfsg.js实际已经不是同一个文件（同一文件的不同版本），那么也就不会有缓存的问题了。</p>
+<p>优化后的用户访问流程：<br><img src="/images/zpsvhu5jhl3.png" alt="用户访问流程图"></p>
+<p>静态资源的访问，始终经过本地缓存、cdn。<br>此外，如果版本信息文件处理错误，为避免工具或者人工问题，导致/production/a-gthdtyh65.js文件的访问活着全站性的版本文件没有更新，得到的404，本地服务器在请求获得时将返回一个302 redirect，将文件重定向到/production/a.js，然后返回。</p>
+<p>更深的优化项：</p>
+<ol>
+<li>所有js、css部署文件可以全部设置长时间缓存，直接取用户本地缓存，节省带宽。因为存放版本信息和静态资源先发布，生成了对应新版本的实体文件，并且老版本文件也存在着。后端代码发布时，因版本信息更新，文件引入的名称也就更新了。此时html没有更新，引用的老版本文件在；html更新了，引用的新版本文件也在。</li>
+<li>既然前端的发布和后端代码的发布分开，前端代码的访问只通过两台固定的服务器，那也是时候进行代码库分离和“动静分离”了。当然，这还涉及到另外的问题：代码库如何分离以及分离后前后端如何协同开发。</li>
+</ol>
+<p>参考来源：</p>
+<ul>
+<li><a href="https://github.com/fouber/blog/issues/6" target="_blank" rel="noopener">大公司里怎样开发和部署前端代码？</a></li>
+<li><a href="https://github.com/fouber/blog" target="_blank" rel="noopener">张云龙的github博客</a></li>
+</ul>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/04/22/webkit内核浏览器在当前页面刷新时scrollTo失效/" itemprop="url">
                 webkit内核浏览器在当前页面刷新时scrollTo失效
               </a>
@@ -1074,91 +1197,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/06/29/Dean Edwards Base.js解析/" itemprop="url">
-                Dean Edwards Base.js解析
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-06-29T00:18:18+08:00" content="2014-06-29">
-            2014-06-29
-          </time>
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                  <span itemprop="name">JavaScript</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2014/06/29/Dean Edwards Base.js解析/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/06/29/Dean Edwards Base.js解析/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody"><p>第一次知道Dean Edwards，是在John Resig的《Pro Javascript Techniques》书中。<br>书中介绍到这样一个Base.js，也正好，公司实现继承的模式和它几近类似。<br>书中也介绍到Dean Edwards实现事件绑定的方式，而正巧某一天，看到JQuery的代码中借鉴了这样一个模式，并标注了名字。<br>所以打算对这个底层面向对象继承的小型类库做一个解析。<br>花了不少的时间，理解这100行不到的代码。受益匪浅。<br>说这么多，感觉都没到什么重点上。<br>其实也就是，站在巨人的肩上，看得更远。</p>
-<p>原文介绍 —— <a href="http://dean.edwards.name/weblog/2006/03/base/" target="_blank" rel="noopener">Base.js</a><br>我的注释版本 —— <a href="/project/items/2014.06.28.Base.js" target="_blank">Base.js</a></p>
-</span>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1197,21 +1235,21 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-count">63</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
 
           <div class="site-state-item site-state-categories">
             <a href="/categories">
-              <span class="site-state-item-count">16</span>
+              <span class="site-state-item-count">17</span>
               <span class="site-state-item-name">分类</span>
               </a>
           </div>
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">62</span>
+              <span class="site-state-item-count">64</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
@@ -1252,7 +1290,7 @@
       <div class="footer-inner"> <div class="copyright">
   
   &copy; &nbsp; 
-  <span itemprop="copyrightYear">2018</span>
+  <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="icon-next-heart"></i>
   </span>
