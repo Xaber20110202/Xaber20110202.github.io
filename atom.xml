@@ -167,6 +167,32 @@
   </entry>
   
   <entry>
+    <title>网页在微信中分享部分场景小图标丢失问题</title>
+    <link href="http://xaber.co/2017/04/12/%E7%BD%91%E9%A1%B5%E5%9C%A8%E5%BE%AE%E4%BF%A1%E4%B8%AD%E5%88%86%E4%BA%AB%E9%83%A8%E5%88%86%E5%9C%BA%E6%99%AF%E5%B0%8F%E5%9B%BE%E6%A0%87%E4%B8%A2%E5%A4%B1%E9%97%AE%E9%A2%98/"/>
+    <id>http://xaber.co/2017/04/12/网页在微信中分享部分场景小图标丢失问题/</id>
+    <published>2017-04-12T10:57:51.000Z</published>
+    <updated>2019-07-18T09:01:12.614Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h3><ol><li>在微信中点击右上角分享，显示的标题、描述、图片有助于用户了解这个链接具体内容</li><li>技术侧根据<a href="https://mp.weixin.qq.com/wiki" target="_blank" rel="noopener">微信JS-SDK说明文档</a>，先通过后端请求获取权限验证配置，之后通过<code>wx.config</code>配置jssdk，最后通过<code>wx.shareConfig</code>进行标题、描述、链接、图片配置</li></ol><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>部分场景下，用户点击分享展示的消息，在标题、描述、链接都正常的情况下，图片丢失，始终不展示<br><img src="http://h0.hucdn.com/open/201715/d9dd9615de9a91a2_1434x1274.png" alt=""></p><a id="more"></a><h3 id="排查思路"><a href="#排查思路" class="headerlink" title="排查思路"></a>排查思路</h3><ol><li>其实第一点想到的是：我前端没问题，“你微信端测一测”。毕竟我们是按照标准的方式进行的配置</li><li>我们自己的图片访问不稳定，分享时微信将该图片存储了，导致展示错误</li></ol><p>因而当时想到的两种最快定位路径是：</p><ol><li>咨询是否有微信相关工程师资源协助排查</li><li>是否可以查询相关图片访问404的百分比</li></ol><h3 id="然而"><a href="#然而" class="headerlink" title="然而"></a>然而</h3><ol><li>资源这块不是你想联系就能联系到的，如果你朋友的朋友的朋友认识马云，但未必你能见得到</li><li>又拍云较难统计这块数据</li></ol><h3 id="排查路径"><a href="#排查路径" class="headerlink" title="排查路径"></a>排查路径</h3><ol><li>联系多个出问题的用户，了解到都是android用户，并且听到些许关键词：多选群发</li><li>个人IOS机器试了好久多选群发，没有问题，上面的问题被略过了</li><li>使用 <a href="https://github.com/nodeWechat/wechat4u" target="_blank" rel="noopener">wechat4u</a> 控制台聊天机器人，log相关消息内容，发现对于图片无法显示的情况，appattach段中缺少数据，排除了CDN网络的问题（即使传递了404图片，也有appattach字段）<br><img src="http://h0.hucdn.com/open/201715/dfbc66e91d75c5f6_484x495.jpg" alt=""></li><li>发现另一个用户也提到相关关键词——群发，进一步了解到，也是android用户</li><li>几个人拉群，android机器进行群发，问题复现</li><li>测试几台ios、android测试机，确定问题为微信android客户端问题：多选群发较高频率出现图片丢失情况</li></ol><h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><ol><li>通过微信公众号“微信团队”反馈问题</li><li>知乎上搜索微信工程师，私信联系反馈</li><li>知乎上创建问题，继续@相关人反馈</li><li>朋友圈发消息寻求朋友相关资源协助（最终联系到一位微信工程师，定位到问题，并同步下个版本会做修复）</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;背景描述&quot;&gt;&lt;a href=&quot;#背景描述&quot; class=&quot;headerlink&quot; title=&quot;背景描述&quot;&gt;&lt;/a&gt;背景描述&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;在微信中点击右上角分享，显示的标题、描述、图片有助于用户了解这个链接具体内容&lt;/li&gt;
+&lt;li&gt;技术侧根据&lt;a href=&quot;https://mp.weixin.qq.com/wiki&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;微信JS-SDK说明文档&lt;/a&gt;，先通过后端请求获取权限验证配置，之后通过&lt;code&gt;wx.config&lt;/code&gt;配置jssdk，最后通过&lt;code&gt;wx.shareConfig&lt;/code&gt;进行标题、描述、链接、图片配置&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h3&gt;&lt;p&gt;部分场景下，用户点击分享展示的消息，在标题、描述、链接都正常的情况下，图片丢失，始终不展示&lt;br&gt;&lt;img src=&quot;http://h0.hucdn.com/open/201715/d9dd9615de9a91a2_1434x1274.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="其他技能" scheme="http://xaber.co/categories/%E5%85%B6%E4%BB%96%E6%8A%80%E8%83%BD/"/>
+    
+    
+      <category term="微信" scheme="http://xaber.co/tags/%E5%BE%AE%E4%BF%A1/"/>
+    
+  </entry>
+  
+  <entry>
     <title>前端职场技术路径</title>
     <link href="http://xaber.co/2017/03/30/%E5%89%8D%E7%AB%AF%E8%81%8C%E5%9C%BA%E6%8A%80%E6%9C%AF%E8%B7%AF%E5%BE%84/"/>
     <id>http://xaber.co/2017/03/30/前端职场技术路径/</id>
@@ -460,31 +486,6 @@
     
       &lt;p&gt;&lt;strong&gt;这位选手请仔细听题，并准备好你的秒表。&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;一到三题，你有60s作答时间；四到八题你有150s作答时间；九到十题你有90s作答时间。&lt;br&gt;总计 5分钟，Ready? Go!&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="JavaScript" scheme="http://xaber.co/categories/JavaScript/"/>
-    
-    
-      <category term="底层基础" scheme="http://xaber.co/tags/%E5%BA%95%E5%B1%82%E5%9F%BA%E7%A1%80/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>JavaScript基础系列 —— 原型prototype</title>
-    <link href="http://xaber.co/2016/02/06/JavaScript%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97%20%E2%80%94%E2%80%94%20%E5%8E%9F%E5%9E%8Bprototype/"/>
-    <id>http://xaber.co/2016/02/06/JavaScript基础系列 —— 原型prototype/</id>
-    <published>2016-02-05T20:22:16.000Z</published>
-    <updated>2016-02-05T20:32:55.000Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>三步上篮都还没练好，就开始学动作玩花式篮球了？<br>天才樱木花道在全国大赛的最后一投，那也是练了几万个定点投篮呢。<br>这是一个循序渐进的过程，运球、上篮、投篮基本功扎实，练得多了，就是百发百中。<br>然后，哎哟不错哦，摆个流川枫那美美的造型，学樱木扣个篮什么的，才能说，根本不在话下。</p></blockquote><p>面试至今，几乎是全部阵亡，少数能回答一点上来的，也几乎没有。可见前端入门之易，而能学精的人却少之又少。</p><a id="more"></a><p>包括最近问起来，发现团队其实对这些方面的知识也不是特别清晰。所以在想，做一系列底层的分享，给大家打牢底层。有了底层基础，才可以搞好上层建筑。</p><p>希望大家能理解下面的题，理解原型prototype。</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">var A = function () &#123;&#125;;</span><br><span class="line">A.prototype = &#123;</span><br><span class="line">    num: 1,</span><br><span class="line">    text: &apos;aaa&apos;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">// 第一题</span><br><span class="line">var x = new A();</span><br><span class="line">console.log(x.num); </span><br><span class="line">console.log(x.text);  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">var y = new A();</span><br><span class="line">A.prototype = &#123;</span><br><span class="line">    num: 2</span><br><span class="line">&#125;;</span><br><span class="line">// 第二题</span><br><span class="line">console.log(y.num); </span><br><span class="line">console.log(y.text); </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">y.num = 3;</span><br><span class="line">var z = new A();</span><br><span class="line">// 第三题</span><br><span class="line">console.log(z.num); </span><br><span class="line">console.log(z.text);</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      &lt;blockquote&gt;
-&lt;p&gt;三步上篮都还没练好，就开始学动作玩花式篮球了？&lt;br&gt;天才樱木花道在全国大赛的最后一投，那也是练了几万个定点投篮呢。&lt;br&gt;这是一个循序渐进的过程，运球、上篮、投篮基本功扎实，练得多了，就是百发百中。&lt;br&gt;然后，哎哟不错哦，摆个流川枫那美美的造型，学樱木扣个篮什么的，才能说，根本不在话下。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;面试至今，几乎是全部阵亡，少数能回答一点上来的，也几乎没有。可见前端入门之易，而能学精的人却少之又少。&lt;/p&gt;
     
     </summary>
     

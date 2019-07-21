@@ -27,7 +27,7 @@
 
 
 
-  <meta name="keywords" content="Hexo,next">
+  <meta name="keywords" content="微信,">
 
 
 
@@ -38,20 +38,21 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1">
 
 
-<meta name="description" content="优点：  仅在用户openid、unionid未绑定过平台账号情况下，需要手机号、验证码进行注册、登录、绑定 已经绑定过unionid的用户，在同一个公众平台下的不同公众号、小程序上第一次做注册、登录、绑定操作时，无需再通过手机号验证码，只要再进行一次用户信息授权（unionid、需用户确认） 当openid已存在绑定关系，利用静默信息授权（openid、无感知），进行登录操作">
-<meta name="keywords" content="FrontEnd Developer 前端 开发 工程师">
+<meta name="description" content="背景描述 在微信中点击右上角分享，显示的标题、描述、图片有助于用户了解这个链接具体内容 技术侧根据微信JS-SDK说明文档，先通过后端请求获取权限验证配置，之后通过wx.config配置jssdk，最后通过wx.shareConfig进行标题、描述、链接、图片配置  问题部分场景下，用户点击分享展示的消息，在标题、描述、链接都正常的情况下，图片丢失，始终不展示">
+<meta name="keywords" content="微信">
 <meta property="og:type" content="article">
-<meta property="og:title" content="微信授权登录流程">
-<meta property="og:url" content="http://xaber.co/2017/02/22/微信授权登录流程/index.html">
+<meta property="og:title" content="网页在微信中分享部分场景小图标丢失问题">
+<meta property="og:url" content="http://xaber.co/2017/04/12/网页在微信中分享部分场景小图标丢失问题/index.html">
 <meta property="og:site_name" content="Xaber&#39;s Blog">
-<meta property="og:description" content="优点：  仅在用户openid、unionid未绑定过平台账号情况下，需要手机号、验证码进行注册、登录、绑定 已经绑定过unionid的用户，在同一个公众平台下的不同公众号、小程序上第一次做注册、登录、绑定操作时，无需再通过手机号验证码，只要再进行一次用户信息授权（unionid、需用户确认） 当openid已存在绑定关系，利用静默信息授权（openid、无感知），进行登录操作">
+<meta property="og:description" content="背景描述 在微信中点击右上角分享，显示的标题、描述、图片有助于用户了解这个链接具体内容 技术侧根据微信JS-SDK说明文档，先通过后端请求获取权限验证配置，之后通过wx.config配置jssdk，最后通过wx.shareConfig进行标题、描述、链接、图片配置  问题部分场景下，用户点击分享展示的消息，在标题、描述、链接都正常的情况下，图片丢失，始终不展示">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://xaber.co/images/2017.01.09_zpsz5wutexo.png">
-<meta property="og:updated_time" content="2018-12-26T16:38:02.822Z">
+<meta property="og:image" content="http://h0.hucdn.com/open/201715/d9dd9615de9a91a2_1434x1274.png">
+<meta property="og:image" content="http://h0.hucdn.com/open/201715/dfbc66e91d75c5f6_484x495.jpg">
+<meta property="og:updated_time" content="2019-07-18T09:01:12.614Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="微信授权登录流程">
-<meta name="twitter:description" content="优点：  仅在用户openid、unionid未绑定过平台账号情况下，需要手机号、验证码进行注册、登录、绑定 已经绑定过unionid的用户，在同一个公众平台下的不同公众号、小程序上第一次做注册、登录、绑定操作时，无需再通过手机号验证码，只要再进行一次用户信息授权（unionid、需用户确认） 当openid已存在绑定关系，利用静默信息授权（openid、无感知），进行登录操作">
-<meta name="twitter:image" content="http://xaber.co/images/2017.01.09_zpsz5wutexo.png">
+<meta name="twitter:title" content="网页在微信中分享部分场景小图标丢失问题">
+<meta name="twitter:description" content="背景描述 在微信中点击右上角分享，显示的标题、描述、图片有助于用户了解这个链接具体内容 技术侧根据微信JS-SDK说明文档，先通过后端请求获取权限验证配置，之后通过wx.config配置jssdk，最后通过wx.shareConfig进行标题、描述、链接、图片配置  问题部分场景下，用户点击分享展示的消息，在标题、描述、链接都正常的情况下，图片丢失，始终不展示">
+<meta name="twitter:image" content="http://h0.hucdn.com/open/201715/d9dd9615de9a91a2_1434x1274.png">
 
 
 <script>
@@ -102,7 +103,7 @@
   };
 </script>
 
-  <title> 微信授权登录流程 | Xaber's Blog </title>
+  <title> 网页在微信中分享部分场景小图标丢失问题 | Xaber's Blog </title>
 </head>
 
 <body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -226,7 +227,7 @@
           
           
             
-              微信授权登录流程
+              网页在微信中分享部分场景小图标丢失问题
             
           
         </h1>
@@ -235,8 +236,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2017-02-22T21:10:40+08:00" content="2017-02-22">
-            2017-02-22
+          <time itemprop="dateCreated" datetime="2017-04-12T18:57:51+08:00" content="2017-04-12">
+            2017-04-12
           </time>
         </span>
 
@@ -261,8 +262,8 @@
           
             <span class="post-comments-count">
             &nbsp; | &nbsp;
-            <a href="/2017/02/22/微信授权登录流程/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/02/22/微信授权登录流程/" itemprop="commentsCount"></span>
+            <a href="/2017/04/12/网页在微信中分享部分场景小图标丢失问题/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/12/网页在微信中分享部分场景小图标丢失问题/" itemprop="commentsCount"></span>
             </a>
           </span>
           
@@ -276,32 +277,63 @@
       
 
       
-        <span itemprop="articleBody"><p>优点：</p>
-<ul>
-<li>仅在用户openid、unionid未绑定过平台账号情况下，需要手机号、验证码进行注册、登录、绑定</li>
-<li>已经绑定过unionid的用户，在同一个公众平台下的不同公众号、小程序上第一次做注册、登录、绑定操作时，无需再通过手机号验证码，只要再进行一次用户信息授权（unionid、需用户确认）</li>
-<li>当openid已存在绑定关系，利用静默信息授权（openid、无感知），进行登录操作</li>
-</ul>
+        <span itemprop="articleBody"><h3 id="背景描述"><a href="#背景描述" class="headerlink" title="背景描述"></a>背景描述</h3><ol>
+<li>在微信中点击右上角分享，显示的标题、描述、图片有助于用户了解这个链接具体内容</li>
+<li>技术侧根据<a href="https://mp.weixin.qq.com/wiki" target="_blank" rel="noopener">微信JS-SDK说明文档</a>，先通过后端请求获取权限验证配置，之后通过<code>wx.config</code>配置jssdk，最后通过<code>wx.shareConfig</code>进行标题、描述、链接、图片配置</li>
+</ol>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><p>部分场景下，用户点击分享展示的消息，在标题、描述、链接都正常的情况下，图片丢失，始终不展示<br><img src="http://h0.hucdn.com/open/201715/d9dd9615de9a91a2_1434x1274.png" alt=""></p>
 <a id="more"></a>
-<p><img src="/images/2017.01.09_zpsz5wutexo.png" alt="微信授权登录流程"></p>
+<h3 id="排查思路"><a href="#排查思路" class="headerlink" title="排查思路"></a>排查思路</h3><ol>
+<li>其实第一点想到的是：我前端没问题，“你微信端测一测”。毕竟我们是按照标准的方式进行的配置</li>
+<li>我们自己的图片访问不稳定，分享时微信将该图片存储了，导致展示错误</li>
+</ol>
+<p>因而当时想到的两种最快定位路径是：</p>
+<ol>
+<li>咨询是否有微信相关工程师资源协助排查</li>
+<li>是否可以查询相关图片访问404的百分比</li>
+</ol>
+<h3 id="然而"><a href="#然而" class="headerlink" title="然而"></a>然而</h3><ol>
+<li>资源这块不是你想联系就能联系到的，如果你朋友的朋友的朋友认识马云，但未必你能见得到</li>
+<li>又拍云较难统计这块数据</li>
+</ol>
+<h3 id="排查路径"><a href="#排查路径" class="headerlink" title="排查路径"></a>排查路径</h3><ol>
+<li>联系多个出问题的用户，了解到都是android用户，并且听到些许关键词：多选群发</li>
+<li>个人IOS机器试了好久多选群发，没有问题，上面的问题被略过了</li>
+<li>使用 <a href="https://github.com/nodeWechat/wechat4u" target="_blank" rel="noopener">wechat4u</a> 控制台聊天机器人，log相关消息内容，发现对于图片无法显示的情况，appattach段中缺少数据，排除了CDN网络的问题（即使传递了404图片，也有appattach字段）<br><img src="http://h0.hucdn.com/open/201715/dfbc66e91d75c5f6_484x495.jpg" alt=""></li>
+<li>发现另一个用户也提到相关关键词——群发，进一步了解到，也是android用户</li>
+<li>几个人拉群，android机器进行群发，问题复现</li>
+<li>测试几台ios、android测试机，确定问题为微信android客户端问题：多选群发较高频率出现图片丢失情况</li>
+</ol>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><ol>
+<li>通过微信公众号“微信团队”反馈问题</li>
+<li>知乎上搜索微信工程师，私信联系反馈</li>
+<li>知乎上创建问题，继续@相关人反馈</li>
+<li>朋友圈发消息寻求朋友相关资源协助（最终联系到一位微信工程师，定位到问题，并同步下个版本会做修复）</li>
+</ol>
 </span>
       
     </div>
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/微信/" rel="tag">#微信</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/02/使用atcon告别混乱的if-else/" rel="prev">使用atcon告别混乱的if else</a>
+              <a href="/2017/04/27/ES6基础系列-——-class的糖怎么吃/" rel="prev">ES6基础系列 —— class的糖怎么吃</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/22/字符编码ASCII，Unicode和UTF-8学习/" rel="next">字符编码ASCII，Unicode和UTF-8学习</a>
+              <a href="/2017/03/30/前端职场技术路径/" rel="next">前端职场技术路径</a>
             
           </div>
         </div>
@@ -416,7 +448,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景描述"><span class="nav-number">1.</span> <span class="nav-text">背景描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题"><span class="nav-number">2.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排查思路"><span class="nav-number">3.</span> <span class="nav-text">排查思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#然而"><span class="nav-number">4.</span> <span class="nav-text">然而</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排查路径"><span class="nav-number">5.</span> <span class="nav-text">排查路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最后"><span class="nav-number">6.</span> <span class="nav-text">最后</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
@@ -470,9 +502,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'xaber';
-      var disqus_identifier = '2017/02/22/微信授权登录流程/';
-      var disqus_title = '微信授权登录流程';
-      var disqus_url = 'http://xaber.co/2017/02/22/微信授权登录流程/';
+      var disqus_identifier = '2017/04/12/网页在微信中分享部分场景小图标丢失问题/';
+      var disqus_title = '网页在微信中分享部分场景小图标丢失问题';
+      var disqus_url = 'http://xaber.co/2017/04/12/网页在微信中分享部分场景小图标丢失问题/';
 
       function run_disqus_script(disqus_script){
         var dsq = document.createElement('script');
