@@ -46,7 +46,7 @@
 <meta property="og:site_name" content="Xaber&#39;s Blog">
 <meta property="og:description" content="大概介绍 浏览器端的前端打包工具 主要用于在浏览器中使用 npm 包，最终会转换为 commonJS (require) 方式，在浏览器使用 方便模块细分，每个模块自成，通过 require 引用其他模块 基于流 Stream 旧时代产物，尽管也能勉强处理 css（CSS bundlers），html（brfs），但是不太友好，且年久失修  阅读此篇，大概可以较好使用 browserify，以及将">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-04T07:01:30.005Z">
+<meta property="og:updated_time" content="2019-08-04T07:29:12.249Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="browserify 中文文档与使用教程">
 <meta name="twitter:description" content="大概介绍 浏览器端的前端打包工具 主要用于在浏览器中使用 npm 包，最终会转换为 commonJS (require) 方式，在浏览器使用 方便模块细分，每个模块自成，通过 require 引用其他模块 基于流 Stream 旧时代产物，尽管也能勉强处理 css（CSS bundlers），html（brfs），但是不太友好，且年久失修  阅读此篇，大概可以较好使用 browserify，以及将">
@@ -281,7 +281,7 @@
 <li>基于流 <code>Stream</code></li>
 <li>旧时代产物，尽管也能勉强处理 css（<a href="https://github.com/browserify/awesome-browserify#css-bundlers" target="_blank" rel="noopener">CSS bundlers</a>），html（<a href="https://github.com/browserify/brfs" target="_blank" rel="noopener">brfs</a>），但是不太友好，且年久失修</li>
 </ol>
-<p>阅读此篇，大概可以较好使用 browserify，以及将其用在合适的地方。</p>
+<p>阅读此篇，大概可以较好使用 browserify，以及将其用在合适的地方</p>
 <p>此外，文中带 <del>删除线</del> 的内容，因相对的内容过时，阅读意义不大，可简单跳过</p>
 <a id="more"></a>
 <h2 id="大概分析"><a href="#大概分析" class="headerlink" title="大概分析"></a>大概分析</h2><p>以 nums.js，demo.js，build 文件做大概分析</p>
@@ -301,7 +301,7 @@
 <p>默认为 <code>.</code> 即当前脚本运行目录</p>
 <h4 id="require"><a href="#require" class="headerlink" title="require"></a><del>require</del></h4><p>数组，通过模块名或文件路径指定需要打包到bundle中的其他模块</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">browserify(<span class="string">'demo-4'</span>, &#123;</span><br><span class="line">  basedir: <span class="string">'./src'</span>,</span><br><span class="line">  <span class="built_in">require</span>: [<span class="string">'./demo-3-module-2'</span>],</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>例如一些全局的处理，又没有模块依赖的内容</p>
+<p>适用于一些全局的处理，又没有模块依赖的内容</p>
 <p>例如 <code>./demo-3-module-2</code> 内容：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">window</span>.demo3Func = <span class="function"><span class="keyword">function</span> (<span class="params">n</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> n + <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>通过 参数 <code>opts.require</code> 方式引入，那么所有被打包的文件，都会有此部分代码</p>
@@ -320,7 +320,7 @@
 <p>这个参数没什么作用，其实如果不想进行转换，不把它放入 <code>transform</code> 内就好，不需要多此一举在 <code>transform</code> 中添加，又在 <code>ignoreTransform</code> 定义不进行转换</p>
 <h4 id="plugin"><a href="#plugin" class="headerlink" title="plugin"></a>plugin</h4><p>插件数组。主要用于一些更高级的插件配置，增强 browserify 功能。</p>
 <p>详见：<a href="https://github.com/browserify/browserify#plugins" target="_blank" rel="noopener">plugins</a> 或者下方一些示例</p>
-<h4 id="extensions"><a href="#extensions" class="headerlink" title="extensions"></a>extensions</h4><p>参数可为字符串或数组。默认是 <code>[&#39;.js&#39;, &#39;.json&#39;]</code>，可以补充 ‘.ts’, ‘.jsx’ 等等</p>
+<h4 id="extensions"><a href="#extensions" class="headerlink" title="extensions"></a>extensions</h4><p>参数可为字符串或数组。默认是 <code>[&#39;.js&#39;, &#39;.json&#39;]</code>，可以补充 <code>.ts</code>, <code>.jsx</code> 等等</p>
 <h4 id="paths"><a href="#paths" class="headerlink" title="paths"></a>paths</h4><p>一个目录数组，用于在查找未使用相对路径引用的模块时浏览搜索，可以是绝对的或相对于basedir。调用browserify命令时，等效设置 <code>NODE_PATH</code> 环境变量</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">browserify(<span class="string">'./src/demo'</span>, &#123;</span><br><span class="line">    basedir: <span class="string">'./'</span>,</span><br><span class="line">    transform: [[<span class="string">'babelify'</span>, &#123; <span class="attr">presets</span>: [<span class="string">'@babel/preset-env'</span>] &#125;]],</span><br><span class="line">    paths: [<span class="string">'src'</span>], <span class="comment">// ./src 下的模块引用都不需要使用相对路径引用</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">browserify(<span class="string">'./demo'</span>, &#123;</span><br><span class="line">    basedir: <span class="string">'./src'</span>,</span><br><span class="line">    transform: [[<span class="string">'babelify'</span>, &#123; <span class="attr">presets</span>: [<span class="string">'@babel/preset-env'</span>] &#125;]],</span><br><span class="line">    paths: [<span class="string">'test'</span>], <span class="comment">// ./src/test 下的模块引用都不需要使用相对路径引用</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>例如：原来 <code>require(&#39;./a&#39;)</code> 可以直接写为 <code>require(&#39;a&#39;)</code></p>
