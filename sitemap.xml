@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xaber.co/2019/08/01/browserify/</loc>
+    
+    <lastmod>2019-08-04T07:01:30.005Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xaber.co/demo/demo/video.html</loc>
     
     <lastmod>2019-07-27T11:44:50.970Z</lastmod>
@@ -44,28 +51,7 @@
   </url>
   
   <url>
-    <loc>http://xaber.co/2017/02/22/%E5%BE%AE%E4%BF%A1%E6%8E%88%E6%9D%83%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B/</loc>
-    
-    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xaber.co/2014/01/08/Hello-Hexo/</loc>
-    
-    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xaber.co/2014/01/11/%E3%80%8A%E5%86%99%E7%BB%99%E5%A4%A7%E5%AE%B6%E7%9C%8B%E7%9A%84%E8%AE%BE%E8%AE%A1%E4%B9%A6%E3%80%8B/</loc>
-    
-    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xaber.co/2014/01/09/Hexo-Phase%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</loc>
     
     <lastmod>2018-12-26T16:38:02.822Z</lastmod>
     
@@ -79,7 +65,14 @@
   </url>
   
   <url>
-    <loc>http://xaber.co/2017/07/13/Jest%E6%96%87%E6%A1%A3%E5%A4%87%E6%B3%A8/</loc>
+    <loc>http://xaber.co/2014/01/08/Hello-Hexo/</loc>
+    
+    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xaber.co/2017/02/22/%E5%BE%AE%E4%BF%A1%E6%8E%88%E6%9D%83%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B/</loc>
     
     <lastmod>2018-12-26T16:38:02.822Z</lastmod>
     
@@ -93,7 +86,21 @@
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/01/20/%E9%97%AD%E5%8C%85%E5%AE%9E%E7%8E%B0%E6%BB%9A%E5%8A%A8%E6%9D%A1%E4%B8%8A%E4%B8%8B%E7%9A%84%E5%88%A4%E5%AE%9A%E4%BB%A5%E5%8F%8A%E5%B9%B4%E7%BB%88%E6%95%88%E6%9E%9C%E7%9A%84demo/</loc>
+    <loc>http://xaber.co/2014/01/09/Hexo-Phase%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</loc>
+    
+    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xaber.co/2017/07/13/Jest%E6%96%87%E6%A1%A3%E5%A4%87%E6%B3%A8/</loc>
+    
+    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xaber.co/2016/12/23/%E8%B0%88%E8%B0%88%E6%8A%80%E6%9C%AF%E6%A0%B8%E5%BF%83%E8%81%8C%E8%B4%A3%E6%98%AF%E4%BB%80%E4%B9%88/</loc>
     
     <lastmod>2018-12-26T16:38:02.817Z</lastmod>
     
@@ -107,21 +114,21 @@
   </url>
   
   <url>
-    <loc>http://xaber.co/2016/12/23/%E8%B0%88%E8%B0%88%E6%8A%80%E6%9C%AF%E6%A0%B8%E5%BF%83%E8%81%8C%E8%B4%A3%E6%98%AF%E4%BB%80%E4%B9%88/</loc>
+    <loc>http://xaber.co/2014/01/20/%E9%97%AD%E5%8C%85%E5%AE%9E%E7%8E%B0%E6%BB%9A%E5%8A%A8%E6%9D%A1%E4%B8%8A%E4%B8%8B%E7%9A%84%E5%88%A4%E5%AE%9A%E4%BB%A5%E5%8F%8A%E5%B9%B4%E7%BB%88%E6%95%88%E6%9E%9C%E7%9A%84demo/</loc>
     
     <lastmod>2018-12-26T16:38:02.817Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xaber.co/2017/01/01/%E6%9D%AD%E5%B7%9E%E5%8D%8A%E6%97%A5/</loc>
+    <loc>http://xaber.co/2014/01/21/%E6%8D%A2%E4%BA%86%E4%B8%AA%E4%B8%BB%E9%A2%98/</loc>
     
     <lastmod>2018-12-26T16:38:02.816Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/01/21/%E6%8D%A2%E4%BA%86%E4%B8%AA%E4%B8%BB%E9%A2%98/</loc>
+    <loc>http://xaber.co/2017/01/01/%E6%9D%AD%E5%B7%9E%E5%8D%8A%E6%97%A5/</loc>
     
     <lastmod>2018-12-26T16:38:02.816Z</lastmod>
     
@@ -450,14 +457,14 @@
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/02/01/PHP%E5%B0%8F%E7%A8%8B%E5%BC%8F-%E9%80%92%E5%BD%92/</loc>
+    <loc>http://xaber.co/2014/01/30/%E8%A7%86%E5%B7%AE%E6%BB%9A%E5%8A%A8-modernist%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</loc>
     
     <lastmod>2014-10-26T14:45:18.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/01/30/%E8%A7%86%E5%B7%AE%E6%BB%9A%E5%8A%A8-modernist%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</loc>
+    <loc>http://xaber.co/2014/02/01/PHP%E5%B0%8F%E7%A8%8B%E5%BC%8F-%E9%80%92%E5%BD%92/</loc>
     
     <lastmod>2014-10-26T14:45:18.000Z</lastmod>
     
@@ -471,14 +478,14 @@
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/01/29/%E7%99%BE%E9%92%B1%E4%B9%B0%E7%99%BE%E9%B8%A1%E5%BB%B6%E4%BC%B8%E7%9A%84%E4%B8%80%E7%82%B9%E7%9C%8B%E6%B3%95/</loc>
+    <loc>http://xaber.co/2014/01/22/Hexo%E5%A4%A7%E5%B0%8F%E5%86%99%E9%97%AE%E9%A2%98-Github%E7%9B%B8%E5%85%B3/</loc>
     
     <lastmod>2014-10-26T14:45:14.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/01/22/Hexo%E5%A4%A7%E5%B0%8F%E5%86%99%E9%97%AE%E9%A2%98-Github%E7%9B%B8%E5%85%B3/</loc>
+    <loc>http://xaber.co/2014/01/29/%E7%99%BE%E9%92%B1%E4%B9%B0%E7%99%BE%E9%B8%A1%E5%BB%B6%E4%BC%B8%E7%9A%84%E4%B8%80%E7%82%B9%E7%9C%8B%E6%B3%95/</loc>
     
     <lastmod>2014-10-26T14:45:14.000Z</lastmod>
     
