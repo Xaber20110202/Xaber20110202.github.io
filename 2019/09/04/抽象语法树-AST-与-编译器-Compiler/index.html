@@ -1,0 +1,820 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.8.0">
+  
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1">
+
+
+
+
+  <meta name="keywords" content="能力,AST,编译器,babel,">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Xaber's Blog" type="application/atom+xml">
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1">
+
+
+<meta name="description" content="the-super-tiny-compiler / 超级微小的编译器详细内容见：the-super-tiny-compiler-CN 大部分编译器的工作可以被分解为三个主要阶段：解析（Parsing），转化（Transformation）以及 代码生成（Code Generation）  解析 将源代码转换为一个更抽象的形式。 转换 接受解析产生的抽象形式并且操纵这些抽象形式做任何编译器想让它们做">
+<meta name="keywords" content="能力,AST,编译器,babel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="抽象语法树 AST 与 编译器 Compiler">
+<meta property="og:url" content="http://xaber.co/2019/09/04/抽象语法树-AST-与-编译器-Compiler/index.html">
+<meta property="og:site_name" content="Xaber&#39;s Blog">
+<meta property="og:description" content="the-super-tiny-compiler / 超级微小的编译器详细内容见：the-super-tiny-compiler-CN 大部分编译器的工作可以被分解为三个主要阶段：解析（Parsing），转化（Transformation）以及 代码生成（Code Generation）  解析 将源代码转换为一个更抽象的形式。 转换 接受解析产生的抽象形式并且操纵这些抽象形式做任何编译器想让它们做">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-09-04T08:36:36.167Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="抽象语法树 AST 与 编译器 Compiler">
+<meta name="twitter:description" content="the-super-tiny-compiler / 超级微小的编译器详细内容见：the-super-tiny-compiler-CN 大部分编译器的工作可以被分解为三个主要阶段：解析（Parsing），转化（Transformation）以及 代码生成（Code Generation）  解析 将源代码转换为一个更抽象的形式。 转换 接受解析产生的抽象形式并且操纵这些抽象形式做任何编译器想让它们做">
+
+
+<script>
+(function () {
+    window.zhuge = window.zhuge || [];
+    window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
+    window.zhuge.factory = function(b) {
+        return function() {
+            var a = Array.prototype.slice.call(arguments);
+            a.unshift(b);
+            window.zhuge.push(a);
+            return window.zhuge
+        }
+    };
+    for (var i = 0; i < window.zhuge.methods.length; i++) {
+        var key = window.zhuge.methods[i];
+        window.zhuge[key] = window.zhuge.factory(key)
+    }
+    window.zhuge.load = function(b, x) {
+        if (!document.getElementById("zhuge-js")) {
+            var a = document.createElement("script");
+            var verDate = new Date();
+            var verStr = verDate.getFullYear().toString()
+                + verDate.getMonth().toString() + verDate.getDate().toString();
+
+            a.type = "text/javascript";
+            a.id = "zhuge-js";
+            a.async = !0;
+            a.src = (location.protocol == 'http:' ? "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" : 'https://zgsdk.zhugeio.com/zhuge-lastest.min.js?v=') + verStr;
+            var c = document.getElementsByTagName("script")[0];
+            c.parentNode.insertBefore(a, c);
+            window.zhuge._init(b, x)
+        }
+    };
+    
+    // 开发模式调试
+    
+    window.zhuge.load('49fc6625ddcc4004aa98d05e876a70e0');
+    
+})();
+</script>
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide'
+  };
+</script>
+
+  <title> 抽象语法树 AST 与 编译器 Compiler | Xaber's Blog </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-47125735-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Xaber's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br>
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br>
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br>
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br>
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br>
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              抽象语法树 AST 与 编译器 Compiler
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2019-09-04T16:30:25+08:00" content="2019-09-04">
+            2019-09-04
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/总结系列/" itemprop="url" rel="index">
+                  <span itemprop="name">总结系列</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2019/09/04/抽象语法树-AST-与-编译器-Compiler/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/04/抽象语法树-AST-与-编译器-Compiler/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="the-super-tiny-compiler-超级微小的编译器"><a href="#the-super-tiny-compiler-超级微小的编译器" class="headerlink" title="the-super-tiny-compiler / 超级微小的编译器"></a>the-super-tiny-compiler / 超级微小的编译器</h2><p>详细内容见：<a href="https://github.com/YongzeYao/the-super-tiny-compiler-CN" target="_blank" rel="noopener">the-super-tiny-compiler-CN</a></p>
+<p>大部分编译器的工作可以被分解为三个主要阶段：解析（Parsing），转化（Transformation）以及 代码生成（Code Generation）</p>
+<ol>
+<li><em>解析</em> 将源代码转换为一个更抽象的形式。</li>
+<li><em>转换</em> 接受解析产生的抽象形式并且操纵这些抽象形式做任何编译器想让它们做的事。</li>
+<li><em>代码生成</em> 基于转换后的代码表现形式（code representation）生成目标代码。</li>
+</ol>
+<a id="more"></a>
+<h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><ol>
+<li><em>词法分析</em> —— tokenizer 通过一个叫做tokenizer（词素生成器，也叫lexer）的工具将源代码分解成一个个词素。（词素是描述编程语言语法的对象。它可以描述数字，标识符，标点符号，运算符等等。）</li>
+<li><em>语法分析</em> —— parser 接收词素并将它们组合成一个描述了源代码各部分之间关系的中间表达形式：抽象语法树。（抽象语法树是一个深度嵌套的对象，这个对象以一种既能够简单地操作又提供很多关于源代码信息的形式，来展现代码。）</li>
+</ol>
+<h3 id="转换"><a href="#转换" class="headerlink" title="转换"></a>转换</h3><p>编译器的下一个阶段是转换阶段。再回顾一遍，这个过程接收解析生成的抽象语法树并对它做出改动。转换阶段可以改变抽象语法树使代码保持在同一个语言（例如Babel，Babel接收的是JS代码生成的也是JS代码），或者编译成另外一门语言。</p>
+<p>traverser函数，这个函数接收抽象语法树以及一个访问者对象</p>
+<p><code>transformer</code> -&gt; <code>traverser(ast, visitor)</code></p>
+<p>接收创造的抽象语法树并将它和一个访问者对象传给 <code>traverser</code> 函数。然后创造一个新的抽象语法树</p>
+<h3 id="代码生成"><a href="#代码生成" class="headerlink" title="代码生成"></a>代码生成</h3><p><code>codeGenerator</code> 生成新的代码</p>
+<h2 id="babel-是如何工作的？"><a href="#babel-是如何工作的？" class="headerlink" title="babel 是如何工作的？"></a>babel 是如何工作的？</h2><ol>
+<li>解析 —— <a href="https://github.com/babel/babel/tree/master/packages/babel-parser" target="_blank" rel="noopener">babel-parser</a>（包含 上方提到的 <a href="https://github.com/babel/babel/tree/master/packages/babel-parser/src/tokenizer" target="_blank" rel="noopener">tokenizer</a>、<a href="https://github.com/babel/babel/tree/master/packages/babel-parser/src/parser" target="_blank" rel="noopener">parser</a>），根据 es2015, es2016… 标准，生成 AST</li>
+<li>转换 —— <a href="https://github.com/babel/babel/tree/master/packages/babel-traverse" target="_blank" rel="noopener">babel-traverse</a> + plugins （visitor）</li>
+<li>代码生成 —— <a href="https://github.com/babel/babel/tree/master/packages/babel-generator" target="_blank" rel="noopener">babel-generator</a></li>
+</ol>
+<h2 id="AST-定义"><a href="#AST-定义" class="headerlink" title="AST 定义"></a>AST 定义</h2><ol>
+<li><a href="https://developer.mozilla.org/zh-CN/docs/Mozilla/Projects/SpiderMonkey/Parser_API#%E8%8A%82%E7%82%B9%E5%AF%B9%E8%B1%A1" target="_blank" rel="noopener">SpiderMonkey in MDN</a></li>
+<li><a href="https://github.com/estree/estree" target="_blank" rel="noopener">The ESTree Spec</a></li>
+<li><a href="https://github.com/babel/babel/blob/master/packages/babel-parser/ast/spec.md" target="_blank" rel="noopener">babel AST</a> 针对 <a href="http://babel.docschina.org/docs/en/babel-parser#output" target="_blank" rel="noopener">ESTree 的调整</a></li>
+<li><a href="https://github.com/facebook/jsx/blob/master/AST.md" target="_blank" rel="noopener">jsx-AST</a></li>
+</ol>
+<h2 id="AST-生成工具-parser"><a href="#AST-生成工具-parser" class="headerlink" title="AST 生成工具 (parser)"></a>AST 生成工具 (parser)</h2><ol>
+<li><a href="https://github.com/jquery/esprima" target="_blank" rel="noopener">esprima</a> —— 老牌解析器</li>
+<li><a href="https://github.com/acornjs/acorn" target="_blank" rel="noopener">acorn</a> —— esprima 后的轮子，目前使用最多。webpack 也使用此工具</li>
+<li><a href="https://github.com/eslint/espree" target="_blank" rel="noopener">espree</a> —— 最初从 esprima fork 出来，来自 eslint，用于 eslint</li>
+<li><a href="https://github.com/babel/babel/tree/master/packages/babel-parser/src/parser" target="_blank" rel="noopener">babel-parser</a> —— 原 <a href="https://github.com/babel/babylon" target="_blank" rel="noopener">babylon</a>，最初 从 <a href="https://github.com/acornjs/acorn" target="_blank" rel="noopener">acorn</a> fork 出来</li>
+<li><a href="https://github.com/mishoo/UglifyJS2" target="_blank" rel="noopener">UglifyJS2</a> —— <a href="https://github.com/mishoo/UglifyJS2/blob/76df77c08c684bc49bebb35d6d527d90cea48108/lib/parse.js" target="_blank" rel="noopener">自带 parser</a></li>
+<li><a href="https://github.com/shapesecurity/shift-parser-js" target="_blank" rel="noopener">shift-parser-js</a> —— 自己定义了一套 AST 规范 <a href="https://github.com/shapesecurity/shift-spec" target="_blank" rel="noopener">shift-spec</a></li>
+</ol>
+<h2 id="其他-AST-转换工具-（transformer）"><a href="#其他-AST-转换工具-（transformer）" class="headerlink" title="其他 AST 转换工具 （transformer）"></a>其他 AST 转换工具 （transformer）</h2><ol>
+<li><a href="https://github.com/estools/estraverse" target="_blank" rel="noopener">estraverse</a></li>
+<li>…</li>
+</ol>
+<h2 id="代码生成工具-（codeGenerator）"><a href="#代码生成工具-（codeGenerator）" class="headerlink" title="代码生成工具 （codeGenerator）"></a>代码生成工具 （codeGenerator）</h2><ol>
+<li><a href="https://github.com/estools/escodegen" target="_blank" rel="noopener">escodegen</a></li>
+<li>…</li>
+</ol>
+<h2 id="其他编译工具"><a href="#其他编译工具" class="headerlink" title="其他编译工具"></a>其他编译工具</h2><ol>
+<li><a href="https://github.com/google/traceur-compiler" target="_blank" rel="noopener">traceur-compiler</a></li>
+<li>…</li>
+</ol>
+<h2 id="基于-AST-的工具"><a href="#基于-AST-的工具" class="headerlink" title="基于 AST 的工具"></a>基于 AST 的工具</h2><p>如上所描述：</p>
+<ol>
+<li>eslint</li>
+<li>webpack</li>
+<li>UglifyJS 代码压缩</li>
+<li><a href="https://github.com/prettier/prettier" target="_blank" rel="noopener">prettier</a> —— 使用 <a href="https://github.com/babel/babel/tree/master/packages/babel-parser/src/parser" target="_blank" rel="noopener">@babel/parser</a>、<a href="https://github.com/ikatyang/angular-estree-parser" target="_blank" rel="noopener">angular-estree-parser</a>… etc.</li>
+<li>typescript —— 自带 parser、transformer、codeGenerator</li>
+<li>代码重构<ol>
+<li><a href="https://github.com/benjamn/recast" target="_blank" rel="noopener">recast</a></li>
+<li><a href="https://github.com/facebook/jscodeshift" target="_blank" rel="noopener">jscodeshift</a></li>
+<li><a href="https://github.com/reactjs/react-codemod" target="_blank" rel="noopener">react-codemod</a></li>
+</ol>
+</li>
+<li>其他，例如：IDE 错误提示、格式化、高亮、自动补全 等</li>
+<li>…</li>
+</ol>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ol>
+<li><a href="https://github.com/YongzeYao/the-super-tiny-compiler-CN" target="_blank" rel="noopener">the-super-tiny-compiler-CN</a></li>
+<li><a href="https://zhaomenghuan.js.org/blog/js-ast-principle-reveals.html" target="_blank" rel="noopener">JS AST 原理揭秘</a></li>
+<li><a href="https://www.qianduandaren.com/2018/12/29/javascript-engine-v8/" target="_blank" rel="noopener">JavaScript基础——JS编译器你都做了啥？</a></li>
+<li><a href="https://juejin.im/post/5bfc21d2e51d4544313df666" target="_blank" rel="noopener">平庸前端码农之蜕变 — AST</a></li>
+<li><a href="https://imweb.io/topic/57b13b4f93d9938132cc8dfd" target="_blank" rel="noopener">代码重构利器 —— jscodeshift</a></li>
+<li><a href="http://ambeta.github.io/2017/08/13/jscodeshift.html" target="_blank" rel="noopener">利用 AST 对项目代码进行迁移</a></li>
+<li><a href="https://tianqi.name/blog/2018/01/12/jscodeshift.html" target="_blank" rel="noopener">jscodeshift 入门指南</a></li>
+<li><a href="http://borninsummer.com/files/2018/11/acorn.js-intro.pdf" target="_blank" rel="noopener">ACORN.JS：原理与应⽤</a></li>
+<li><a href="https://juejin.im/post/582425402e958a129926fcb4" target="_blank" rel="noopener">使用 Acorn 来解析 JavaScript</a></li>
+<li><a href="https://esprima.org/test/compare.html" target="_blank" rel="noopener">Speed Comparison</a></li>
+<li><a href="https://github.com/addyosmani/es6-tools" target="_blank" rel="noopener">es6-tools</a></li>
+</ol>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/能力/" rel="tag">#能力</a>
+          
+            <a href="/tags/AST/" rel="tag">#AST</a>
+          
+            <a href="/tags/编译器/" rel="tag">#编译器</a>
+          
+            <a href="/tags/babel/" rel="tag">#babel</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/15/webpack-文档与配置/" rel="next">webpack 文档与配置</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/6246962?v=3&s=460" alt="Xaber" itemprop="image">
+          <p class="site-author-name" itemprop="name">Xaber</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">71</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-super-tiny-compiler-超级微小的编译器"><span class="nav-number">1.</span> <span class="nav-text">the-super-tiny-compiler / 超级微小的编译器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解析"><span class="nav-number">1.1.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转换"><span class="nav-number">1.2.</span> <span class="nav-text">转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码生成"><span class="nav-number">1.3.</span> <span class="nav-text">代码生成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#babel-是如何工作的？"><span class="nav-number">2.</span> <span class="nav-text">babel 是如何工作的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AST-定义"><span class="nav-number">3.</span> <span class="nav-text">AST 定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AST-生成工具-parser"><span class="nav-number">4.</span> <span class="nav-text">AST 生成工具 (parser)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他-AST-转换工具-（transformer）"><span class="nav-number">5.</span> <span class="nav-text">其他 AST 转换工具 （transformer）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码生成工具-（codeGenerator）"><span class="nav-number">6.</span> <span class="nav-text">代码生成工具 （codeGenerator）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他编译工具"><span class="nav-number">7.</span> <span class="nav-text">其他编译工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于-AST-的工具"><span class="nav-number">8.</span> <span class="nav-text">基于 AST 的工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xaber</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xaber';
+      var disqus_identifier = '2019/09/04/抽象语法树-AST-与-编译器-Compiler/';
+      var disqus_title = '抽象语法树 AST 与 编译器 Compiler';
+      var disqus_url = 'http://xaber.co/2019/09/04/抽象语法树-AST-与-编译器-Compiler/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+
+  </script>
+
+  
+  <script src="/js/fingerprint2.js"></script>
+<script>
+    $(function () {
+        if (!window.zhuge || !window.Fingerprint2) {
+            return;
+        }
+
+        var tb = function (num) {
+            return num < 10 ? ('0' + num) : num;
+        };
+
+        var getFormatTime = function () {
+            var a = new Date();
+            return a.getFullYear() + '-' + 
+                tb(a.getMonth() + 1) + '-' + 
+                tb(a.getDate()) + ' ' +
+                tb(a.getHours()) + ':' +
+                tb(a.getMinutes()) + ':' +
+                tb(a.getSeconds());
+        };
+
+        new Fingerprint2().get(function (result, components) {
+            //a hash, representing your device fingerprint
+            // console.log(result); 
+
+            // an array of FP components
+            // console.log(components);
+
+            // 已设备指纹作为一个用户记录
+            zhuge.identify(result, {});
+
+            zhuge.track('页面展示', {
+                'time': getFormatTime(),
+                'referrer_url': document.referrer,
+                'url': window.location.href
+            });
+        });
+    });
+</script>
+</body>
+</html>
