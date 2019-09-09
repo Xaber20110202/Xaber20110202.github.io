@@ -38,18 +38,18 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1">
 
 
-<meta name="description" content="the-super-tiny-compiler / 超级微小的编译器详细内容见：the-super-tiny-compiler-CN 大部分编译器的工作可以被分解为三个主要阶段：解析（Parsing），转化（Transformation）以及 代码生成（Code Generation）  解析 将源代码转换为一个更抽象的形式。 转换 接受解析产生的抽象形式并且操纵这些抽象形式做任何编译器想让它们做">
+<meta name="description" content="the-super-tiny-compiler / 超级微小的编译器此部分 the-super-tiny-compiler / 超级微小的编译器 内容，均摘取自 the-super-tiny-compiler-CN，先看完 the-super-tiny-compiler-CN 才有看后续的意义。 概要大部分编译器的工作可以被分解为三个主要阶段：解析（Parsing），转化（Transformati">
 <meta name="keywords" content="能力,AST,编译器,babel">
 <meta property="og:type" content="article">
 <meta property="og:title" content="抽象语法树 AST 与 编译器 Compiler">
 <meta property="og:url" content="http://xaber.co/2019/09/04/抽象语法树-AST-与-编译器-Compiler/index.html">
 <meta property="og:site_name" content="Xaber&#39;s Blog">
-<meta property="og:description" content="the-super-tiny-compiler / 超级微小的编译器详细内容见：the-super-tiny-compiler-CN 大部分编译器的工作可以被分解为三个主要阶段：解析（Parsing），转化（Transformation）以及 代码生成（Code Generation）  解析 将源代码转换为一个更抽象的形式。 转换 接受解析产生的抽象形式并且操纵这些抽象形式做任何编译器想让它们做">
+<meta property="og:description" content="the-super-tiny-compiler / 超级微小的编译器此部分 the-super-tiny-compiler / 超级微小的编译器 内容，均摘取自 the-super-tiny-compiler-CN，先看完 the-super-tiny-compiler-CN 才有看后续的意义。 概要大部分编译器的工作可以被分解为三个主要阶段：解析（Parsing），转化（Transformati">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-04T08:36:36.167Z">
+<meta property="og:updated_time" content="2019-09-09T03:12:53.702Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="抽象语法树 AST 与 编译器 Compiler">
-<meta name="twitter:description" content="the-super-tiny-compiler / 超级微小的编译器详细内容见：the-super-tiny-compiler-CN 大部分编译器的工作可以被分解为三个主要阶段：解析（Parsing），转化（Transformation）以及 代码生成（Code Generation）  解析 将源代码转换为一个更抽象的形式。 转换 接受解析产生的抽象形式并且操纵这些抽象形式做任何编译器想让它们做">
+<meta name="twitter:description" content="the-super-tiny-compiler / 超级微小的编译器此部分 the-super-tiny-compiler / 超级微小的编译器 内容，均摘取自 the-super-tiny-compiler-CN，先看完 the-super-tiny-compiler-CN 才有看后续的意义。 概要大部分编译器的工作可以被分解为三个主要阶段：解析（Parsing），转化（Transformati">
 
 
 <script>
@@ -274,8 +274,8 @@
       
 
       
-        <span itemprop="articleBody"><h2 id="the-super-tiny-compiler-超级微小的编译器"><a href="#the-super-tiny-compiler-超级微小的编译器" class="headerlink" title="the-super-tiny-compiler / 超级微小的编译器"></a>the-super-tiny-compiler / 超级微小的编译器</h2><p>详细内容见：<a href="https://github.com/YongzeYao/the-super-tiny-compiler-CN" target="_blank" rel="noopener">the-super-tiny-compiler-CN</a></p>
-<p>大部分编译器的工作可以被分解为三个主要阶段：解析（Parsing），转化（Transformation）以及 代码生成（Code Generation）</p>
+        <span itemprop="articleBody"><h2 id="the-super-tiny-compiler-超级微小的编译器"><a href="#the-super-tiny-compiler-超级微小的编译器" class="headerlink" title="the-super-tiny-compiler / 超级微小的编译器"></a>the-super-tiny-compiler / 超级微小的编译器</h2><p>此部分 <em>the-super-tiny-compiler / 超级微小的编译器</em> 内容，均摘取自 <strong><a href="https://github.com/YongzeYao/the-super-tiny-compiler-CN" target="_blank" rel="noopener">the-super-tiny-compiler-CN</a></strong>，先看完 <strong><a href="https://github.com/YongzeYao/the-super-tiny-compiler-CN" target="_blank" rel="noopener">the-super-tiny-compiler-CN</a></strong> 才有看后续的意义。</p>
+<h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><p>大部分编译器的工作可以被分解为三个主要阶段：解析（Parsing），转化（Transformation）以及 代码生成（Code Generation）</p>
 <ol>
 <li><em>解析</em> 将源代码转换为一个更抽象的形式。</li>
 <li><em>转换</em> 接受解析产生的抽象形式并且操纵这些抽象形式做任何编译器想让它们做的事。</li>
@@ -292,9 +292,9 @@
 <p>接收创造的抽象语法树并将它和一个访问者对象传给 <code>traverser</code> 函数。然后创造一个新的抽象语法树</p>
 <h3 id="代码生成"><a href="#代码生成" class="headerlink" title="代码生成"></a>代码生成</h3><p><code>codeGenerator</code> 生成新的代码</p>
 <h2 id="babel-是如何工作的？"><a href="#babel-是如何工作的？" class="headerlink" title="babel 是如何工作的？"></a>babel 是如何工作的？</h2><ol>
-<li>解析 —— <a href="https://github.com/babel/babel/tree/master/packages/babel-parser" target="_blank" rel="noopener">babel-parser</a>（包含 上方提到的 <a href="https://github.com/babel/babel/tree/master/packages/babel-parser/src/tokenizer" target="_blank" rel="noopener">tokenizer</a>、<a href="https://github.com/babel/babel/tree/master/packages/babel-parser/src/parser" target="_blank" rel="noopener">parser</a>），根据 es2015, es2016… 标准，生成 AST</li>
-<li>转换 —— <a href="https://github.com/babel/babel/tree/master/packages/babel-traverse" target="_blank" rel="noopener">babel-traverse</a> + plugins （visitor）</li>
-<li>代码生成 —— <a href="https://github.com/babel/babel/tree/master/packages/babel-generator" target="_blank" rel="noopener">babel-generator</a></li>
+<li>解析 —— <a href="https://github.com/babel/babel/tree/master/packages/babel-parser" target="_blank" rel="noopener">@babel/parser</a>（包含 上方提到的 <a href="https://github.com/babel/babel/tree/master/packages/babel-parser/src/tokenizer" target="_blank" rel="noopener">tokenizer</a>、<a href="https://github.com/babel/babel/tree/master/packages/babel-parser/src/parser" target="_blank" rel="noopener">parser</a>），根据 es2015, es2016… 标准，生成 AST</li>
+<li>转换 —— <a href="https://github.com/babel/babel/tree/master/packages/babel-traverse" target="_blank" rel="noopener">@babel/traverse</a> + plugins （visitor）</li>
+<li>代码生成 —— <a href="https://github.com/babel/babel/tree/master/packages/babel-generator" target="_blank" rel="noopener">@babel/generator</a></li>
 </ol>
 <h2 id="AST-定义"><a href="#AST-定义" class="headerlink" title="AST 定义"></a>AST 定义</h2><ol>
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Mozilla/Projects/SpiderMonkey/Parser_API#%E8%8A%82%E7%82%B9%E5%AF%B9%E8%B1%A1" target="_blank" rel="noopener">SpiderMonkey in MDN</a></li>
@@ -305,6 +305,7 @@
 <h2 id="AST-生成工具-parser"><a href="#AST-生成工具-parser" class="headerlink" title="AST 生成工具 (parser)"></a>AST 生成工具 (parser)</h2><ol>
 <li><a href="https://github.com/jquery/esprima" target="_blank" rel="noopener">esprima</a> —— 老牌解析器</li>
 <li><a href="https://github.com/acornjs/acorn" target="_blank" rel="noopener">acorn</a> —— esprima 后的轮子，目前使用最多。webpack 也使用此工具</li>
+<li><a href="https://astexplorer.net/" target="_blank" rel="noopener">astexplorer</a> —— 在线生成工具</li>
 <li><a href="https://github.com/eslint/espree" target="_blank" rel="noopener">espree</a> —— 最初从 esprima fork 出来，来自 eslint，用于 eslint</li>
 <li><a href="https://github.com/babel/babel/tree/master/packages/babel-parser/src/parser" target="_blank" rel="noopener">babel-parser</a> —— 原 <a href="https://github.com/babel/babylon" target="_blank" rel="noopener">babylon</a>，最初 从 <a href="https://github.com/acornjs/acorn" target="_blank" rel="noopener">acorn</a> fork 出来</li>
 <li><a href="https://github.com/mishoo/UglifyJS2" target="_blank" rel="noopener">UglifyJS2</a> —— <a href="https://github.com/mishoo/UglifyJS2/blob/76df77c08c684bc49bebb35d6d527d90cea48108/lib/parse.js" target="_blank" rel="noopener">自带 parser</a></li>
@@ -373,6 +374,8 @@
       
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/07/babel-7-全套/" rel="prev">babel 7 全套</a>
             
           </div>
 
@@ -444,7 +447,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-count">70</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -493,7 +496,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-super-tiny-compiler-超级微小的编译器"><span class="nav-number">1.</span> <span class="nav-text">the-super-tiny-compiler / 超级微小的编译器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解析"><span class="nav-number">1.1.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转换"><span class="nav-number">1.2.</span> <span class="nav-text">转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码生成"><span class="nav-number">1.3.</span> <span class="nav-text">代码生成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#babel-是如何工作的？"><span class="nav-number">2.</span> <span class="nav-text">babel 是如何工作的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AST-定义"><span class="nav-number">3.</span> <span class="nav-text">AST 定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AST-生成工具-parser"><span class="nav-number">4.</span> <span class="nav-text">AST 生成工具 (parser)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他-AST-转换工具-（transformer）"><span class="nav-number">5.</span> <span class="nav-text">其他 AST 转换工具 （transformer）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码生成工具-（codeGenerator）"><span class="nav-number">6.</span> <span class="nav-text">代码生成工具 （codeGenerator）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他编译工具"><span class="nav-number">7.</span> <span class="nav-text">其他编译工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于-AST-的工具"><span class="nav-number">8.</span> <span class="nav-text">基于 AST 的工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#the-super-tiny-compiler-超级微小的编译器"><span class="nav-number">1.</span> <span class="nav-text">the-super-tiny-compiler / 超级微小的编译器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概要"><span class="nav-number">1.1.</span> <span class="nav-text">概要</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解析"><span class="nav-number">1.2.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#转换"><span class="nav-number">1.3.</span> <span class="nav-text">转换</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码生成"><span class="nav-number">1.4.</span> <span class="nav-text">代码生成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#babel-是如何工作的？"><span class="nav-number">2.</span> <span class="nav-text">babel 是如何工作的？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AST-定义"><span class="nav-number">3.</span> <span class="nav-text">AST 定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AST-生成工具-parser"><span class="nav-number">4.</span> <span class="nav-text">AST 生成工具 (parser)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他-AST-转换工具-（transformer）"><span class="nav-number">5.</span> <span class="nav-text">其他 AST 转换工具 （transformer）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码生成工具-（codeGenerator）"><span class="nav-number">6.</span> <span class="nav-text">代码生成工具 （codeGenerator）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他编译工具"><span class="nav-number">7.</span> <span class="nav-text">其他编译工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于-AST-的工具"><span class="nav-number">8.</span> <span class="nav-text">基于 AST 的工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考"><span class="nav-number">9.</span> <span class="nav-text">参考</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

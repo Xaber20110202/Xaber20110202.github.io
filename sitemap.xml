@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xaber.co/2019/09/09/babel-7-%E6%8F%92%E4%BB%B6%E5%BC%80%E5%8F%91%E7%9B%B8%E5%85%B3/</loc>
+    
+    <lastmod>2019-09-09T14:08:30.684Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xaber.co/2019/09/07/babel-7-%E5%85%A8%E5%A5%97/</loc>
+    
+    <lastmod>2019-09-09T14:08:25.287Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xaber.co/2019/09/04/%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91-AST-%E4%B8%8E-%E7%BC%96%E8%AF%91%E5%99%A8-Compiler/</loc>
     
-    <lastmod>2019-09-04T08:36:36.167Z</lastmod>
+    <lastmod>2019-09-09T03:12:53.702Z</lastmod>
     
   </url>
   
@@ -58,42 +72,7 @@
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/01/09/Html%E8%A7%A3%E6%9E%90/</loc>
-    
-    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://xaber.co/2014/01/08/Hello-Hexo/</loc>
-    
-    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xaber.co/2017/02/22/%E5%BE%AE%E4%BF%A1%E6%8E%88%E6%9D%83%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B/</loc>
-    
-    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xaber.co/2017/04/27/ES6%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97-%E2%80%94%E2%80%94-class%E7%9A%84%E7%B3%96%E6%80%8E%E4%B9%88%E5%90%83/</loc>
-    
-    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xaber.co/2017/07/13/Jest%E6%96%87%E6%A1%A3%E5%A4%87%E6%B3%A8/</loc>
-    
-    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xaber.co/2014/01/09/Hexo-Phase%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</loc>
     
     <lastmod>2018-12-26T16:38:02.822Z</lastmod>
     
@@ -107,7 +86,42 @@
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/03/20/%E7%88%AA%E5%93%87%E7%8A%80%E7%89%9B/</loc>
+    <loc>http://xaber.co/2017/02/22/%E5%BE%AE%E4%BF%A1%E6%8E%88%E6%9D%83%E7%99%BB%E5%BD%95%E6%B5%81%E7%A8%8B/</loc>
+    
+    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xaber.co/2014/01/09/Hexo-Phase%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</loc>
+    
+    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xaber.co/2014/01/09/Html%E8%A7%A3%E6%9E%90/</loc>
+    
+    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xaber.co/2017/07/13/Jest%E6%96%87%E6%A1%A3%E5%A4%87%E6%B3%A8/</loc>
+    
+    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xaber.co/2017/04/27/ES6%E5%9F%BA%E7%A1%80%E7%B3%BB%E5%88%97-%E2%80%94%E2%80%94-class%E7%9A%84%E7%B3%96%E6%80%8E%E4%B9%88%E5%90%83/</loc>
+    
+    <lastmod>2018-12-26T16:38:02.822Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xaber.co/2016/12/23/%E8%B0%88%E8%B0%88%E6%8A%80%E6%9C%AF%E6%A0%B8%E5%BF%83%E8%81%8C%E8%B4%A3%E6%98%AF%E4%BB%80%E4%B9%88/</loc>
     
     <lastmod>2018-12-26T16:38:02.817Z</lastmod>
     
@@ -121,21 +135,21 @@
   </url>
   
   <url>
-    <loc>http://xaber.co/2016/12/23/%E8%B0%88%E8%B0%88%E6%8A%80%E6%9C%AF%E6%A0%B8%E5%BF%83%E8%81%8C%E8%B4%A3%E6%98%AF%E4%BB%80%E4%B9%88/</loc>
+    <loc>http://xaber.co/2014/03/20/%E7%88%AA%E5%93%87%E7%8A%80%E7%89%9B/</loc>
     
     <lastmod>2018-12-26T16:38:02.817Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/01/21/%E6%8D%A2%E4%BA%86%E4%B8%AA%E4%B8%BB%E9%A2%98/</loc>
+    <loc>http://xaber.co/2017/01/01/%E6%9D%AD%E5%B7%9E%E5%8D%8A%E6%97%A5/</loc>
     
     <lastmod>2018-12-26T16:38:02.816Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xaber.co/2017/01/01/%E6%9D%AD%E5%B7%9E%E5%8D%8A%E6%97%A5/</loc>
+    <loc>http://xaber.co/2014/01/21/%E6%8D%A2%E4%BA%86%E4%B8%AA%E4%B8%BB%E9%A2%98/</loc>
     
     <lastmod>2018-12-26T16:38:02.816Z</lastmod>
     
@@ -436,14 +450,14 @@
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/05/20/Pro-Javascript-Techniques-%E7%AC%94%E8%AE%B0part312-%E7%B1%BB%E5%BC%8F%E7%BB%A7%E6%89%BF-By-Douglas-Crockford-%E6%88%91%E7%9A%84%E8%A7%A3%E5%86%B3/</loc>
+    <loc>http://xaber.co/2014/05/20/Pro-Javascript-Techniques-%E7%AC%94%E8%AE%B0part313-%E7%B1%BB%E5%BC%8F%E7%BB%A7%E6%89%BF-By-Douglas-Crockford-%E6%9E%84%E5%BB%BA%E5%9F%BA%E7%B1%BB/</loc>
     
     <lastmod>2014-10-26T14:45:28.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/05/20/Pro-Javascript-Techniques-%E7%AC%94%E8%AE%B0part313-%E7%B1%BB%E5%BC%8F%E7%BB%A7%E6%89%BF-By-Douglas-Crockford-%E6%9E%84%E5%BB%BA%E5%9F%BA%E7%B1%BB/</loc>
+    <loc>http://xaber.co/2014/05/20/Pro-Javascript-Techniques-%E7%AC%94%E8%AE%B0part312-%E7%B1%BB%E5%BC%8F%E7%BB%A7%E6%89%BF-By-Douglas-Crockford-%E6%88%91%E7%9A%84%E8%A7%A3%E5%86%B3/</loc>
     
     <lastmod>2014-10-26T14:45:28.000Z</lastmod>
     
@@ -464,14 +478,14 @@
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/02/01/PHP%E5%B0%8F%E7%A8%8B%E5%BC%8F-%E9%80%92%E5%BD%92/</loc>
+    <loc>http://xaber.co/2014/01/30/%E8%A7%86%E5%B7%AE%E6%BB%9A%E5%8A%A8-modernist%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</loc>
     
     <lastmod>2014-10-26T14:45:18.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/01/30/%E8%A7%86%E5%B7%AE%E6%BB%9A%E5%8A%A8-modernist%E4%B8%BB%E9%A2%98%E4%BF%AE%E6%94%B9/</loc>
+    <loc>http://xaber.co/2014/02/01/PHP%E5%B0%8F%E7%A8%8B%E5%BC%8F-%E9%80%92%E5%BD%92/</loc>
     
     <lastmod>2014-10-26T14:45:18.000Z</lastmod>
     
@@ -485,14 +499,14 @@
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/01/29/%E7%99%BE%E9%92%B1%E4%B9%B0%E7%99%BE%E9%B8%A1%E5%BB%B6%E4%BC%B8%E7%9A%84%E4%B8%80%E7%82%B9%E7%9C%8B%E6%B3%95/</loc>
+    <loc>http://xaber.co/2014/01/22/Hexo%E5%A4%A7%E5%B0%8F%E5%86%99%E9%97%AE%E9%A2%98-Github%E7%9B%B8%E5%85%B3/</loc>
     
     <lastmod>2014-10-26T14:45:14.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://xaber.co/2014/01/22/Hexo%E5%A4%A7%E5%B0%8F%E5%86%99%E9%97%AE%E9%A2%98-Github%E7%9B%B8%E5%85%B3/</loc>
+    <loc>http://xaber.co/2014/01/29/%E7%99%BE%E9%92%B1%E4%B9%B0%E7%99%BE%E9%B8%A1%E5%BB%B6%E4%BC%B8%E7%9A%84%E4%B8%80%E7%82%B9%E7%9C%8B%E6%B3%95/</loc>
     
     <lastmod>2014-10-26T14:45:14.000Z</lastmod>
     

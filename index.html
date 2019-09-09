@@ -222,6 +222,200 @@
           
           
             
+              <a class="post-title-link" href="/2019/09/09/babel-7-插件开发相关/" itemprop="url">
+                babel 7 插件开发相关
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2019-09-09T21:21:40+08:00" content="2019-09-09">
+            2019-09-09
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/总结系列/" itemprop="url" rel="index">
+                  <span itemprop="name">总结系列</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2019/09/09/babel-7-插件开发相关/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/09/babel-7-插件开发相关/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>此文前，需要先阅读</p>
+<ol>
+<li><a href="http://xaber.co/2019/09/04/%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91-AST-%E4%B8%8E-%E7%BC%96%E8%AF%91%E5%99%A8-Compiler/">抽象语法树 AST 与 编译器 Compiler</a></li>
+<li><a href="http://xaber.co/2019/09/07/babel-7-%E5%85%A8%E5%A5%97/">babel 7 全套</a></li>
+<li><a href="https://github.com/jamiebuilds/babel-handbook/blob/master/translations/zh-Hans/plugin-handbook.md#toc-introduction" target="_blank" rel="noopener">Babel 6 插件手册</a> （PS：尽管大部分 API 已过时，但是大概的理念仍然适用）</li>
+</ol>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2019/09/09/babel-7-插件开发相关/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2019/09/07/babel-7-全套/" itemprop="url">
+                babel 7 全套
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2019-09-07T13:24:25+08:00" content="2019-09-07">
+            2019-09-07
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/总结系列/" itemprop="url" rel="index">
+                  <span itemprop="name">总结系列</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2019/09/07/babel-7-全套/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/07/babel-7-全套/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>babel 官方在 2018-08-27 发布了文章，babel 7 正式发布，距离 babel 6 相隔3年。</p>
+<p>包含内容（官网cp）：</p>
+<ol>
+<li>upgrade tool</li>
+<li>JavaScript 配置文件 <code>babel.config.js</code></li>
+<li>选择性的配置 <code>overrides</code></li>
+<li>TC39 提案 支持 <a href="https://github.com/babel/proposals/" target="_blank" rel="noopener">@babel/proposals</a></li>
+<li>jsx、typescript、flow 的支持</li>
+<li>Babel 辅助函数的变化</li>
+<li>自动 Polyfill (试验) <code>useBuiltins</code></li>
+</ol>
+<p>详细内容可见：<a href="https://babel.docschina.org/blog/2018/08/27/7.0.0" target="_blank" rel="noopener">Babel 7 发布</a></p>
+<p>此篇文章主要介绍 babel 7 相关 <code>presets</code>、<code>plugins</code>、<code>@babel 下其他所有的 packages</code>、babel 其他工具、以及 babel 插件相关，即 babel 全套（包含部分流程上的源码链接）</p>
+<p>至于 AST 抽象语法树相关可见另一文 <strong><a href="http://xaber.co/2019/09/04/%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91-AST-%E4%B8%8E-%E7%BC%96%E8%AF%91%E5%99%A8-Compiler/">抽象语法树-AST-与-编译器-Compiler</a></strong> 内容。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2019/09/07/babel-7-全套/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2019/09/04/抽象语法树-AST-与-编译器-Compiler/" itemprop="url">
                 抽象语法树 AST 与 编译器 Compiler
               </a>
@@ -275,8 +469,8 @@
 
       
         
-          <h2 id="the-super-tiny-compiler-超级微小的编译器"><a href="#the-super-tiny-compiler-超级微小的编译器" class="headerlink" title="the-super-tiny-compiler / 超级微小的编译器"></a>the-super-tiny-compiler / 超级微小的编译器</h2><p>详细内容见：<a href="https://github.com/YongzeYao/the-super-tiny-compiler-CN" target="_blank" rel="noopener">the-super-tiny-compiler-CN</a></p>
-<p>大部分编译器的工作可以被分解为三个主要阶段：解析（Parsing），转化（Transformation）以及 代码生成（Code Generation）</p>
+          <h2 id="the-super-tiny-compiler-超级微小的编译器"><a href="#the-super-tiny-compiler-超级微小的编译器" class="headerlink" title="the-super-tiny-compiler / 超级微小的编译器"></a>the-super-tiny-compiler / 超级微小的编译器</h2><p>此部分 <em>the-super-tiny-compiler / 超级微小的编译器</em> 内容，均摘取自 <strong><a href="https://github.com/YongzeYao/the-super-tiny-compiler-CN" target="_blank" rel="noopener">the-super-tiny-compiler-CN</a></strong>，先看完 <strong><a href="https://github.com/YongzeYao/the-super-tiny-compiler-CN" target="_blank" rel="noopener">the-super-tiny-compiler-CN</a></strong> 才有看后续的意义。</p>
+<h3 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h3><p>大部分编译器的工作可以被分解为三个主要阶段：解析（Parsing），转化（Transformation）以及 代码生成（Code Generation）</p>
 <ol>
 <li><em>解析</em> 将源代码转换为一个更抽象的形式。</li>
 <li><em>转换</em> 接受解析产生的抽象形式并且操纵这些抽象形式做任何编译器想让它们做的事。</li>
@@ -933,185 +1127,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2017/05/21/谈谈前端工程化/" itemprop="url">
-                谈谈前端工程化
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2017-05-21T22:22:27+08:00" content="2017-05-21">
-            2017-05-21
-          </time>
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                <a href="/categories/总结系列/" itemprop="url" rel="index">
-                  <span itemprop="name">总结系列</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2017/05/21/谈谈前端工程化/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/05/21/谈谈前端工程化/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>此篇是前两天在公司作为研发部门的一个TT分享，同步至此。分享的准备过程，其实也是对自己体系化的整理。原本认为分享过程大家死气沉沉，却没想到后面有同学发消息说学到很多，挺好。</p>
-<p>话不多说，开始正题。<strong>此篇卖点</strong>：</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/05/21/谈谈前端工程化/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2017/04/27/ES6基础系列-——-class的糖怎么吃/" itemprop="url">
-                ES6基础系列 —— class的糖怎么吃
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2017-04-27T17:21:24+08:00" content="2017-04-27">
-            2017-04-27
-          </time>
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                  <span itemprop="name">JavaScript</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2017/04/27/ES6基础系列-——-class的糖怎么吃/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/04/27/ES6基础系列-——-class的糖怎么吃/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>原型前前后后大概分享过也不止3次了，面试的时候也经常在提，虽然老话常谈，也没什么好讲的东西</p>
-<p>不过，还是要重点强调下，原型和闭包是JS中核心中的核心，这两个东西会玩，基本上日常类的需求、bug改造起来会驾轻就熟很多</p>
-<h3 id="先来几个栗子"><a href="#先来几个栗子" class="headerlink" title="先来几个栗子"></a>先来几个栗子</h3>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2017/04/27/ES6基础系列-——-class的糖怎么吃/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1150,7 +1165,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-count">70</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

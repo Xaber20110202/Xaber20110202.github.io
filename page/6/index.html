@@ -222,6 +222,190 @@
           
           
             
+              <a class="post-title-link" href="/2014/05/20/Pro-Javascript-Techniques-笔记part313-类式继承-By-Douglas-Crockford-构建基类/" itemprop="url">
+                Pro JavaScript Techniques 笔记.part.3.1.3 类式继承 —— 构建基类
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-05-20T20:38:56+08:00" content="2014-05-20">
+            2014-05-20
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                  <span itemprop="name">JavaScript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/05/20/Pro-Javascript-Techniques-笔记part313-类式继承-By-Douglas-Crockford-构建基类/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/05/20/Pro-Javascript-Techniques-笔记part313-类式继承-By-Douglas-Crockford-构建基类/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>上篇解决了之前的继承中调用uber()的一些问题，此篇可以封装上篇篇尾所述的一些缺陷。<del>声明函数部分是无法封装的。</del></p>
+<pre><code>var create = function () {
+    var X = function () {};
+    X.inherits(Base);
+    return X;
+};
+</code></pre><p>通过这个函数获得的构造函数都是<strong><del>同一个。</del></strong>但可以封装剩下两步骤，并构建自己的基类型。<br><strong>尽管都指向的是函数中的引用，构造函数的名称也都是X，但永远不会是同一个。真是有点无地自容。</strong></p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/05/20/Pro-Javascript-Techniques-笔记part313-类式继承-By-Douglas-Crockford-构建基类/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2014/05/20/Pro-Javascript-Techniques-笔记part312-类式继承-By-Douglas-Crockford-我的解决/" itemprop="url">
+                Pro JavaScript Techniques 笔记.part.3.1.2 类式继承 —— 我的解决
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2014-05-20T20:24:01+08:00" content="2014-05-20">
+            2014-05-20
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                  <span itemprop="name">JavaScript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2014/05/20/Pro-Javascript-Techniques-笔记part312-类式继承-By-Douglas-Crockford-我的解决/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/05/20/Pro-Javascript-Techniques-笔记part312-类式继承-By-Douglas-Crockford-我的解决/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>根据前篇所述的constructor问题，所需做的是找到一个方案记录构造函数的父类型，这方面可以通过闭包或者添加一个属性来标记父类型来解决。</p>
+<p>另一个问题则是，当前构造函数创建的实例也拥有同名方法时，它在第一次调用<code>uber()</code>获得的是原型上的同名方法，而当第二次调用时，其调用的同名方法并不属于父类型的原型而是父类型的父类型的原型。</p>
+<p>以下是我的解决方案，通过闭包实现了显式设置要调用的方法名来调用父级、乃至最上级的同名方法。</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/05/20/Pro-Javascript-Techniques-笔记part312-类式继承-By-Douglas-Crockford-我的解决/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2014/05/18/Pro-Javascript-Techniques-笔记part311-类式继承-By-Douglas-Crockford-问题补充/" itemprop="url">
                 Pro JavaScript Techniques 笔记.part.3.1.1 类式继承 by Douglas Crockford —— 问题补充
               </a>
@@ -918,182 +1102,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/01/22/Hexo大小写问题-Github相关/" itemprop="url">
-                Hexo大小写问题 - Github相关
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-01-22T10:54:29+08:00" content="2014-01-22">
-            2014-01-22
-          </time>
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                <a href="/categories/Hexo/" itemprop="url" rel="index">
-                  <span itemprop="name">Hexo</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2014/01/22/Hexo大小写问题-Github相关/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/22/Hexo大小写问题-Github相关/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>早上发现categories里一些分类点击会跳转404，而本地是没问题的，这是什么情况？<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/01/22/Hexo大小写问题-Github相关/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </p></div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/01/21/换了个主题/" itemprop="url">
-                换了个主题
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-01-21T20:43:29+08:00" content="2014-01-21">
-            2014-01-21
-          </time>
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                <a href="/categories/Hexo/" itemprop="url" rel="index">
-                  <span itemprop="name">Hexo</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2014/01/21/换了个主题/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/01/21/换了个主题/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p><img src="/images/QQ622A56FE20140121202603_zpsb5c8bfac.jpg" alt="先前修改的主题"><br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/01/21/换了个主题/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </p></div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1132,7 +1140,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">68</span>
+              <span class="site-state-item-count">70</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
