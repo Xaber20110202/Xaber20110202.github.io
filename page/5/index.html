@@ -222,6 +222,200 @@
           
           
             
+              <a class="post-title-link" href="/2015/04/22/webkit内核浏览器在当前页面刷新时scrollTo失效/" itemprop="url">
+                webkit内核浏览器在当前页面刷新时scrollTo失效
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-04-22T00:51:54+08:00" content="2015-04-22">
+            2015-04-22
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                  <span itemprop="name">JavaScript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/04/22/webkit内核浏览器在当前页面刷新时scrollTo失效/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/04/22/webkit内核浏览器在当前页面刷新时scrollTo失效/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><a id="more"></a>
+<p>实际上这是去年7月份时碰到的问题，但是那会儿只是单纯认为这是浏览器纪录了刷新前的位置，并自发做了回到原来位置的处理导致的失效，并没有刻意去处理，而只是简单做了如下操作：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$(window).on(&apos;load&apos;, function () &#123;</span><br><span class="line">    setTimeout(function () &#123;</span><br><span class="line">        $(&apos;html,body&apos;).animate(&#123;</span><br><span class="line">            &apos;scrollTop&apos; : top</span><br><span class="line">        &#125;, 0);</span><br><span class="line">    &#125;, 200);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>上周时，因周年庆的活动，偶然间触动了这部分代码，偶然间触发了这个问题。于是今天花了几个小时做了算是精准的定位。</p>
+<p>以下代码直接运行在html中，具体可以下载这个html代码做修改和查看<a href="https://github.com/Xaber20110202/Container/blob/master/JavaScript/2015.04.21-webkit%20scrollTo%E5%9C%A8%E9%A1%B5%E9%9D%A2loaded%E5%AE%8C%E6%88%90%E4%B9%8B%E5%89%8D%E5%A4%B1%E6%95%88.html" target="_blank" rel="noopener">这个页面</a>。</p>
+<p>测试：chrome 41.0.2272.104 (64-bit) / ff 37.0.1</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">log(&apos;test 1 for window.scrollTo&apos;);</span><br><span class="line">window.scrollTo(0, 2000);</span><br><span class="line">log(&apos;now document.body.scrollTop is : &apos; + document.body.scrollTop); // chrome: 2000       FF: 0</span><br><span class="line">log(&apos;now document.documentElement.scrollTop is : &apos; + document.documentElement.scrollTop); // chrome: 0   ff: 2000</span><br></pre></td></tr></table></figure>
+<p>…… 等等等等，总共做了六个测试，包括<code>window.scorllTo</code>， <code>window.scroll</code>， <code>window.scrollBy</code>， <code>window.onload then scrollTo</code>， <code>window.onload then setTimeout then scrollTo</code>。最后log的结果都是类似的，而实际效果就是，chrome在刷新的情况下，怎么都到不了设定的2000px的位置，而firefox可以。重新打开倒是正常。</p>
+<p>而实际业务逻辑中做的减法调试也耗费了不少的时间。包括以这样的代码找到所有的scroll事件依依去除。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var lookForBindHandler = function (dom, eventType) &#123;</span><br><span class="line">    $.each( $._data(dom).events[eventType], function (key, handle) &#123;</span><br><span class="line">        console.log(handle.handler.toString());</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;; </span><br><span class="line">lookForBindHandler(window, &apos;scroll&apos;)</span><br></pre></td></tr></table></figure>
+<p>到依次去除业务代码、依赖到的库文件lazyload、 infinitescroll、jQuery 到最后直接用原生的 window.scrollTo（jQuey内部用的应该也是window.scrollTo无误）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if ( win ) &#123;</span><br><span class="line">    win.scrollTo(</span><br><span class="line">        top ? val : jQuery( win ).scrollLeft(),</span><br><span class="line">        top ? val : jQuery( win ).scrollTop()</span><br><span class="line">    );</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    elem[ method ] = val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>另见stackoverflow，<a href="http://stackoverflow.com/questions/15260184/strange-beaviour-of-chrome-at-window-scrollto" target="_blank" rel="noopener">链接A</a>、<a href="http://stackoverflow.com/questions/15691569/javascript-issue-with-scrollto-in-chrome" target="_blank" rel="noopener">链接B</a>，定位为Chrome 刷新当前页面的情况。</p>
+<p>后做继续跟进，发现Safari、Opera(偶尔) 也有此现象，而IE、FF都是正常，那推测为Webkit的通病。</p>
+<p>对应的UA为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Chrome 	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2272.104 Safari/537.36</span><br><span class="line">Opera	Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/40.0.2214.111 Safari/537.36 OPR/27.0.1689.69</span><br><span class="line">Safari	 Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_3) AppleWebKit/600.5.17 (KHTML, like Gecko) Version/8.0.5 Safari/600.5.17</span><br><span class="line">FireFox	 Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:37.0) Gecko/20100101 Firefox/37.0</span><br></pre></td></tr></table></figure>
+<p>因此，只需做webKit和是否刷新页面的判断，就可以提供比原来多200ms以上的用户反馈和体验。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">if (window.navigator.userAgent.search(/AppleWebKit\/(\d+\.)+(\d+)? \(KHTML\, like Gecko\)/) !== -1) &#123;</span><br><span class="line">    if (window.name) &#123; // 默认如果被设置过 就采用延时</span><br><span class="line">        $(window).on(&apos;load&apos;, function () &#123;</span><br><span class="line">            setTimeout(next, 200);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        window.name = &apos;refresh_frag&apos;;</span><br><span class="line">        next();</span><br><span class="line">    &#125;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    next();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="http://www.cainiao8.com/web/js_blueidea/12_detect_if_refreshed.html" target="_blank" rel="noopener">网页是否当前页面刷新的判断 － 根据window.name</a></p>
+<p>其实我们能做的可以做的还有很多…<br>The End.<br>2015.04.22 01:15</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2015/01/20/project-thinking-part-3/" itemprop="url">
+                project thinking part.3
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-01-20T00:01:44+08:00" content="2015-01-20">
+            2015-01-20
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/总结系列/" itemprop="url" rel="index">
+                  <span itemprop="name">总结系列</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/01/20/project-thinking-part-3/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/01/20/project-thinking-part-3/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody"><a id="more"></a>
+<p>做事，个人感觉其实是发现、判断、方案、评估、执行的过程。以某一个视角上来说。</p>
+<p>####发现<br>嗯，捡到一个问题。</p>
+<p>####判断<br>判断这个问题的发生，其原因以及带来的弊端、后果，以及在此时此刻解决这个问题是否刻不容缓，花费的时间精力人力物力投入是否值得是否必要。</p>
+<p>####方案<br>在做完这个判断之后，再考虑方案。最好是几个方案而不是一个方案。</p>
+<p>####评估<br>评估的流程乃至关重要。评估建立在判断和方案之后，也就意味着，这个问题的解决，在这个时间点上投入这些人力物力势在必行。评估的作用在于，减少这个人力物力的消耗，尽可能地增强灵活性、可维护性、可扩展性。以免解决问题的过程，引发一系列其它问题。</p>
+<p>####执行<br>在已经确定在这个时间点上解决这个问题，评估并综合了方案的利弊，相应地提供了合理的人力物力的前提下，那做，其实已经细化到完成结果的阶段了。</p>
+<p>结果讲究的是过程，想好自己要做什么，为什么做，在这个点做合不合适，怎样做，怎样做更好，那其实事情已经做好了。</p>
+</span>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/01/04/2014/" itemprop="url">
                 2014
               </a>
@@ -965,187 +1159,11 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/06/03/获取字符串中出现最多的字符和次数/" itemprop="url">
-                获取字符串中出现最多的字符和次数
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-06-03T21:08:41+08:00" content="2014-06-03">
-            2014-06-03
-          </time>
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                  <span itemprop="name">JavaScript</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2014/06/03/获取字符串中出现最多的字符和次数/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/06/03/获取字符串中出现最多的字符和次数/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>这里提供三个方案，第一个方案是之前的。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/06/03/获取字符串中出现最多的字符和次数/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/05/27/Pro-Javascript-Techniques-笔记part314-类式继承-By-Douglas-Crockford-修正/" itemprop="url">
-                Pro JavaScript Techniques 笔记.part.3.1.4 类式继承 —— 修正
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-05-27T01:16:30+08:00" content="2014-05-27">
-            2014-05-27
-          </time>
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                  <span itemprop="name">JavaScript</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2014/05/27/Pro-Javascript-Techniques-笔记part314-类式继承-By-Douglas-Crockford-修正/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/05/27/Pro-Javascript-Techniques-笔记part314-类式继承-By-Douglas-Crockford-修正/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>修正上篇原错误观点。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/05/27/Pro-Javascript-Techniques-笔记part314-类式继承-By-Douglas-Crockford-修正/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/">&raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo;</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/">&raquo;</a>
   </nav>
 
  </div>
@@ -1179,7 +1197,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">70</span>
+              <span class="site-state-item-count">72</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1193,7 +1211,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">71</span>
+              <span class="site-state-item-count">79</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
