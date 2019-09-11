@@ -46,7 +46,7 @@
 <meta property="og:site_name" content="Xaber&#39;s Blog">
 <meta property="og:description" content="前言前文 JavaScript &amp;amp; WebAssembly 解释、编译相关 提到了不少编译相关的内容，对应的延伸，想了解下：  有哪些 JavaScript 引擎？ 跨平台 都有哪些形式？是怎么做到的？  对应的，也搜集了如下一些文章：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-11T03:08:19.972Z">
+<meta property="og:updated_time" content="2019-09-11T03:18:16.486Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript 引擎与跨端跨平台相关">
 <meta name="twitter:description" content="前言前文 JavaScript &amp;amp; WebAssembly 解释、编译相关 提到了不少编译相关的内容，对应的延伸，想了解下：  有哪些 JavaScript 引擎？ 跨平台 都有哪些形式？是怎么做到的？  对应的，也搜集了如下一些文章：">
@@ -323,10 +323,10 @@
 <p>之前也想着，国内小程序这么火，国外怎么样呢？ —— <strong>没有</strong>，啥都没有，就是自己在玩</p>
 <p>这样的做法，就像是，chrome 说：</p>
 <ol>
-<li>我搞了一个单独的规范，不搞 w3c、ecmascript 那一套了，我们用 dart、flutter</li>
-<li>原来的，html、css、js 也支持，但是没有 flutter 快</li>
-<li>flutter 会有单独的入口哦，非常新进</li>
-<li>用 flutter 开发的 mini web，每年要交 300块保护费</li>
+<li>我搞了一个单独的规范，不搞 w3c、ecmascript 那一套了，我们用 dart、gcss、gxml，为了提升页面的性能（实际上还是转成 JS 渲染，然后加一点另外的壳）</li>
+<li>原来的，html、css、js 也支持，但是没有 dart 快</li>
+<li>flutter 会有单独的入口哦，非常先进</li>
+<li>用 flutter 开发的 gweb，每年要交 300块保护费</li>
 </ol>
 <p>好了，大家各玩各的。safari 推出自己的，firefox 推出自己的，手机浏览器 UC 都推出自己……</p>
 <h3 id="原生渲染，bridge-通信"><a href="#原生渲染，bridge-通信" class="headerlink" title="原生渲染，bridge 通信"></a>原生渲染，bridge 通信</h3><h4 id="RN"><a href="#RN" class="headerlink" title="RN"></a>RN</h4><ul>
@@ -339,7 +339,7 @@
 <h4 id="weex"><a href="#weex" class="headerlink" title="weex"></a>weex</h4><ul>
 <li><a href="https://juejin.im/post/5acf7052f265da23853341e4" target="_blank" rel="noopener">Weex原理之带你去蹲坑</a></li>
 </ul>
-<h3 id="另起炉灶"><a href="#另起炉灶" class="headerlink" title="另起炉灶"></a>另起炉灶</h3><h4 id="Flutter"><a href="#Flutter" class="headerlink" title="Flutter"></a>Flutter</h4><ul>
+<h3 id="自己画"><a href="#自己画" class="headerlink" title="自己画"></a>自己画</h3><h4 id="Flutter"><a href="#Flutter" class="headerlink" title="Flutter"></a>Flutter</h4><ul>
 <li><a href="https://tech.meituan.com/2018/08/09/waimai-flutter-practice.html" target="_blank" rel="noopener">Flutter原理与实践</a></li>
 </ul>
 <h2 id="desktop-app-跨平台"><a href="#desktop-app-跨平台" class="headerlink" title="desktop app 跨平台"></a>desktop app 跨平台</h2><h3 id="hybrid-1"><a href="#hybrid-1" class="headerlink" title="hybrid"></a>hybrid</h3><ul>
@@ -350,7 +350,7 @@
 <h3 id="原生渲染，bridge-通信-1"><a href="#原生渲染，bridge-通信-1" class="headerlink" title="原生渲染，bridge 通信"></a>原生渲染，bridge 通信</h3><ul>
 <li><a href="https://github.com/microsoft/react-native-windows" target="_blank" rel="noopener">react-native-windows</a></li>
 </ul>
-<h3 id="另起炉灶-1"><a href="#另起炉灶-1" class="headerlink" title="另起炉灶"></a>另起炉灶</h3><h4 id="flutter"><a href="#flutter" class="headerlink" title="flutter"></a>flutter</h4><ul>
+<h3 id="自己画-1"><a href="#自己画-1" class="headerlink" title="自己画"></a>自己画</h3><h4 id="flutter"><a href="#flutter" class="headerlink" title="flutter"></a>flutter</h4><ul>
 <li><a href="https://medium.com/flutter-community/flutter-for-desktop-create-and-run-a-desktop-application-ebeb1604f1e0" target="_blank" rel="noopener">Flutter for Desktop: Create and Run a Desktop Application</a></li>
 <li><a href="https://github.com/google/flutter-desktop-embedding" target="_blank" rel="noopener">flutter-desktop-embedding</a></li>
 </ul>
@@ -379,7 +379,7 @@
 <li>…</li>
 </ul>
 <p>诸如此类，如果 Fuchsia、flutter 在于 google，推行得开；大胆猜测，以后更多的体系会搭建在 dart、flutter 上。毕竟谁也不想天天搞来搞去写重复的代码搞一样的事情还搞适配。</p>
-<p>此外，在刚开始工作时，有一个同事，偶尔会提，JavaScript 语言自身其实带着不少的缺陷，后来过了几年他转后端做 PHP 去了；那些年，我会一些 JavaScript 奇技淫巧，对他说的话，还会有一些反感。</p>
+<p>此外，在刚开始工作时，有一个同事，偶尔会提，JavaScript 语言自身其实带着不少的缺陷，后来过了几年他转后端做 PHP 去了；那些年，会一些 JavaScript 奇技淫巧，对他说的话，还会有一些反感。</p>
 <p>现在看来，从</p>
 <ul>
 <li><a href="http://xaber.co/2019/09/04/%E6%8A%BD%E8%B1%A1%E8%AF%AD%E6%B3%95%E6%A0%91-AST-%E4%B8%8E-%E7%BC%96%E8%AF%91%E5%99%A8-Compiler/">抽象语法树 AST 与 编译器 Compiler</a></li>
@@ -540,7 +540,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript-引擎对比"><span class="nav-number">2.</span> <span class="nav-text">JavaScript 引擎对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mobile-app-跨平台"><span class="nav-number">3.</span> <span class="nav-text">mobile app 跨平台</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hybrid"><span class="nav-number">3.1.</span> <span class="nav-text">hybrid</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关于小程序的吐槽"><span class="nav-number">3.1.1.</span> <span class="nav-text">关于小程序的吐槽</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原生渲染，bridge-通信"><span class="nav-number">3.2.</span> <span class="nav-text">原生渲染，bridge 通信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RN"><span class="nav-number">3.2.1.</span> <span class="nav-text">RN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#weex"><span class="nav-number">3.2.2.</span> <span class="nav-text">weex</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#另起炉灶"><span class="nav-number">3.3.</span> <span class="nav-text">另起炉灶</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Flutter"><span class="nav-number">3.3.1.</span> <span class="nav-text">Flutter</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#desktop-app-跨平台"><span class="nav-number">4.</span> <span class="nav-text">desktop app 跨平台</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hybrid-1"><span class="nav-number">4.1.</span> <span class="nav-text">hybrid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原生渲染，bridge-通信-1"><span class="nav-number">4.2.</span> <span class="nav-text">原生渲染，bridge 通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#另起炉灶-1"><span class="nav-number">4.3.</span> <span class="nav-text">另起炉灶</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#flutter"><span class="nav-number">4.3.1.</span> <span class="nav-text">flutter</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多端"><span class="nav-number">5.</span> <span class="nav-text">多端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发散"><span class="nav-number">6.</span> <span class="nav-text">发散</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JavaScript-引擎对比"><span class="nav-number">2.</span> <span class="nav-text">JavaScript 引擎对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mobile-app-跨平台"><span class="nav-number">3.</span> <span class="nav-text">mobile app 跨平台</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hybrid"><span class="nav-number">3.1.</span> <span class="nav-text">hybrid</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关于小程序的吐槽"><span class="nav-number">3.1.1.</span> <span class="nav-text">关于小程序的吐槽</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原生渲染，bridge-通信"><span class="nav-number">3.2.</span> <span class="nav-text">原生渲染，bridge 通信</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#RN"><span class="nav-number">3.2.1.</span> <span class="nav-text">RN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#weex"><span class="nav-number">3.2.2.</span> <span class="nav-text">weex</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自己画"><span class="nav-number">3.3.</span> <span class="nav-text">自己画</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Flutter"><span class="nav-number">3.3.1.</span> <span class="nav-text">Flutter</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#desktop-app-跨平台"><span class="nav-number">4.</span> <span class="nav-text">desktop app 跨平台</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hybrid-1"><span class="nav-number">4.1.</span> <span class="nav-text">hybrid</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原生渲染，bridge-通信-1"><span class="nav-number">4.2.</span> <span class="nav-text">原生渲染，bridge 通信</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自己画-1"><span class="nav-number">4.3.</span> <span class="nav-text">自己画</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#flutter"><span class="nav-number">4.3.1.</span> <span class="nav-text">flutter</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多端"><span class="nav-number">5.</span> <span class="nav-text">多端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发散"><span class="nav-number">6.</span> <span class="nav-text">发散</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
