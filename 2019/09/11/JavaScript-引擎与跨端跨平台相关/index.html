@@ -46,7 +46,7 @@
 <meta property="og:site_name" content="Xaber&#39;s Blog">
 <meta property="og:description" content="前言前文 JavaScript &amp;amp; WebAssembly 解释、编译相关 提到了不少编译相关的内容，对应的延伸，想了解下：  有哪些 JavaScript 引擎？ 跨平台 都有哪些形式？是怎么做到的？  对应的，也搜集了如下一些文章：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-10T16:43:49.575Z">
+<meta property="og:updated_time" content="2019-09-11T03:08:19.972Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript 引擎与跨端跨平台相关">
 <meta name="twitter:description" content="前言前文 JavaScript &amp;amp; WebAssembly 解释、编译相关 提到了不少编译相关的内容，对应的延伸，想了解下：  有哪些 JavaScript 引擎？ 跨平台 都有哪些形式？是怎么做到的？  对应的，也搜集了如下一些文章：">
@@ -312,15 +312,15 @@
 </ul>
 </li>
 </ul>
-<h4 id="关于小程序的吐槽"><a href="#关于小程序的吐槽" class="headerlink" title="关于小程序的吐槽"></a>关于小程序的吐槽</h4><p>当年，小程序刚出来的时候，我负责过小程序的开发系列工作，当时有幸还被公司安排去北京参加了小程序开发者大会。</p>
-<p>当时，觉得小程序多少多少推陈出新。至于，后面支付宝说要推出小程序时，一脸吃惊。</p>
+<h4 id="关于小程序的吐槽"><a href="#关于小程序的吐槽" class="headerlink" title="关于小程序的吐槽"></a>关于小程序的吐槽</h4><p>当年，小程序刚出来的时候，负责过小程序的开发系列工作，当时有幸还被公司安排去北京参加了小程序开发者大会。</p>
+<p>当时，觉得小程序多少推陈出新。至于，后面支付宝说要推出小程序时，甚至一脸吃惊（抄这么快？）。</p>
 <p>然后，现在看下来，其实想吐槽下小程序这个形式，个人认为，<strong>被微信以及国内一众厂商带坏了节奏</strong>。</p>
-<p>这个东西就感觉像是一个临时性的产物，但是因为入口、流量的暴露，不得不去做（收得好一波年费），连带着其他厂商跟进。</p>
-<p>实际上想想，小程序到底本来也就是 webview 渲染，再加点 native 的壳，性能到底提升多少呢，或者这样的性能提升，对于用户来说有多大意义呢？</p>
-<p>在我看来，该用的东西，慢点就慢点，等个 1-2s 死不了人；不用的东西，就算再快，打开看一眼，照旧是关闭。</p>
+<p>小程序这个东西感觉就像是一个临时性的产物，但是因为入口、流量的原因，不得不去做（收得好一波年费），连带着其他厂商跟进。</p>
+<p>实际上想想，小程序到底本来也就是 webview 渲染，再加点 native 的壳，性能会否有那么大提升？或者这样的性能提升，对于用户来说有多大意义呢？投入大量资源有没有必要？</p>
+<p>在我看来，该用的东西，慢点等个 1-2s 不打紧；不用的东西，就算再快，打开看一眼，照旧是关闭。</p>
 <p>没什么必要搞不同的写法，即使想提升 微信 APP 内网页得性能，也是可以通过 提供 hybrid API 的方式来实现（即使不能覆盖更高大上的功能），但是微信却是在浏览器标准之外单独搞了一套开发体系。</p>
 <p>搞得 1,2,3,4 家厂商齐齐跟进，连带着前端又要搞 h5、又要搞小程序，又要处理不同的厂商之间的小程序兼容性，各家标准不一样，然后又有人针对不同厂商的小程序去做适配抹平。</p>
-<p>之前也想着，国内小程序这么火，国外怎么样呢？ —— <strong>没有</strong>，啥都没有，就是你们自己在玩</p>
+<p>之前也想着，国内小程序这么火，国外怎么样呢？ —— <strong>没有</strong>，啥都没有，就是自己在玩</p>
 <p>这样的做法，就像是，chrome 说：</p>
 <ol>
 <li>我搞了一个单独的规范，不搞 w3c、ecmascript 那一套了，我们用 dart、flutter</li>
@@ -352,11 +352,17 @@
 </ul>
 <h3 id="另起炉灶-1"><a href="#另起炉灶-1" class="headerlink" title="另起炉灶"></a>另起炉灶</h3><h4 id="flutter"><a href="#flutter" class="headerlink" title="flutter"></a>flutter</h4><ul>
 <li><a href="https://medium.com/flutter-community/flutter-for-desktop-create-and-run-a-desktop-application-ebeb1604f1e0" target="_blank" rel="noopener">Flutter for Desktop: Create and Run a Desktop Application</a></li>
+<li><a href="https://github.com/google/flutter-desktop-embedding" target="_blank" rel="noopener">flutter-desktop-embedding</a></li>
 </ul>
 <h2 id="多端"><a href="#多端" class="headerlink" title="多端"></a>多端</h2><ul>
 <li><a href="https://www.ibm.com/developerworks/cn/web/wa-universal-react-native/index.html" target="_blank" rel="noopener">React Native 三端同构实战</a></li>
 </ul>
-<h2 id="发散"><a href="#发散" class="headerlink" title="发散"></a>发散</h2><p>再看一文：<a href="https://www.zhihu.com/question/307594373/answer/568969429" target="_blank" rel="noopener">知乎：Flutter 在 2019 年会有怎样的表现？</a></p>
+<h2 id="发散"><a href="#发散" class="headerlink" title="发散"></a>发散</h2><p>再看：</p>
+<ul>
+<li><a href="https://www.zhihu.com/question/307594373/answer/568969429" target="_blank" rel="noopener">知乎：Flutter 在 2019 年会有怎样的表现？</a></li>
+<li><a href="https://www.zhihu.com/question/323439136/answer/676567715" target="_blank" rel="noopener">如何评价 Flutter for Web？</a></li>
+<li><a href="https://blog.geekyants.com/web-dashboard-in-flutter-hummingbird-7becad465889" target="_blank" rel="noopener">Web Dashboard in Flutter Hummingbird</a></li>
+</ul>
 <p>历史是重复的，以历史维度去看</p>
 <ul>
 <li>10年读大学的时候，大家买手机大多数是诺基亚 5230系列，塞班论坛非常火爆。结果仅仅过了 1 - 2 年 —— 没落</li>
@@ -367,9 +373,9 @@
 <ul>
 <li>android 碎片化问题、补丁升级的问题…</li>
 <li>Fuchsia 系统发布在即</li>
-<li>flutter android、ios、fuchsia，甚至 windows、macOS 也能玩</li>
+<li>flutter android、ios、fuchsia，甚至 windows、macOS 以后也能玩</li>
 <li>dart 可以 dart2js</li>
-<li>要是 flutter 搞出一个 浏览器SDK 支持的话</li>
+<li>要是 flutter 搞出一个 浏览器SDK 支持的话 —— 昨天这么说，今天查了一下发现已经有了 <a href="https://github.com/flutter/flutter_web" target="_blank" rel="noopener">flutter_web</a>（尽管可能还不完善）</li>
 <li>…</li>
 </ul>
 <p>诸如此类，如果 Fuchsia、flutter 在于 google，推行得开；大胆猜测，以后更多的体系会搭建在 dart、flutter 上。毕竟谁也不想天天搞来搞去写重复的代码搞一样的事情还搞适配。</p>
@@ -385,10 +391,10 @@
 <p>个人比较看好 Dart / flutter 未来。</p>
 <p>至于说</p>
 <ul>
-<li>小程序 —— 瞎成体系，成不了新标准，比起独家厂商性能方面的些许提升，投入大量人力物力，可以说趁早拜拜了您</li>
+<li>小程序 —— 闭门造车的体系，成不了新标准，比起独家厂商性能方面的些许提升，投入大量人力物力，对 JS 的生态来说，反倒成了一种破坏（因为要花精力去了解 / 学习这种无用东西），可以说最好趁早拜拜了您</li>
 <li>hybrid 类 apicloud / dcloud —— 仍有一定场景和用途：独立开发者 / 小型公司，开发起来太简单了</li>
-<li>weex —— 再见，比起 react native 生态，差距过大</li>
-<li>RN —— 在比较长的时间内，仍然是主角；但未可知 3年以后，可能会变成 grunt 的类似存在</li>
+<li>weex —— 不看好，比起 react native 生态，差距过大</li>
+<li>RN —— 在比较长的时间内，仍然是主角；但未可知 3 - 5 年以后，可能会变成 grunt 的类似存在</li>
 </ul>
 </span>
       
