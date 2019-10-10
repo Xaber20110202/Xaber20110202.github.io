@@ -222,6 +222,135 @@
           
           
             
+              <a class="post-title-link" href="/2019/10/10/immutable-js、immer-以及其他-N-个-immutable-data-库相关/" itemprop="url">
+                immutable-js、immer 以及其他 N 个 immutable data 库相关
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2019-10-10T18:19:14+08:00" content="2019-10-10">
+            2019-10-10
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                  <span itemprop="name">JavaScript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2019/10/10/immutable-js、immer-以及其他-N-个-immutable-data-库相关/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/10/immutable-js、immer-以及其他-N-个-immutable-data-库相关/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>redux / flux 要求采用返回新对象的形式，来触发数据更新、re-render，一般推荐的做法就是采用对象结构的方式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">  ...state,</span><br><span class="line">  enabled: <span class="literal">true</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果要更改 <code>state.settings.profile.darkmode</code>，大概就会变成这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">  ...state,</span><br><span class="line">  settings: &#123;</span><br><span class="line">    ...state.settings,</span><br><span class="line">    profile：&#123;</span><br><span class="line">      ...state.settings.profile,</span><br><span class="line">      darkmode: <span class="literal">true</span>,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上存在两个问题：</p>
+<ol>
+<li><strong>如果 <code>state</code> 对象巨大（注意：对象巨大）</strong>，在结构、拷贝 state 的过程中，<strong>耗时会较长</strong></li>
+<li>如上更改 <code>state.settings.profile.darkmode</code>，要进行 <strong>“庞大”的工作</strong></li>
+</ol>
+<p>如何解决这两个在使用 redux 过程中可能存在的问题，便是此文讨论的点。</p>
+<p>相应的此文，此文包含内容：</p>
+<ul>
+<li><p>不可变（Immutable）数据</p>
+<ul>
+<li>新数据结构<ul>
+<li><a href="https://github.com/immutable-js/immutable-js" target="_blank" rel="noopener">facebook/immutable-js</a></li>
+<li><a href="https://github.com/swannodette/mori" target="_blank" rel="noopener">swannodette/mori</a></li>
+</ul>
+</li>
+<li>原生 JS 数据形式<ul>
+<li><a href="https://github.com/rtfeldman/seamless-immutable" target="_blank" rel="noopener">rtfeldman/seamless-immutable</a></li>
+<li><a href="https://github.com/planttheidea/crio" target="_blank" rel="noopener">planttheidea/crio</a></li>
+<li><a href="https://github.com/aearly/icepick" target="_blank" rel="noopener">aearly/icepick</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>不可变更新（Immutable Update）实用程序</p>
+<ul>
+<li><a href="https://github.com/mweststrate/immer" target="_blank" rel="noopener">mweststrate/immer</a></li>
+<li><a href="https://github.com/kolodny/immutability-helper" target="_blank" rel="noopener">kolodny/immutability-helper</a></li>
+<li><a href="https://github.com/mariocasciaro/object-path-immutable" target="_blank" rel="noopener">mariocasciaro/object-path-immutable</a></li>
+<li><a href="https://github.com/debitoor/dot-prop-immutable" target="_blank" rel="noopener">debitoor/dot-prop-immutable</a></li>
+</ul>
+</li>
+<li>Immutable/Redux 互操作<ul>
+<li><a href="https://github.com/gajus/redux-immutable" target="_blank" rel="noopener">gajus/redux-immutable</a></li>
+<li><a href="https://github.com/eadmundo/redux-seamless-immutable" target="_blank" rel="noopener">eadmundo/redux-seamless-immutable</a></li>
+</ul>
+</li>
+</ul>
+<p>先说结论，80% - 90% 的场景，直接使用 immer 即可</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2019/10/10/immutable-js、immer-以及其他-N-个-immutable-data-库相关/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2019/09/22/flux-redux-演变、优缺点与源码分析/" itemprop="url">
                 flux redux 演变、优缺点与源码分析
               </a>
@@ -1062,94 +1191,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2018/12/28/node-代理转发与-Google-Cloud、域名配置/" itemprop="url">
-                node 代理转发与 Google Cloud、域名配置
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2018-12-28T00:15:03+08:00" content="2018-12-28">
-            2018-12-28
-          </time>
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                <a href="/categories/node/" itemprop="url" rel="index">
-                  <span itemprop="name">node</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2018/12/28/node-代理转发与-Google-Cloud、域名配置/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/28/node-代理转发与-Google-Cloud、域名配置/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>此文介绍 node 简单搭建一个代理转发服务，部署至 Google Cloud 服务器，并为该服务绑定域名。</p>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2018/12/28/node-代理转发与-Google-Cloud、域名配置/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1188,7 +1229,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">73</span>
+              <span class="site-state-item-count">74</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1202,7 +1243,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">83</span>
+              <span class="site-state-item-count">85</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>

@@ -1,0 +1,877 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head><meta name="generator" content="Hexo 3.8.0">
+  
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5">
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.5.1">
+
+
+
+
+  <meta name="keywords" content="react,flux,redux,immutable,immer,">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Xaber's Blog" type="application/atom+xml">
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.5.1">
+
+
+<meta name="description" content="前言redux / flux 要求采用返回新对象的形式，来触发数据更新、re-render，一般推荐的做法就是采用对象结构的方式： 1234return &amp;#123;  ...state,  enabled: true,&amp;#125; 如果要更改 state.settings.profile.darkmode，大概就会变成这样： 12345678910return &amp;#123;  ...state,">
+<meta name="keywords" content="react,flux,redux,immutable,immer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="immutable-js、immer 以及其他 N 个 immutable data 库相关">
+<meta property="og:url" content="http://xaber.co/2019/10/10/immutable-js、immer-以及其他-N-个-immutable-data-库相关/index.html">
+<meta property="og:site_name" content="Xaber&#39;s Blog">
+<meta property="og:description" content="前言redux / flux 要求采用返回新对象的形式，来触发数据更新、re-render，一般推荐的做法就是采用对象结构的方式： 1234return &amp;#123;  ...state,  enabled: true,&amp;#125; 如果要更改 state.settings.profile.darkmode，大概就会变成这样： 12345678910return &amp;#123;  ...state,">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-10-10T10:20:27.985Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="immutable-js、immer 以及其他 N 个 immutable data 库相关">
+<meta name="twitter:description" content="前言redux / flux 要求采用返回新对象的形式，来触发数据更新、re-render，一般推荐的做法就是采用对象结构的方式： 1234return &amp;#123;  ...state,  enabled: true,&amp;#125; 如果要更改 state.settings.profile.darkmode，大概就会变成这样： 12345678910return &amp;#123;  ...state,">
+
+
+<script>
+(function () {
+    window.zhuge = window.zhuge || [];
+    window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
+    window.zhuge.factory = function(b) {
+        return function() {
+            var a = Array.prototype.slice.call(arguments);
+            a.unshift(b);
+            window.zhuge.push(a);
+            return window.zhuge
+        }
+    };
+    for (var i = 0; i < window.zhuge.methods.length; i++) {
+        var key = window.zhuge.methods[i];
+        window.zhuge[key] = window.zhuge.factory(key)
+    }
+    window.zhuge.load = function(b, x) {
+        if (!document.getElementById("zhuge-js")) {
+            var a = document.createElement("script");
+            var verDate = new Date();
+            var verStr = verDate.getFullYear().toString()
+                + verDate.getMonth().toString() + verDate.getDate().toString();
+
+            a.type = "text/javascript";
+            a.id = "zhuge-js";
+            a.async = !0;
+            a.src = (location.protocol == 'http:' ? "http://sdk.zhugeio.com/zhuge-lastest.min.js?v=" : 'https://zgsdk.zhugeio.com/zhuge-lastest.min.js?v=') + verStr;
+            var c = document.getElementsByTagName("script")[0];
+            c.parentNode.insertBefore(a, c);
+            window.zhuge._init(b, x)
+        }
+    };
+    
+    // 开发模式调试
+    
+    window.zhuge.load('49fc6625ddcc4004aa98d05e876a70e0');
+    
+})();
+</script>
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'hide'
+  };
+</script>
+
+  <title> immutable-js、immer 以及其他 N 个 immutable data 库相关 | Xaber's Blog </title>
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+  
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-47125735-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+
+
+  <div class="container one-column page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-next-logo"></i>
+      </span>
+      <span class="site-title">Xaber's Blog</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu ">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-next-home"></i> <br>
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-next-archives"></i> <br>
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-next-categories"></i> <br>
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-next-tags"></i> <br>
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-next-about"></i> <br>
+            关于
+          </a>
+        </li>
+      
+
+      
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div id="content" class="content"> 
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              immutable-js、immer 以及其他 N 个 immutable data 库相关
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2019-10-10T18:19:14+08:00" content="2019-10-10">
+            2019-10-10
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                  <span itemprop="name">JavaScript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2019/10/10/immutable-js、immer-以及其他-N-个-immutable-data-库相关/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/10/immutable-js、immer-以及其他-N-个-immutable-data-库相关/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>redux / flux 要求采用返回新对象的形式，来触发数据更新、re-render，一般推荐的做法就是采用对象结构的方式：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">  ...state,</span><br><span class="line">  enabled: <span class="literal">true</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果要更改 <code>state.settings.profile.darkmode</code>，大概就会变成这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> &#123;</span><br><span class="line">  ...state,</span><br><span class="line">  settings: &#123;</span><br><span class="line">    ...state.settings,</span><br><span class="line">    profile：&#123;</span><br><span class="line">      ...state.settings.profile,</span><br><span class="line">      darkmode: <span class="literal">true</span>,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上存在两个问题：</p>
+<ol>
+<li><strong>如果 <code>state</code> 对象巨大（注意：对象巨大）</strong>，在结构、拷贝 state 的过程中，<strong>耗时会较长</strong></li>
+<li>如上更改 <code>state.settings.profile.darkmode</code>，要进行 <strong>“庞大”的工作</strong></li>
+</ol>
+<p>如何解决这两个在使用 redux 过程中可能存在的问题，便是此文讨论的点。</p>
+<p>相应的此文，此文包含内容：</p>
+<ul>
+<li><p>不可变（Immutable）数据</p>
+<ul>
+<li>新数据结构<ul>
+<li><a href="https://github.com/immutable-js/immutable-js" target="_blank" rel="noopener">facebook/immutable-js</a></li>
+<li><a href="https://github.com/swannodette/mori" target="_blank" rel="noopener">swannodette/mori</a></li>
+</ul>
+</li>
+<li>原生 JS 数据形式<ul>
+<li><a href="https://github.com/rtfeldman/seamless-immutable" target="_blank" rel="noopener">rtfeldman/seamless-immutable</a></li>
+<li><a href="https://github.com/planttheidea/crio" target="_blank" rel="noopener">planttheidea/crio</a></li>
+<li><a href="https://github.com/aearly/icepick" target="_blank" rel="noopener">aearly/icepick</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>不可变更新（Immutable Update）实用程序</p>
+<ul>
+<li><a href="https://github.com/mweststrate/immer" target="_blank" rel="noopener">mweststrate/immer</a></li>
+<li><a href="https://github.com/kolodny/immutability-helper" target="_blank" rel="noopener">kolodny/immutability-helper</a></li>
+<li><a href="https://github.com/mariocasciaro/object-path-immutable" target="_blank" rel="noopener">mariocasciaro/object-path-immutable</a></li>
+<li><a href="https://github.com/debitoor/dot-prop-immutable" target="_blank" rel="noopener">debitoor/dot-prop-immutable</a></li>
+</ul>
+</li>
+<li>Immutable/Redux 互操作<ul>
+<li><a href="https://github.com/gajus/redux-immutable" target="_blank" rel="noopener">gajus/redux-immutable</a></li>
+<li><a href="https://github.com/eadmundo/redux-seamless-immutable" target="_blank" rel="noopener">eadmundo/redux-seamless-immutable</a></li>
+</ul>
+</li>
+</ul>
+<p>先说结论，80% - 90% 的场景，直接使用 immer 即可</p>
+<a id="more"></a>
+<h2 id="不可变（Immutable）数据"><a href="#不可变（Immutable）数据" class="headerlink" title="不可变（Immutable）数据"></a>不可变（Immutable）数据</h2><h3 id="facebook-immutable-js"><a href="#facebook-immutable-js" class="headerlink" title="facebook/immutable-js"></a>facebook/immutable-js</h3><p>仓库地址：<a href="https://github.com/immutable-js/immutable-js" target="_blank" rel="noopener">facebook/immutable-js</a></p>
+<p>参考阅读：</p>
+<ul>
+<li><a href="https://juejin.im/entry/59b5e4916fb9a00a3b3bd52d" target="_blank" rel="noopener">精读 Immutable 结构共享</a></li>
+<li><a href="https://juejin.im/post/5b9b30a35188255c6418e67c" target="_blank" rel="noopener">深入探究Immutable.js的实现机制（一）</a></li>
+<li><a href="https://juejin.im/post/5ba4a6b75188255ca1537b19" target="_blank" rel="noopener">深入探究immutable.js的实现机制（二）</a></li>
+</ul>
+<p>简言之：</p>
+<ol>
+<li>immutable-js 构建了一些新的数据结构，以空间换时间的方式，来解决 上述的 第一个 大结构对象 拷贝慢问题</li>
+<li>并通过 <code>stateMap.setIn([&#39;settings&#39;, &#39;profile&#39;, &#39;darkmode&#39;], true)</code> 的方式，解决第二个问题</li>
+</ol>
+<p>但相应的</p>
+<ol>
+<li>如果对象不大，其实用不着 immutable-js</li>
+<li>要留意 immutable 数据 和 原生的 数据之间的差异和操作</li>
+</ol>
+<h3 id="swannodette-mori"><a href="#swannodette-mori" class="headerlink" title="swannodette/mori"></a><del>swannodette/mori</del></h3><p><del>仓库地址：<a href="https://github.com/swannodette/mori" target="_blank" rel="noopener">swannodette/mori</a></del></p>
+<p><del>应该是历史遗留产物了，不赘述。</del></p>
+<h3 id="rtfeldman-seamless-immutable"><a href="#rtfeldman-seamless-immutable" class="headerlink" title="rtfeldman/seamless-immutable"></a>rtfeldman/seamless-immutable</h3><p>仓库地址：<a href="https://github.com/rtfeldman/seamless-immutable" target="_blank" rel="noopener">rtfeldman/seamless-immutable</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> array = Immutable([<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>]);</span><br><span class="line">array.map(<span class="function"><span class="params">value</span> =&gt;</span> [value+<span class="number">2</span>, value+<span class="number">4</span>]);</span><br><span class="line"><span class="comment">// returns Immutable([ [ 3, 5 ], [ 4, 6 ], [ 5, 7 ] ])</span></span><br><span class="line"></span><br><span class="line">Immutable.flatMap(array, value =&gt; [value+<span class="number">2</span>, value+<span class="number">4</span>]);</span><br><span class="line"><span class="comment">// returns Immutable([ 3, 5, 4, 6, 5, 7 ])</span></span><br></pre></td></tr></table></figure>
+<p>参考阅读：</p>
+<ul>
+<li><a href="https://juejin.im/post/5bf3fa4b6fb9a049cb185c6e" target="_blank" rel="noopener">seamless-Immutable API（中文文档）</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/33576966" target="_blank" rel="noopener">seamless-immutable之源码阅读笔记</a></li>
+<li><a href="https://github.com/camsong/blog/issues/3" target="_blank" rel="noopener">Immutable 详解及 React 中实践</a></li>
+</ul>
+<p>冻结的不可变数组/对象，向后兼容 JS</p>
+<p>相较 immutable-js，其没有构建新的数据结构，而是在原有 JS array、object 上做了扩展，冻结了一些原生的 array、object 的方法，例如：<code>pop</code>、<code>push</code> 等，在 dev 环境直接报错</p>
+<h3 id="planttheidea-crio"><a href="#planttheidea-crio" class="headerlink" title="planttheidea/crio"></a>planttheidea/crio</h3><p>仓库地址：<a href="https://github.com/planttheidea/crio" target="_blank" rel="noopener">planttheidea/crio</a></p>
+<p>具有 API 的不可变 JS 对象，与 seamless-immutable 其实大同小异，继承了原生的 Array、Object，但是也 覆盖 / 封装 了 <code>push</code>、<code>pop</code> 等方法，提供了，使得其最终也会返回一个新的 crio immutable array</p>
+<ul>
+<li><a href="https://github.com/planttheidea/crio/blob/master/src/CrioArray.js#L491" target="_blank" rel="noopener">CrioArray pop</a></li>
+<li><a href="https://github.com/planttheidea/crio/blob/master/src/CrioArray.js#L505" target="_blank" rel="noopener">CrioArray push</a></li>
+</ul>
+<p>但是这其实和原生的 <code>[].push</code>、<code>[1, 2].pop</code> 就会有差异，需要注意，原生这两个方法返回的是 数组的长度，这引入的差异，感觉更难以控制，反而弊大于利。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// you can assign with crio() directly</span></span><br><span class="line"><span class="keyword">const</span> crioArray = crio([<span class="string">'foo'</span>]);</span><br><span class="line"><span class="keyword">const</span> updatedCrioArray = crioArray.push(<span class="string">'bar'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> crioObject = crio(&#123;<span class="attr">foo</span>: <span class="string">'bar'</span>&#125;);</span><br><span class="line"><span class="keyword">const</span> updatedCrioObject = crioObject.set(<span class="string">'bar'</span>, <span class="string">'baz'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// or use the convenience methods</span></span><br><span class="line"><span class="keyword">const</span> otherCrioArray = crio.array([<span class="string">'bar'</span>]);</span><br><span class="line"><span class="keyword">const</span> updatedOtherCrioArray = otherCrioArray.push(<span class="string">'bar'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> otherCrioObject = crio.object(&#123;<span class="attr">bar</span>: <span class="string">'baz'</span>&#125;);</span><br><span class="line"><span class="keyword">const</span> updatedOtherCrioObject = otherCrioObject.set(<span class="string">'bar'</span>, <span class="string">'baz'</span>);</span><br></pre></td></tr></table></figure>
+<p>参考阅读：</p>
+<ul>
+<li><a href="https://github.com/planttheidea/crio/issues/6" target="_blank" rel="noopener">Difference with seamless-immutable?</a></li>
+<li><a href="https://github.com/planttheidea/crio#why-not-just-use-x-immutable-library" target="_blank" rel="noopener">Why not just use X immutable library?</a></li>
+</ul>
+<h3 id="aearly-icepick"><a href="#aearly-icepick" class="headerlink" title="aearly/icepick"></a>aearly/icepick</h3><p>仓库地址：<a href="https://github.com/aearly/icepick" target="_blank" rel="noopener">aearly/icepick</a></p>
+<p>又是一个轮子。和 seamless-immutable 几乎类似。区别可能就在于 这个 是类似 lodash 一样的，工具函数。而 seamless-immutable 则是面向对象的方式。</p>
+<p>需要注意的是，其内部与 seamless-immutable 类似，是通过 object shallow copy、slice array 来创建新对象，而 planttheidea/crio 则是通过继承、重新 new 的方式来做。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> coll = &#123;<span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> newColl = icepick.assoc(coll, <span class="string">"b"</span>, <span class="number">3</span>); <span class="comment">// &#123;a: 1, b: 3&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> arr = [<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>];</span><br><span class="line"><span class="keyword">var</span> newArr = icepick.assoc(arr, <span class="number">2</span>, <span class="string">"d"</span>); <span class="comment">// ["a", "b", "d"]</span></span><br></pre></td></tr></table></figure>
+<p>参考阅读：</p>
+<ul>
+<li><a href="https://github.com/aearly/icepick#why-not-just-use-immutablejs-or-mori" target="_blank" rel="noopener">Why not just use Immutable.js or mori?</a></li>
+<li><a href="https://github.com/aearly/icepick#how-does-this-differ-from-reactaddonsupdate-or-seamless-immutable" target="_blank" rel="noopener">How does this differ from React.addons.update or seamless-immutable.</a></li>
+</ul>
+<p>综合这 5 个库，facebook/immutable-js 解决了最上方提到的两个问题，但是相对来说比较重。</p>
+<p>而 这三个，因为都是使用原生 JS 数据结构，相对的，其实解决的是上方的第二个问题，意义并不是很大。</p>
+<ul>
+<li>rtfeldman/seamless-immutable</li>
+<li>planttheidea/crio</li>
+<li>aearly/icepick</li>
+</ul>
+<p>而且后面两个仓库 star 数量较少，当然具体代码未细看，需要说具体问题、具体场景去具体分析，才好做相应技术选型。</p>
+<p>但是，如果第一个问题不突出，只是去解决 这第二个 “工作量大” 的问题，<strong>真的需要引入上述 immutable 相应的数据结构吗？去记相应的新的对象、数组的新方法吗？</strong></p>
+<h2 id="不可变更新（Immutable-Update）实用程序"><a href="#不可变更新（Immutable-Update）实用程序" class="headerlink" title="不可变更新（Immutable Update）实用程序"></a>不可变更新（Immutable Update）实用程序</h2><p>此部分，就是单纯处理第二个问题，没有新的数据结构、数据对象。包含的四个工具库：</p>
+<ul>
+<li><a href="https://github.com/debitoor/dot-prop-immutable" target="_blank" rel="noopener">debitoor/dot-prop-immutable</a></li>
+<li><a href="https://github.com/kolodny/immutability-helper" target="_blank" rel="noopener">kolodny/immutability-helper</a></li>
+<li><a href="https://github.com/mariocasciaro/object-path-immutable" target="_blank" rel="noopener">mariocasciaro/object-path-immutable</a></li>
+<li><a href="https://github.com/mweststrate/immer" target="_blank" rel="noopener">mweststrate/immer</a></li>
+</ul>
+<p>直接推荐 压轴的 <a href="https://github.com/mweststrate/immer" target="_blank" rel="noopener">mweststrate/immer</a></p>
+<h3 id="dot-prop-immutable"><a href="#dot-prop-immutable" class="headerlink" title="dot-prop-immutable"></a>dot-prop-immutable</h3><p>仓库地址：<a href="https://github.com/debitoor/dot-prop-immutable" target="_blank" rel="noopener">debitoor/dot-prop-immutable</a></p>
+<p>只是一些 helper 方法。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> dotProp = <span class="built_in">require</span>(<span class="string">'dot-prop-immutable'</span>);</span><br><span class="line"><span class="keyword">var</span> state = &#123; <span class="attr">todos</span>: [] &#125;, index = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Add todo:</span></span><br><span class="line">state = dotProp.set(state, <span class="string">'todos'</span>, list =&gt; [...list, &#123;<span class="attr">text</span>: <span class="string">'cleanup'</span>, <span class="attr">complete</span>: <span class="literal">false</span>&#125;])</span><br><span class="line"><span class="comment">// or with destructuring assignment</span></span><br><span class="line">state = &#123;...state, <span class="attr">todos</span>: [...state.todos, &#123;<span class="attr">text</span>: <span class="string">'cleanup'</span>, <span class="attr">complete</span>: <span class="literal">false</span>&#125;]&#125;;</span><br><span class="line"><span class="comment">//=&gt;  &#123; todos: [&#123;text: 'cleanup', complete: false&#125;] &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Complete todo:</span></span><br><span class="line">state = dotProp.set(state, <span class="string">`todos.<span class="subst">$&#123;index&#125;</span>.complete`</span>, <span class="literal">true</span>)</span><br><span class="line"><span class="comment">// or with destructuring assignment</span></span><br><span class="line">state = &#123;...state, <span class="attr">todos</span>: [</span><br><span class="line">	...state.todos.slice(<span class="number">0</span>, index),</span><br><span class="line">	&#123;...state.todos[index], <span class="attr">complete</span>: <span class="literal">true</span>&#125;,</span><br><span class="line">	...state.todos.slice(index + <span class="number">1</span>)</span><br><span class="line">]&#125;;</span><br><span class="line"><span class="comment">//=&gt;  &#123; todos: [&#123;text: 'cleanup', complete: true&#125;] &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Delete todo:</span></span><br><span class="line">state = dotProp.delete(state, <span class="string">`todos.<span class="subst">$&#123;index&#125;</span>`</span>)</span><br><span class="line"><span class="comment">// or with destructuring assignment</span></span><br><span class="line">state = &#123;...state, <span class="attr">todos</span>: [</span><br><span class="line">	...state.todos.slice(<span class="number">0</span>, index),</span><br><span class="line">	...state.todos.slice(index + <span class="number">1</span>)</span><br><span class="line">]&#125;;</span><br><span class="line"><span class="comment">//=&gt;  &#123; todos: [] &#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="kolodny-immutability-helper"><a href="#kolodny-immutability-helper" class="headerlink" title="kolodny/immutability-helper"></a>kolodny/immutability-helper</h3><p>仓库地址：<a href="https://github.com/kolodny/immutability-helper" target="_blank" rel="noopener">kolodny/immutability-helper</a></p>
+<p>只是一些 helper 写法 （以 $method 方式）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> update <span class="keyword">from</span> <span class="string">'immutability-helper'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> newData = update(myData, &#123;</span><br><span class="line">  x: &#123;<span class="attr">y</span>: &#123;<span class="attr">z</span>: &#123;<span class="attr">$set</span>: <span class="number">7</span>&#125;&#125;&#125;,</span><br><span class="line">  a: &#123;<span class="attr">b</span>: &#123;<span class="attr">$push</span>: [<span class="number">9</span>]&#125;&#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> initialArray = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>];</span><br><span class="line"><span class="keyword">const</span> newArray = update(initialArray, &#123;<span class="attr">$push</span>: [<span class="number">4</span>]&#125;); <span class="comment">// =&gt; [1, 2, 3, 4]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> collection = [<span class="number">1</span>, <span class="number">2</span>, &#123;<span class="attr">a</span>: [<span class="number">12</span>, <span class="number">17</span>, <span class="number">15</span>]&#125;];</span><br><span class="line"><span class="keyword">const</span> newCollection = update(collection, &#123;<span class="number">2</span>: &#123;<span class="attr">a</span>: &#123;<span class="attr">$splice</span>: [[<span class="number">1</span>, <span class="number">1</span>, <span class="number">13</span>, <span class="number">14</span>]]&#125;&#125;&#125;);</span><br><span class="line"><span class="comment">// =&gt; [1, 2, &#123;a: [12, 13, 14, 15]&#125;]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> obj = &#123;<span class="attr">a</span>: <span class="number">5</span>, <span class="attr">b</span>: <span class="number">3</span>&#125;;</span><br><span class="line"><span class="keyword">const</span> newObj = update(obj, &#123;<span class="attr">b</span>: &#123;<span class="attr">$apply</span>: <span class="function"><span class="keyword">function</span>(<span class="params">x</span>) </span>&#123;<span class="keyword">return</span> x * <span class="number">2</span>;&#125;&#125;&#125;);</span><br><span class="line"><span class="comment">// =&gt; &#123;a: 5, b: 6&#125;</span></span><br><span class="line"><span class="comment">// This is equivalent, but gets verbose for deeply nested collections:</span></span><br><span class="line"><span class="keyword">const</span> newObj2 = update(obj, &#123;<span class="attr">b</span>: &#123;<span class="attr">$set</span>: obj.b * <span class="number">2</span>&#125;&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="mariocasciaro-object-path-immutable"><a href="#mariocasciaro-object-path-immutable" class="headerlink" title="mariocasciaro/object-path-immutable"></a>mariocasciaro/object-path-immutable</h3><p>仓库地址：<a href="https://github.com/mariocasciaro/object-path-immutable" target="_blank" rel="noopener">mariocasciaro/object-path-immutable</a></p>
+<p>大同小异，helper 方法，返回新的数据对象</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newObj1 = immutable.set(obj, <span class="string">'a.b'</span>, <span class="string">'f'</span>)</span><br><span class="line"><span class="keyword">const</span> newObj2 = immutable.set(obj, [<span class="string">'a'</span>, <span class="string">'b'</span>], <span class="string">'f'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//   a: &#123;</span></span><br><span class="line"><span class="comment">//     b: 'f',</span></span><br><span class="line"><span class="comment">//     c: ['d', 'f']</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Note that if the path is specified as a string, numbers are automatically interpreted as array indexes.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> newObj = immutable.set(obj, <span class="string">'a.c.1'</span>, <span class="string">'fooo'</span>)</span><br><span class="line"><span class="comment">// &#123;</span></span><br><span class="line"><span class="comment">//   a: &#123;</span></span><br><span class="line"><span class="comment">//     b: 'f',</span></span><br><span class="line"><span class="comment">//     c: ['d', 'fooo']</span></span><br><span class="line"><span class="comment">//   &#125;</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
+<h3 id="mweststrate-immer"><a href="#mweststrate-immer" class="headerlink" title="mweststrate/immer"></a>mweststrate/immer</h3><p>仓库地址：<a href="https://github.com/mweststrate/immer" target="_blank" rel="noopener">mweststrate/immer</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> produce <span class="keyword">from</span> <span class="string">"immer"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> baseState = [</span><br><span class="line">    &#123;</span><br><span class="line">        todo: <span class="string">"Learn typescript"</span>,</span><br><span class="line">        done: <span class="literal">true</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        todo: <span class="string">"Try immer"</span>,</span><br><span class="line">        done: <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> nextState = produce(baseState, draftState =&gt; &#123;</span><br><span class="line">    draftState.push(&#123;<span class="attr">todo</span>: <span class="string">"Tweet about it"</span>&#125;)</span><br><span class="line">    draftState[<span class="number">1</span>].done = <span class="literal">true</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>和上面的思路不一样，原始对象先做了一层 Proxy 代理，得到 draftState 传递给 function。</p>
+<p>function（带副作用） 直接更改 draftState，最后 produce 返回新的对象。</p>
+<p>推荐直接使用 immer，毕竟人是 mobx 的作者，毕竟是获了奖的。而且其写法特别符合人的直觉，还省了 <code>return</code>（<code>produce</code> 函数内部帮我们做掉了）</p>
+<p>参考阅读：<a href="https://zhuanlan.zhihu.com/p/34691516" target="_blank" rel="noopener">精读《Immer.js》源码</a></p>
+<h2 id="Immutable-Redux-互操作"><a href="#Immutable-Redux-互操作" class="headerlink" title="Immutable/Redux 互操作"></a>Immutable/Redux 互操作</h2><h3 id="gajus-redux-immutable"><a href="#gajus-redux-immutable" class="headerlink" title="gajus/redux-immutable"></a>gajus/redux-immutable</h3><p>仓库地址：<a href="https://github.com/gajus/redux-immutable" target="_blank" rel="noopener">gajus/redux-immutable</a></p>
+<p>将 immutable-js 与 redux 结合的工具</p>
+<h3 id="eadmundo-redux-seamless-immutable"><a href="#eadmundo-redux-seamless-immutable" class="headerlink" title="eadmundo/redux-seamless-immutable"></a>eadmundo/redux-seamless-immutable</h3><p>仓库地址：<a href="https://github.com/eadmundo/redux-seamless-immutable" target="_blank" rel="noopener">eadmundo/redux-seamless-immutable</a></p>
+<p>将 seamless-immutable 与 redux 结合的工具</p>
+<p>既然，如无必要不会使用 immutable-js 去处理第一个问题，那么，第二个问题 使用 immer 可以做的很好，也就没必要使用这两个工具了。</p>
+<h2 id="其他参考"><a href="#其他参考" class="headerlink" title="其他参考"></a>其他参考</h2><p><a href="https://cn.redux.js.org/docs/introduction/Ecosystem.html#immutable-data" target="_blank" rel="noopener">redux - 生态系统 - 不可变（Immutable）数据</a></p>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/react/" rel="tag">#react</a>
+          
+            <a href="/tags/flux/" rel="tag">#flux</a>
+          
+            <a href="/tags/redux/" rel="tag">#redux</a>
+          
+            <a href="/tags/immutable/" rel="tag">#immutable</a>
+          
+            <a href="/tags/immer/" rel="tag">#immer</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/09/22/flux-redux-演变、优缺点与源码分析/" rel="next">flux redux 演变、优缺点与源码分析</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+ </div>
+
+        
+
+        
+          <div class="comments" id="comments">
+            
+              <div id="disqus_thread">
+                <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+              </div>
+            
+          </div>
+        
+      </div>
+
+      
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="https://avatars2.githubusercontent.com/u/6246962?v=3&s=460" alt="Xaber" itemprop="image">
+          <p class="site-author-name" itemprop="name">Xaber</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description"></p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/">
+              <span class="site-state-item-count">74</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">18</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">85</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="menu-item-icon icon-next-feed"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不可变（Immutable）数据"><span class="nav-number">2.</span> <span class="nav-text">不可变（Immutable）数据</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#facebook-immutable-js"><span class="nav-number">2.1.</span> <span class="nav-text">facebook/immutable-js</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#swannodette-mori"><span class="nav-number">2.2.</span> <span class="nav-text">swannodette/mori</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rtfeldman-seamless-immutable"><span class="nav-number">2.3.</span> <span class="nav-text">rtfeldman/seamless-immutable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#planttheidea-crio"><span class="nav-number">2.4.</span> <span class="nav-text">planttheidea/crio</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#aearly-icepick"><span class="nav-number">2.5.</span> <span class="nav-text">aearly/icepick</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#不可变更新（Immutable-Update）实用程序"><span class="nav-number">3.</span> <span class="nav-text">不可变更新（Immutable Update）实用程序</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dot-prop-immutable"><span class="nav-number">3.1.</span> <span class="nav-text">dot-prop-immutable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#kolodny-immutability-helper"><span class="nav-number">3.2.</span> <span class="nav-text">kolodny/immutability-helper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mariocasciaro-object-path-immutable"><span class="nav-number">3.3.</span> <span class="nav-text">mariocasciaro/object-path-immutable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mweststrate-immer"><span class="nav-number">3.4.</span> <span class="nav-text">mweststrate/immer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Immutable-Redux-互操作"><span class="nav-number">4.</span> <span class="nav-text">Immutable/Redux 互操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#gajus-redux-immutable"><span class="nav-number">4.1.</span> <span class="nav-text">gajus/redux-immutable</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#eadmundo-redux-seamless-immutable"><span class="nav-number">4.2.</span> <span class="nav-text">eadmundo/redux-seamless-immutable</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他参考"><span class="nav-number">5.</span> <span class="nav-text">其他参考</span></a></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner"> <div class="copyright">
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="icon-next-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Xaber</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+ </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+  </div>
+
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'xaber';
+      var disqus_identifier = '2019/10/10/immutable-js、immer-以及其他-N-个-immutable-data-库相关/';
+      var disqus_title = 'immutable-js、immer 以及其他 N 个 immutable data 库相关';
+      var disqus_url = 'http://xaber.co/2019/10/10/immutable-js、immer-以及其他-N-个-immutable-data-库相关/';
+
+      function run_disqus_script(disqus_script){
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+      
+        run_disqus_script('embed.js');
+      
+    </script>
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.5.1"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.5.1"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.5.1" id="motion.global"></script>
+
+
+
+
+  <script type="text/javascript" src="/js/nav-toggle.js?v=0.4.5.1"></script>
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.5.1" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+  <script type="text/javascript">
+    $(document).ready(function () {
+      if (CONFIG.sidebar === 'always') {
+        displaySidebar();
+      }
+      if (isMobile()) {
+        FastClick.attach(document.body);
+      }
+    });
+  </script>
+
+  
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/lazyload.js"></script>
+  <script type="text/javascript">
+    $(function () {
+      $("#posts").find('img').lazyload({
+        placeholder: "/images/loading.gif",
+        effect: "fadeIn"
+      });
+    });
+
+  </script>
+
+  
+  <script src="/js/fingerprint2.js"></script>
+<script>
+    $(function () {
+        if (!window.zhuge || !window.Fingerprint2) {
+            return;
+        }
+
+        var tb = function (num) {
+            return num < 10 ? ('0' + num) : num;
+        };
+
+        var getFormatTime = function () {
+            var a = new Date();
+            return a.getFullYear() + '-' + 
+                tb(a.getMonth() + 1) + '-' + 
+                tb(a.getDate()) + ' ' +
+                tb(a.getHours()) + ':' +
+                tb(a.getMinutes()) + ':' +
+                tb(a.getSeconds());
+        };
+
+        new Fingerprint2().get(function (result, components) {
+            //a hash, representing your device fingerprint
+            // console.log(result); 
+
+            // an array of FP components
+            // console.log(components);
+
+            // 已设备指纹作为一个用户记录
+            zhuge.identify(result, {});
+
+            zhuge.track('页面展示', {
+                'time': getFormatTime(),
+                'referrer_url': document.referrer,
+                'url': window.location.href
+            });
+        });
+    });
+</script>
+</body>
+</html>
