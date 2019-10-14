@@ -222,6 +222,96 @@
           
           
             
+              <a class="post-title-link" href="/2015/05/29/运营商劫持-part-2-文件替换-appendChild篇/" itemprop="url">
+                运营商劫持.part.2 文件替换与appendChild篇
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2015-05-29T01:13:07+08:00" content="2015-05-29">
+            2015-05-29
+          </time>
+        </span>
+
+        
+          <span class="post-category">
+            &nbsp; | &nbsp; 分类于
+            
+              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
+                <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                  <span itemprop="name">JavaScript</span>
+                </a>
+              </span>
+
+              
+              
+
+            
+          </span>
+        
+
+        
+          
+            <span class="post-comments-count">
+            &nbsp; | &nbsp;
+            <a href="/2015/05/29/运营商劫持-part-2-文件替换-appendChild篇/#comments" itemprop="discussionUrl">
+              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2015/05/29/运营商劫持-part-2-文件替换-appendChild篇/" itemprop="commentsCount"></span>
+            </a>
+          </span>
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <p>上一篇提到一种劫持形式是在一个js文件中追加了一段脚本，当然这段脚本并未对代码的执行造成多少影响，只是右下角出现一个框框广告罢了（虽然也很烦人，但相比下面的情况至少好多了）。</p>
+<p>这一篇谈到的场景则是，运营商直接劫持了一整个文件，并替换了整个文件的内容。场景重现是这样的：页面引入了<code>a.js</code>，<code>b.js</code>，<code>c.js</code>三个文件，<code>a.js</code>为全局的通用依赖，比如说jQuery，<code>b.js</code>为几个页面业务间通用的一些方法等等的合集，<code>c.js</code>为当前页面业务代码，三个脚本的执行顺序为<code>a.js</code>，<code>b.js</code>，<code>c.js</code>。</p>
+<p>然后运营商来劫持了，他有可能会把a.js里的文件内容替换成这样：<br>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/05/29/运营商劫持-part-2-文件替换-appendChild篇/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </p></div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2015/05/29/运营商劫持-part-1-iframe篇/" itemprop="url">
                 运营商劫持.part.1 iframe篇
               </a>
@@ -1110,94 +1200,6 @@
 
 
     
-      
-
-  <article class="post post-type-normal " itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2014/07/13/前端 - 工具/" itemprop="url">
-                前端 - 工具
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2014-07-13T20:50:45+08:00" content="2014-07-13">
-            2014-07-13
-          </time>
-        </span>
-
-        
-          <span class="post-category">
-            &nbsp; | &nbsp; 分类于
-            
-              <span itemprop="about" itemscope="" itemtype="https://schema.org/Thing">
-                <a href="/categories/工具系列/" itemprop="url" rel="index">
-                  <span itemprop="name">工具系列</span>
-                </a>
-              </span>
-
-              
-              
-
-            
-          </span>
-        
-
-        
-          
-            <span class="post-comments-count">
-            &nbsp; | &nbsp;
-            <a href="/2014/07/13/前端 - 工具/#comments" itemprop="discussionUrl">
-              <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2014/07/13/前端 - 工具/" itemprop="commentsCount"></span>
-            </a>
-          </span>
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <p>此文介绍前端开发的几个实用工具。<br>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/07/13/前端 - 工具/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </p></div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1236,7 +1238,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/">
-              <span class="site-state-item-count">74</span>
+              <span class="site-state-item-count">75</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -1250,7 +1252,7 @@
 
           <div class="site-state-item site-state-tags">
             <a href="/tags">
-              <span class="site-state-item-count">85</span>
+              <span class="site-state-item-count">86</span>
               <span class="site-state-item-name">标签</span>
               </a>
           </div>
