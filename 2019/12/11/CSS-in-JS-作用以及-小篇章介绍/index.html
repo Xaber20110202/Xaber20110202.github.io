@@ -46,7 +46,7 @@
 <meta property="og:site_name" content="Xaber&#39;s Blog">
 <meta property="og:description" content="为什么要用 CSS-in-JS？ 缺乏模块的概念 缺乏作用域的概念【CSS 类名容易重复、覆盖】 多选择器作用在同一个元素上、同一个选择器作用在不同的元素上，可能造成混乱  废弃代码：经常性地会发生，改变了类名，老的类名旧样式扔在代码文件里不会去碰的情况 CSS 样式的顺序、继承、覆盖问题 HTML 和 CSS 实际是强耦合的 （改结构基本意味着改样式） 选择器太过全能（啥都能选） 基于状态的样式">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-11T07:06:18.016Z">
+<meta property="og:updated_time" content="2019-12-11T07:08:59.683Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSS-in-JS 作用以及 小篇章介绍">
 <meta name="twitter:description" content="为什么要用 CSS-in-JS？ 缺乏模块的概念 缺乏作用域的概念【CSS 类名容易重复、覆盖】 多选择器作用在同一个元素上、同一个选择器作用在不同的元素上，可能造成混乱  废弃代码：经常性地会发生，改变了类名，老的类名旧样式扔在代码文件里不会去碰的情况 CSS 样式的顺序、继承、覆盖问题 HTML 和 CSS 实际是强耦合的 （改结构基本意味着改样式） 选择器太过全能（啥都能选） 基于状态的样式">
@@ -292,7 +292,7 @@
 </ol>
 <h2 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h2><p>一个组件，对应一个 css 样式。不重复、不覆盖、想删就删 等等。</p>
 <p>相应的，最终生成的 CSS 文件可能会更大（包含不少重复样式内容），但是，相对的，可能在某方面降低了后期维护成本、也在某方面增加了扩展成本。</p>
-<p>简言： CSS 和 CSS-in-JS 各有优劣，取决于用处、场景，当然，大型项目使用 CSS-in-JS 会更工程化一点。</p>
+<p>简言： <strong>CSS 和 CSS-in-JS 各有优劣</strong>，取决于用处、场景，当然，大型项目使用 CSS-in-JS <strong>可能</strong> 会更工程化一点。</p>
 <h2 id="各种-CSS-in-JS-工具对比"><a href="#各种-CSS-in-JS-工具对比" class="headerlink" title="各种 CSS-in-JS 工具对比"></a>各种 CSS-in-JS 工具对比</h2><p>其实都大同小异，如果要用，选型前稍微看下即可，推荐以下两个二选一。</p>
 <ul>
 <li>Styled-Components</li>
@@ -460,7 +460,7 @@
       <div class="footer-inner"> <div class="copyright">
   
   &copy; &nbsp; 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="icon-next-heart"></i>
   </span>
